@@ -1,16 +1,18 @@
 'use strict';
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("SpotImages", [
+      {
+        spotId: 1,
+        url: "www.goggle.com"
+      },
+      {
+        spotId:1,
+        url :"www.boing.com"
+      }
+
+    ])
   },
 
   async down (queryInterface, Sequelize) {
@@ -20,5 +22,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+     const Op = Sequelize.Op;
+     await queryInterface.bulkDelete('SpotImages', {
+       spotId: { [Op.in]: [1] }
+     }, {});
   }
 };

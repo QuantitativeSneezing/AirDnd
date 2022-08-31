@@ -14,6 +14,7 @@ router.get('/:id/reviews', async (req, res, next) => {
         })
         res.json(spotReviews)
     } else {
+        res.status(404)
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -31,6 +32,7 @@ router.get('/:id/bookings', async (req, res, next) => {
         })
         res.json(spotBookings)
     } else {
+        res.status(404)
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -51,6 +53,7 @@ router.get('/:id',
         if (spot) {
             res.json(spot)
         } else {
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
