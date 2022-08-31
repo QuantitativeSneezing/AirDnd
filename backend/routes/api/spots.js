@@ -6,7 +6,8 @@ router.get('/',
     async (req, res, next) => {
         const spots = await Spot.findAll({
             include: {
-            model: User }
+                model: User
+            }
         })
         res.json(spots)
     }
@@ -15,16 +16,16 @@ router.get('/:id',
     async (req, res, next) => {
         const lookForId = req.params.id
         const spot = await Spot.findOne({
-            where: {id: lookForId}
+            where: { id: lookForId }
         })
         // TODO: eager load images
-        if (spot){
-        res.json(spot)
-        } else{
-            res.json(   {
+        if (spot) {
+            res.json(spot)
+        } else {
+            res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
-              })
+            })
         }
     })
 router.get('/current',
@@ -43,8 +44,8 @@ router.get('/current',
     });
 router.post('/',
     async (req, res, next) => {
-        const {ownerId, address,city,state,country,lat,lng, name,description, price}= req.body
-        const newSpot= await Spot.create({ownerId, address,city,state,country,lat,lng, name,description, price});
+        const { ownerId, address, city, state, country, lat, lng, name, description, price } = req.body
+        const newSpot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price });
         res.json(newSpot)
     })
 module.exports = router
