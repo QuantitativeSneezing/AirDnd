@@ -10,11 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Spot.belongsTo(models.User,
+        {foreignKey: 'ownerId'}
+        )
       // define association here
     }
   }
   Spot.init({
-    ownerID: DataTypes.INTEGER,
+    ownerId: DataTypes.INTEGER,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
