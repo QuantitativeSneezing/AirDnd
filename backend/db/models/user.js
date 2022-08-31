@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: "ownerId", onDelete: 'CASCADE' }
       )
       User.hasMany(models.Review,
-        { foreignKey: "ownerId", onDelete: 'CASCADE' }
+        { foreignKey: "userId", onDelete: 'CASCADE' }
       )
       User.hasMany(models.Booking,
-        { foreignKey: "ownerId", onDelete: 'CASCADE' }
+        { foreignKey: "userId", onDelete: 'CASCADE' }
       )
       // define association here
     }
