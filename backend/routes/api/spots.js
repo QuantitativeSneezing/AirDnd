@@ -37,8 +37,22 @@ const validateSpot = [
         .withMessage('Price per day is required'),
     handleValidationErrors
 ];
-
-
+const validateSpotImage = [
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a url'),
+    handleValidationErrors
+];
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
 
 router.get('/:id/reviews', async (req, res, next) => {
     const lookForId = req.params.id
@@ -76,23 +90,26 @@ router.get('/:id/bookings', async (req, res, next) => {
         })
     }
 })
-router.post('/:id/images', async (req, res, next) => {
-    const lookForId = req.params.id
-    const spot = await Spot.findOne({
-        where: { id: lookForId }
-    });
-    if (spot) {
-        const { url, preview } = req.body
-        const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
-        res.json(newSpotImage)
-    } else {
-        res.status(404)
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
-    }
-})
+router.post('/:id/images',
+    validateSpotImage,
+    async (req, res, next) => {
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId }
+        });
+        if (spot) {
+            const { url, preview } = req.body
+            const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
+            res.json(newSpotImage)
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
+
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
