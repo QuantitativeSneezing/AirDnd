@@ -68,9 +68,9 @@ router.get('/current',
         if (user) {
             const id = user.id;
             const userSpots = await (Spot.findAll({
-                // where: {
-                //     ownerId: id
-                // },
+                where: {
+                    ownerId: id
+                },
             }))
             return res.json(userSpots);
         } else return res.json("No spots found");
@@ -80,7 +80,7 @@ router.get('/',
     async (req, res, next) => {
         const spots = await Spot.findAll({
         })
-        res.json("spots")
+        res.json(spots)
     }
 )
 
