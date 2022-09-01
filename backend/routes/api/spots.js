@@ -46,7 +46,7 @@ router.post('/:id/images', async (req, res, next) => {
     });
     if (spot) {
         const {url, preview}= req.body
-        const newSpotImage= SpotImage.create({spotId:lookForId, url, preview})
+        const newSpotImage= await SpotImage.create({spotId:lookForId, url, preview})
         res.json(newSpotImage)
     } else {
         res.status(404)

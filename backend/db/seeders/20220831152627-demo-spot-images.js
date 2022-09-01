@@ -5,11 +5,13 @@ module.exports = {
     await queryInterface.bulkInsert("SpotImages", [
       {
         spotId: 1,
-        url: "www.goggle.com"
+        url: "www.goggle.com",
+        preview: 1
       },
       {
         spotId:1,
-        url :"www.boing.com"
+        url :"www.boing.com",
+        preview: 1
       }
 
     ])
