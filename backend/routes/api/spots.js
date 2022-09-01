@@ -39,6 +39,20 @@ router.get('/:id/bookings', async (req, res, next) => {
         })
     }
 })
+router.get('/current',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        if (user) {
+            const id = user.id;
+            const userSpots = await (Spot.findAll({
+                where: {
+                    ownerId: id
+                },
+            }))
+            return res.json(userSpots);
+        } else return res.json("No spots found");
+    });
 router.get('/:id',
     async (req, res, next) => {
 
@@ -61,20 +75,7 @@ router.get('/:id',
         }
     })
 
-router.get('/current',
-    requireAuth,
-    async (req, res, next) => {
-        const { user } = req;
-        if (user) {
-            const id = user.id;
-            const userSpots = await (Spot.findAll({
-                where: {
-                    ownerId: id
-                },
-            }))
-            return res.json(userSpots);
-        } else return res.json("No spots found");
-    });
+
 
 router.get('/',
     async (req, res, next) => {
