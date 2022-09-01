@@ -79,9 +79,6 @@ router.get('/current',
 router.get('/',
     async (req, res, next) => {
         const spots = await Spot.findAll({
-            include: {
-                model: User
-            }
         })
         res.json(spots)
     }
