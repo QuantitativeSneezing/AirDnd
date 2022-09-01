@@ -13,7 +13,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('spots', [{
+    await queryInterface.bulkInsert('Spots', [{
       "ownerId": 1,
       "address": "aaa123 Didney Lane",
       "city": "Testville",
