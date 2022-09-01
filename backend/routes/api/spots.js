@@ -39,6 +39,23 @@ router.get('/:id/bookings', async (req, res, next) => {
         })
     }
 })
+router.post('/:id/images', async (req, res, next) => {
+    const lookForId = req.params.id
+    const spot = await Spot.findOne({
+        where: { id: lookForId }
+    });
+    if (spot) {
+        const {url, preview}= req.body
+        const newSpotImage= SpotImage.create({spotId:lookForId, url, preview})
+        res.json(newSpotImage)
+    } else {
+        res.status(404)
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+})
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
