@@ -80,7 +80,7 @@ router.get('/',
     async (req, res, next) => {
         const spots = await Spot.findAll({
         })
-        res.json(spots)
+        res.json("spots")
     }
 )
 
