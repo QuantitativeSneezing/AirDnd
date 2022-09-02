@@ -1,4 +1,5 @@
 const express = require('express')
+const sequelize= require('sequelize')
 const router = express.Router();
 const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
 const { requireAuth } = require('../../db/utils/auth')
@@ -169,7 +170,36 @@ router.get('/current',
     });
 router.get('/:id',
     async (req, res, next) => {
-
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId },
+            include: {
+                model: SpotImage
+            }
+        })
+        if (spot) {
+            const reviewAvg= await Review.findAll({
+                where: {spotId: lookForId},
+                attributes: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']]
+            })
+            const owner= await User.findOne({
+                where: {id:spot.ownerId},
+                attributes: ["id", "firstName", "lastName"]
+            })
+            res.json({spot,reviewAvg,owner})
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
+router.put('/:id',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        //for validating that the spot is owned by the user
         const lookForId = req.params.id
         const spot = await Spot.findOne({
             where: { id: lookForId },
@@ -179,7 +209,32 @@ router.get('/:id',
         })
 
         if (spot) {
-            res.json(spot)
+            if (user.id !== spot.ownerId) {
+                res.status(403)
+                return res.json({
+                    "message": "Forbidden",
+                    "statusCode": 403
+                })
+                //error out if unauthorized first
+            }
+            const address = (req.body.address || spot.address)
+            const city = (req.body.city || spot.city)
+            const state = (req.body.state || spot.state)
+            const country= (req.body.country ||spot.country)
+            const lat= (req.body.lat||spot.lat)
+            const lng= (req.body.lng||spot.lng)
+            const name= (req.body.name|| spot.name)
+            const description= (req.body.description||spot.description)
+            const price= (req.body.price||spot.price)
+            spot.address= address;
+            spot.city= city;
+            spot.state= state;
+            spot.country= country;
+            spot.lat= lat;
+            spot.lng= lng;
+            spot.name= name;
+            spot.description= description;
+            spot.price= price;
         } else {
             res.status(404)
             res.json({
