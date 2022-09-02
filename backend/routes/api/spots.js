@@ -1,5 +1,5 @@
 const express = require('express')
-const sequelize= require('sequelize')
+const sequelize = require('sequelize')
 const router = express.Router();
 const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
 const { requireAuth } = require('../../db/utils/auth')
@@ -73,24 +73,100 @@ router.get('/:id/reviews', async (req, res, next) => {
         })
     }
 })
-router.get('/:id/bookings', async (req, res, next) => {
-    const lookForId = req.params.id
-    const spot = await Spot.findOne({
-        where: { id: lookForId }
-    });
-    if (spot) {
-        const spotBookings = await Booking.findAll({
-            where: { spotId: lookForId }
-        })
-        res.json(spotBookings)
-    } else {
-        res.status(404)
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
-    }
-})
+router.get('/:id/bookings',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId }
+        });
+        if (spot) {
+            let spotBookings = await Booking.findAll({
+                where: { spotId: lookForId },
+                attributes: ["spotId", "startDate", "endDate"]
+            })
+            if (spot.ownerId === user.id) {
+                spotBookings = await Booking.findAll({
+                    where: { spotId: lookForId },
+                    include: { model: user }
+                })
+            }
+            res.json(spotBookings)
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
+router.post('/:id/bookings',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId }
+        });
+        if (spot) {
+            if (spot.ownerId === user.id) {
+                res.status(403)
+                return res.json({
+                    "message": "Don't book your own spot please",
+                    "statusCode": 403
+                })
+            }
+            const { startDate, endDate } = req.body
+            const compareStartDate= Date.parse(startDate)
+            const compareEndDate= Date.parse(endDate)
+            if (endDate < startDate) {
+                res.status(400)
+                return res.json({
+                    "message": "Validation error",
+                    "statusCode": 400,
+                    "errors": {
+                        "endDate": "endDate cannot be on or before startDate"
+                    }
+                })
+            }
+            const otherBookings = await Booking.findAll({
+                where: { spotId: lookForId }
+            })
+            for (let i = 0; i < otherBookings.length; i++) {
+                // this is an incredibly messy validation method, might update in future
+                const existingBooking = otherBookings[i]
+                //four overlap cases: the beginning or end of the booking can overlap with the middle of a date,
+                //or the new booking can entirely envelope another date or be entirely enveloped by another date
+                const overlap =
+                    (compareStartDate >= existingBooking.startDate && compareStartDate <= existingBooking.endDate) ||
+                    (compareEndDate >= existingBooking.startDate && compareEndDate <= existingBooking.endDate) ||
+                    (compareStartDate <= existingBooking.startDate && compareEndDate >= existingBooking.endDate);
+                if (overlap) {
+                    res.status(403)
+                    return res.json({
+                        "message": "Sorry, this spot is already booked for the specified dates",
+                        "statusCode": 403,
+                        "errors": "start or end date overlaps with existing booking"
+
+                    })
+                }
+            }
+            const booking = await Booking.create({
+                spotId: lookForId,
+                userId: user.id,
+                startDate,
+                endDate
+            })
+            res.json(booking)
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
 router.post('/:id/images',
     requireAuth,
     validateSpotImage,
@@ -129,7 +205,10 @@ router.post('/:id/reviews',
         const { user } = req;
         const lookForId = req.params.id
         const spot = await Spot.findOne({
-            where: { id: lookForId }
+            where: { id: lookForId },
+            include: {
+                model: ReviewImage
+            }
         });
 
         if (spot) {
@@ -145,6 +224,7 @@ router.post('/:id/reviews',
             }
             const { review, stars } = req.body
             const spotReview = await Review.create({ spotId: lookForId, review, stars, userId: user.id })
+            res.status(201)
             res.json(spotReview)
         } else {
             res.status(404)
@@ -178,15 +258,15 @@ router.get('/:id',
             }
         })
         if (spot) {
-            const reviewAvg= await Review.findAll({
-                where: {spotId: lookForId},
+            const reviewAvg = await Review.findAll({
+                where: { spotId: lookForId },
                 attributes: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']]
             })
-            const owner= await User.findOne({
-                where: {id:spot.ownerId},
+            const owner = await User.findOne({
+                where: { id: spot.ownerId },
                 attributes: ["id", "firstName", "lastName"]
             })
-            res.json({spot,reviewAvg,owner})
+            res.json({ spot, reviewAvg, owner })
         } else {
             res.status(404)
             res.json({
@@ -220,21 +300,23 @@ router.put('/:id',
             const address = (req.body.address || spot.address)
             const city = (req.body.city || spot.city)
             const state = (req.body.state || spot.state)
-            const country= (req.body.country ||spot.country)
-            const lat= (req.body.lat||spot.lat)
-            const lng= (req.body.lng||spot.lng)
-            const name= (req.body.name|| spot.name)
-            const description= (req.body.description||spot.description)
-            const price= (req.body.price||spot.price)
-            spot.address= address;
-            spot.city= city;
-            spot.state= state;
-            spot.country= country;
-            spot.lat= lat;
-            spot.lng= lng;
-            spot.name= name;
-            spot.description= description;
-            spot.price= price;
+            const country = (req.body.country || spot.country)
+            const lat = (req.body.lat || spot.lat)
+            const lng = (req.body.lng || spot.lng)
+            const name = (req.body.name || spot.name)
+            const description = (req.body.description || spot.description)
+            const price = (req.body.price || spot.price)
+            spot.address = address;
+            spot.city = city;
+            spot.state = state;
+            spot.country = country;
+            spot.lat = lat;
+            spot.lng = lng;
+            spot.name = name;
+            spot.description = description;
+            spot.price = price;
+            await spot.save();
+            res.json(spot)
         } else {
             res.status(404)
             res.json({
