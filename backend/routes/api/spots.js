@@ -91,12 +91,22 @@ router.get('/:id/bookings', async (req, res, next) => {
     }
 })
 router.post('/:id/images',
+    requireAuth,
     validateSpotImage,
     async (req, res, next) => {
+        const { user } = req;
         const lookForId = req.params.id
         const spot = await Spot.findOne({
             where: { id: lookForId }
         });
+        if (user.id!==spot.ownerId){
+            res.status(403)
+            return res.json( {
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+              //error out if unauthorized
+        }
         if (spot) {
             const { url, preview } = req.body
             const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
@@ -109,7 +119,22 @@ router.post('/:id/images',
             })
         }
     })
+router.post('/:id/reviews', async (req, res, next) => {
+    const lookForId = req.params.id
+    const spot = await Spot.findOne({
+        where: { id: lookForId }
+    });
+    if (spot) {
 
+        res.json(spotReviews)
+    } else {
+        res.status(404)
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+})
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
