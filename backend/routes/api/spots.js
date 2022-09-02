@@ -95,19 +95,21 @@ router.post('/:id/images',
     validateSpotImage,
     async (req, res, next) => {
         const { user } = req;
+        //for validating that the spot is owned by the user
         const lookForId = req.params.id
         const spot = await Spot.findOne({
             where: { id: lookForId }
         });
-        if (user.id!==spot.ownerId){
-            res.status(403)
-            return res.json( {
-                "message": "Forbidden",
-                "statusCode": 403
-              })
-              //error out if unauthorized
-        }
+
         if (spot) {
+            if (user.id !== spot.ownerId) {
+                res.status(403)
+                return res.json({
+                    "message": "Forbidden",
+                    "statusCode": 403
+                })
+                //error out if unauthorized first
+            }
             const { url, preview } = req.body
             const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
             res.json(newSpotImage)
@@ -119,22 +121,38 @@ router.post('/:id/images',
             })
         }
     })
-router.post('/:id/reviews', async (req, res, next) => {
-    const lookForId = req.params.id
-    const spot = await Spot.findOne({
-        where: { id: lookForId }
-    });
-    if (spot) {
+router.post('/:id/reviews',
+    requireAuth,
+    validateReview,
+    async (req, res, next) => {
+        const { user } = req;
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId }
+        });
 
-        res.json(spotReviews)
-    } else {
-        res.status(404)
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
-    }
-})
+        if (spot) {
+            const checkForExistingReview = await Review.findOne({
+                where: { userId: user.id }
+            })
+            if (checkForExistingReview) {
+                res.status(403)
+                return res.json({
+                    "message": "User already has a review for this spot",
+                    "statusCode": 403
+                })
+            }
+            const { review, stars } = req.body
+            const spotReview = await Review.create({ spotId: lookForId, review, stars, userId: user.id })
+            res.json(spotReview)
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
@@ -170,7 +188,42 @@ router.get('/:id',
             })
         }
     })
+router.delete('/:id',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        //for validating that the spot is owned by the user
+        const lookForId = req.params.id
+        const spot = await Spot.findOne({
+            where: { id: lookForId },
+            include: {
+                model: SpotImage
+            }
+        })
 
+        if (spot) {
+            if (user.id !== spot.ownerId) {
+                res.status(403)
+                return res.json({
+                    "message": "Forbidden",
+                    "statusCode": 403
+                })
+                //error out if unauthorized first
+            }
+            spot.destroy();
+            res.status(200)
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+            })
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
 
 
 router.get('/',
