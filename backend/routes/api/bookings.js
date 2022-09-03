@@ -92,4 +92,41 @@ router.put('/:id',
                 "statusCode": 404
             });
     })
+router.delete('/:id',
+    requireAuth,
+    async (req, res, next) => {
+        const { user } = req;
+        //for validating that the spot is owned by the user
+        const lookForId = req.params.id
+        const booking = await Booking.findOne({
+            where: { id: lookForId },
+        })
+
+
+        if (booking) {
+            const spot = await Spot.findOne({
+                where: { id: booking.spotId}
+            })
+            if (user.id !== spot.ownerId && user.id !== booking.userId) {
+                res.status(403)
+                return res.json({
+                    "message": "Forbidden",
+                    "statusCode": 403
+                })
+                //error out if unauthorized first
+            }
+            booking.destroy();
+            res.status(200)
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+            })
+        } else {
+            res.status(404)
+            res.json({
+                "message": "Booking couldn't be found",
+                "statusCode": 404
+            })
+        }
+    })
 module.exports = router
