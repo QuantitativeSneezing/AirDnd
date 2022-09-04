@@ -207,10 +207,7 @@ router.post('/:id/reviews',
         const { user } = req;
         const lookForId = req.params.id
         const spot = await Spot.findOne({
-            where: { id: lookForId },
-            include: {
-                model: ReviewImage
-            }
+            where: { id: lookForId }
         });
 
         if (spot) {
