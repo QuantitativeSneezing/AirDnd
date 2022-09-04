@@ -6,12 +6,12 @@ module.exports = {
       {
         spotId: 1,
         url: "www.goggle.com",
-        preview: 1
+        preview: true
       },
       {
         spotId:1,
         url :"www.boing.com",
-        preview: 1
+        preview: true
       }
 
     ])
