@@ -23,7 +23,7 @@ router.use("/bookings", bookingsRouter)
 
 router.use("/spot-images", spotImagesRouter)
 
-router.use("/review-images", spotImagesRouter)
+router.use("/review-images", reviewImagesRouter)
 
 router.get('/restore-user',
 (req, res) => {
