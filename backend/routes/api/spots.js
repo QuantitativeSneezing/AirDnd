@@ -379,27 +379,27 @@ router.get('/',
         const whereParams = {}
         if (req.query.minLat) {
             const minLat = { [Op.gte]: req.query.minLat }
-            whereParams.minLat = minLat
+            whereParams.Lat = minLat
         }
         if (req.query.maxLat){
             const maxLat= {[Op.lte] : req.query.maxLat}
-            whereParams.maxLat= maxLat
+            whereParams.Lat= maxLat
         }
         if (req.query.minLng) {
             const minLng = { [Op.gte]: req.query.minLng }
-            whereParams.minLng = minLng
+            whereParams.Lng = minLng
         }
         if (req.query.maxLng){
             const maxLng= {[Op.lte] : req.query.maxLng}
-            whereParams.maxLng= maxLng
+            whereParams.Lng= maxLng
         }
         if (req.query.minPrice) {
             const minPrice = { [Op.gte]: req.query.minPrice }
-            whereParams.minPrice = minPrice
+            whereParams.Price = minPrice
         }
         if (req.query.maxPrice){
             const maxPrice= {[Op.lte] : req.query.maxPrice}
-            whereParams.maxPrice= maxPrice
+            whereParams.Price= maxPrice
         }
         const spots = await Spot.findAll({
             where: whereParams,
