@@ -90,8 +90,14 @@ router.get('/:id/bookings',
             if (spot.ownerId === user.id) {
                 spotBookings = await Booking.findAll({
                     where: { spotId: lookForId },
-                    include: { model: user }
                 })
+                for (let i=0;i<spotBookings.length;i++){
+                    const currentBooking= spotBookings[i];
+                    const addedUser= await User.findOne({
+                        where: {id: currentBooking.userId}
+                    })
+                    currentBooking.user= addedUser
+                }
             }
             res.json(spotBookings)
         } else {
