@@ -5,6 +5,7 @@ const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
 const { requireAuth } = require('../../db/utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../db/utils/validation');
+const { Op } = require("sequelize");
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
@@ -118,8 +119,8 @@ router.post('/:id/bookings',
                 })
             }
             const { startDate, endDate } = req.body
-            const compareStartDate= Date.parse(startDate)
-            const compareEndDate= Date.parse(endDate)
+            const compareStartDate = Date.parse(startDate)
+            const compareEndDate = Date.parse(endDate)
             if (endDate < startDate) {
                 res.status(400)
                 return res.json({
@@ -365,9 +366,46 @@ router.delete('/:id',
 
 router.get('/',
     async (req, res, next) => {
-        const where={}
+        let size = 20;
+        let page = 0;
+        if (req.query.size < 20 && req.query.size > 0) {
+            size = req.query.size
+        }
+        if (req.query.page < 10 && req.query.page > 0) {
+            page = req.query.page
+        }
+        const limit = size;
+        const offset = (page - 1) * limit;
+        const whereParams = {}
+        if (req.query.minLat) {
+            const minLat = { [Op.gte]: req.query.minLat }
+            whereParams.minLat = minLat
+        }
+        if (req.query.maxLat){
+            const maxLat= {[Op.lte] : req.query.maxLat}
+            whereParams.maxLat= maxLat
+        }
+        if (req.query.minLng) {
+            const minLng = { [Op.gte]: req.query.minLng }
+            whereParams.minLng = minLng
+        }
+        if (req.query.maxLng){
+            const maxLng= {[Op.lte] : req.query.maxLng}
+            whereParams.maxLng= maxLng
+        }
+        if (req.query.minPrice) {
+            const minPrice = { [Op.gte]: req.query.minPrice }
+            whereParams.minPrice = minPrice
+        }
+        if (req.query.maxPrice){
+            const maxPrice= {[Op.lte] : req.query.maxPrice}
+            whereParams.maxPrice= maxPrice
+        }
         const spots = await Spot.findAll({
-            where,
+            where: whereParams,
+            limit,
+            offset
+
         })
         res.json(spots)
     }
