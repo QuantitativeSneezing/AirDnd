@@ -7,6 +7,7 @@ const spotsRouter= require("./spots")
 const reviewsRouter= require("./reviews")
 const bookingsRouter= require("./bookings")
 const spotImagesRouter= require("./spot-images")
+const reviewImagesRouter= require("./review-images")
 
 router.use(restoreUser);
 
@@ -22,6 +23,7 @@ router.use("/bookings", bookingsRouter)
 
 router.use("/spot-images", spotImagesRouter)
 
+router.use("/review-images", spotImagesRouter)
 
 router.get('/restore-user',
 (req, res) => {
