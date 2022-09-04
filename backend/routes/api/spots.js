@@ -365,7 +365,9 @@ router.delete('/:id',
 
 router.get('/',
     async (req, res, next) => {
+        const where={}
         const spots = await Spot.findAll({
+            where,
         })
         res.json(spots)
     }
