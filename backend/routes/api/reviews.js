@@ -43,7 +43,7 @@ router.post('/:id/images',
                 })
             }
             const associatedImages = await ReviewImage.findAll({
-                where: { userId: user.id }
+                where: { reviewId: review.id }
             })
             if (associatedImages){
                 if (associatedImages.length > 9) {
