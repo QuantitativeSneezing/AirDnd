@@ -11,14 +11,14 @@ router.delete('/:id',
         const { user } = req;
         //for validating that the spot is owned by the user
         const lookForId = req.params.id
-        const reviewImage = await reviewImage.findOne({
+        const reviewImageToDelete = await reviewImage.findOne({
             where: { id: lookForId },
         })
 
 
-        if (reviewImage) {
+        if (reviewImageToDelete) {
             const review = await Review.findOne({
-                where: { id: reviewImage.reviewId }
+                where: { id: reviewImageToDelete.reviewId }
             })
             if (user.id !== review.userId) {
                 res.status(403)
@@ -28,7 +28,7 @@ router.delete('/:id',
                 })
                 //error out if unauthorized first
             }
-            reviewImage.destroy();
+            reviewImageToDelete.destroy();
             res.status(200)
             res.json({
                 "message": "Successfully deleted",
