@@ -1,7 +1,7 @@
 const express = require('express')
 const sequelize = require('sequelize')
 const router = express.Router();
-const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
+const { Spot, User, SpotImage, Review, Booking, ReviewImage } = require('../../db/models');
 const { requireAuth } = require('../../db/utils/auth');
 const { route } = require('./spots');
 
@@ -11,14 +11,14 @@ router.delete('/:id',
         const { user } = req;
         //for validating that the spot is owned by the user
         const lookForId = req.params.id
-        const reviewImageToDelete = await reviewImage.findOne({
+        const reviewImage = await ReviewImage.findOne({
             where: { id: lookForId },
         })
 
 
-        if (reviewImageToDelete) {
+        if (reviewImage) {
             const review = await Review.findOne({
-                where: { id: reviewImageToDelete.reviewId }
+                where: { id: reviewImage.reviewId }
             })
             if (user.id !== review.userId) {
                 res.status(403)
@@ -28,7 +28,7 @@ router.delete('/:id',
                 })
                 //error out if unauthorized first
             }
-            reviewImageToDelete.destroy();
+            reviewImage.destroy();
             res.status(200)
             res.json({
                 "message": "Successfully deleted",
