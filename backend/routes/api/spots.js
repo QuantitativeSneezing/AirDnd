@@ -375,43 +375,43 @@ router.get('/',
             page = req.query.page
         }
         const limit = size;
-        let offset= 0
-        if (page> 1){
-        offset = ((page - 1) * limit);
+        let offset = 0
+        if (page > 1) {
+            offset = ((page - 1) * limit);
+        }
+            const whereParams = {}
+            if (req.query.minLat) {
+                const minLat = { [Op.gte]: req.query.minLat }
+                whereParams.Lat = minLat
+            }
+            if (req.query.maxLat) {
+                const maxLat = { [Op.lte]: req.query.maxLat }
+                whereParams.Lat = maxLat
+            }
+            if (req.query.minLng) {
+                const minLng = { [Op.gte]: req.query.minLng }
+                whereParams.Lng = minLng
+            }
+            if (req.query.maxLng) {
+                const maxLng = { [Op.lte]: req.query.maxLng }
+                whereParams.Lng = maxLng
+            }
+            if (req.query.minPrice) {
+                const minPrice = { [Op.gte]: req.query.minPrice }
+                whereParams.Price = minPrice
+            }
+            if (req.query.maxPrice) {
+                const maxPrice = { [Op.lte]: req.query.maxPrice }
+                whereParams.Price = maxPrice
+            }
+            const spots = await Spot.findAll({
+                where: whereParams,
+                limit,
+                offset
 
-        const whereParams = {}
-        if (req.query.minLat) {
-            const minLat = { [Op.gte]: req.query.minLat }
-            whereParams.Lat = minLat
+            })
+            res.json(spots)
         }
-        if (req.query.maxLat){
-            const maxLat= {[Op.lte] : req.query.maxLat}
-            whereParams.Lat= maxLat
-        }
-        if (req.query.minLng) {
-            const minLng = { [Op.gte]: req.query.minLng }
-            whereParams.Lng = minLng
-        }
-        if (req.query.maxLng){
-            const maxLng= {[Op.lte] : req.query.maxLng}
-            whereParams.Lng= maxLng
-        }
-        if (req.query.minPrice) {
-            const minPrice = { [Op.gte]: req.query.minPrice }
-            whereParams.Price = minPrice
-        }
-        if (req.query.maxPrice){
-            const maxPrice= {[Op.lte] : req.query.maxPrice}
-            whereParams.Price= maxPrice
-        }
-        const spots = await Spot.findAll({
-            where: whereParams,
-            limit,
-            offset
-
-        })
-        res.json(spots)
-    }
 )
 
 router.post('/',
