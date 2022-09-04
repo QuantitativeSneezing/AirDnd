@@ -45,12 +45,14 @@ router.post('/:id/images',
             const associatedImages = await ReviewImage.findAll({
                 where: { userId: user.id }
             })
-            if (associatedImages.length > 9) {
-                res.status(403)
-                return res.json({
-                    "message": "Maximum number of images for this resource was reached",
-                    "statusCode": 403
-                })
+            if (associatedImages){
+                if (associatedImages.length > 9) {
+                    res.status(403)
+                    return res.json({
+                        "message": "Maximum number of images for this resource was reached",
+                        "statusCode": 403
+                    })
+                }
             }
             const newSpotImage = await ReviewImage.create({ reviewId: lookForId, url })
             res.json(newSpotImage)
