@@ -11,7 +11,7 @@ router.delete('/:id',
         const { user } = req;
         //for validating that the spot is owned by the user
         const lookForId = req.params.id
-        const reviewImage = await SpotImage.findOne({
+        const reviewImage = await reviewImage.findOne({
             where: { id: lookForId },
         })
 
