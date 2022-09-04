@@ -375,7 +375,10 @@ router.get('/',
             page = req.query.page
         }
         const limit = size;
-        const offset = (page - 1) * limit;
+        let offset= 0
+        if (page> 1){
+        offset = ((page - 1) * limit);
+
         const whereParams = {}
         if (req.query.minLat) {
             const minLat = { [Op.gte]: req.query.minLat }
