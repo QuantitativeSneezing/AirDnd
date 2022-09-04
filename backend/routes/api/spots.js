@@ -188,7 +188,8 @@ router.post('/:id/images',
                 })
                 //error out if unauthorized first
             }
-            const { url, preview } = req.body
+            let { url, preview } = req.body
+            preview= Boolean(preview)
             const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
             res.json(newSpotImage)
         } else {
