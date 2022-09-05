@@ -21,7 +21,7 @@ router.get('/current',
                     userId: id
                 },
             }))
-            return res.json(userReviews);
+            return res.json({userReviews: userReviews});
         } else return res.json("ERROR");
     });
 router.post('/:id/images',

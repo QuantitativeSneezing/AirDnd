@@ -14,7 +14,7 @@ router.get('/current',
                     userId: id
                 },
             }))
-            return res.json(userBookings);
+            return res.json({userBookings:userBookings});
         } else res.json(
             {
                 "message": "no Bookings/User found",
