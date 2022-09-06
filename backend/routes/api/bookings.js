@@ -85,7 +85,7 @@ router.put('/:id',
             if (endDate && endDate instanceof Date) {
                 booking.endDate = endDate
             }
-            res.json(booking)
+            res.json({booking: booking})
         } else res.json(
             {
                 "message": "no Booking found",
