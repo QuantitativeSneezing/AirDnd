@@ -65,7 +65,7 @@ router.get('/:id/reviews', async (req, res, next) => {
         const spotReviews = await Review.findAll({
             where: { spotId: lookForId }
         })
-        res.json(spotReviews)
+        res.json({reviews: spotReviews})
     } else {
         res.status(404)
         res.json({
@@ -231,7 +231,7 @@ router.post('/:id/reviews',
             const { review, stars } = req.body
             const spotReview = await Review.create({ spotId: lookForId, review, stars, userId: user.id })
             res.status(201)
-            res.json({review: spotReview})
+            res.json(spotReview)
         } else {
             res.status(404)
             res.json({
