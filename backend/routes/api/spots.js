@@ -99,7 +99,7 @@ router.get('/:id/bookings',
                     currentBooking.user= addedUser
                 }
             }
-            res.json(spotBookings)
+            res.json({bookings: spotBookings})
         } else {
             res.status(404)
             res.json({
