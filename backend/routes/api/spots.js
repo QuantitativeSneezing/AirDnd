@@ -231,7 +231,7 @@ router.post('/:id/reviews',
             const { review, stars } = req.body
             const spotReview = await Review.create({ spotId: lookForId, review, stars, userId: user.id })
             res.status(201)
-            res.json(spotReview)
+            res.json({review: spotReview})
         } else {
             res.status(404)
             res.json({
