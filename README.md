@@ -2,7 +2,9 @@
 Schema here:
 https://drive.google.com/file/d/1mlD7SR5M-bWXZ9_ANdyKlyU5Rjb8XyIG/view?usp=sharing
 # Wiki Links:
-
+[Home](https://github.com/QuantitativeSneezing/Airdnd/wiki)
+[Features](https://github.com/QuantitativeSneezing/Airdnd/wiki/features-list)
+[State Shaoe](https://github.com/QuantitativeSneezing/Airdnd/wiki/Redux-State-Shape)
 
 # Made with:
 [<img src="https://img.shields.io/badge/Javascript-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://www.javascript.com/)
