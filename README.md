@@ -1,5 +1,5 @@
 # AirDnd
-Schema here:
+Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project on its wiki.
 
 # Wiki Links:
 [**Home**](https://github.com/QuantitativeSneezing/Airdnd/wiki)
