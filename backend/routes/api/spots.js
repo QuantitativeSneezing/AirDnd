@@ -283,6 +283,7 @@ router.get('/:id',
     })
 router.put('/:id',
     requireAuth,
+    validateSpot,
     async (req, res, next) => {
         const { user } = req;
         //for validating that the spot is owned by the user
