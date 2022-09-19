@@ -10,8 +10,6 @@ function LoginFormPage() {
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
-    const [firstName, setFirstName]= useState('')
-    const [lastName, setLastName]= useState('')
 
     if (sessionUser) return (
         <Redirect to="/" />
@@ -20,7 +18,7 @@ function LoginFormPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(sessionActions.login({ credential, password, firstName,lastName }))
+        return dispatch(sessionActions.login({ credential, password }))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
@@ -50,26 +48,6 @@ function LoginFormPage() {
                     required
                 />
             </label>
-            <label>
-                First Name
-                <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Last Name
-                <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                />
-            </label>
-            <input>
-            </input>
             <button type="submit">Log In</button>
         </form>
     );
