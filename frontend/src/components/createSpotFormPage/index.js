@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
-//   lat, lng, name, description, price
+import { Redirect, useHistory } from "react-router-dom";
+import * as spotActions from "../../store/spots";
 import './SpotForm.css'
+
 const States = ["Alaska", "Alabama", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
     "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
     "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Missouri", "Montana", "Nebraska", "Nevada",
@@ -12,27 +12,35 @@ const States = ["Alaska", "Alabama", "Arkansas", "California", "Colorado", "Conn
 // I did actually type these all out, don't want to run afoul of copy/paste rules lol
 function SpotFormPage() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry]= useState("")
-    const [lat, setLat]= useState(0)
-    const [long, setLong]= useState(0)
+    const [state, setState] = useState("Alaska");
+    const [country, setCountry] = useState("")
+    const [lat, setLat] = useState(0)
+    const [lng, setLong] = useState(0)
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [price, setPrice] = useState(0)
     const updateState = (e) => setState(e.target.value);
 
     // this should probably be a dropdown/scroll menu
     const [errors, setErrors] = useState([]);
 
-    if (sessionUser) return <Redirect to="/" />;
-    const handleSubmit = (e) => {
+    if (!sessionUser) return <Redirect to="/" />;
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(sessionActions.login({ credential, password }))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            });
+        const payload = {
+            address, city, state, country, lat, lng, name, description, price
+        }
+
+        const spot = await dispatch(spotActions.createSpot(payload))
+        if (spot) {
+            console.log("SPOT :" ,spot)
+            history.push(`/spots/${spot.id}`);
+        }
     }
 
 
@@ -81,23 +89,51 @@ function SpotFormPage() {
                 Latitude
                 <input
                     type="number"
-                    step= "0.1"
+                    step="0.1"
                     value={lat}
                     onChange={(e) => setLat(e.target.value)}
                     required
                 />
             </label>
             <label>
-                Last Name
+                Longitude
                 <input
                     type="number"
-                    step= "0.1"
-                    value={long}
+                    step="0.1"
+                    value={lng}
                     onChange={(e) => setLong(e.target.value)}
                     required
                 />
             </label>
-            <button type="submit">Sign Up</button>
+            <label>
+                Name
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                />
+            </label>
+            <label>
+                Description
+                <input
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                />
+            </label>
+            <label>
+                Price
+                <input
+                    type="number"
+                    step="0.1"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                />
+            </label>
+            <button type="submit">Add spot</button>
         </form>
     );
 }

@@ -11,14 +11,16 @@ function Navigation({ isLoaded }) {
     let sessionLinks;
     if (sessionUser) {
         sessionLinks = (
-            <ProfileButton user={sessionUser} />
+            <>
+                <ProfileButton user={sessionUser} />
+                <NavLink to="/spots/new"> Add a spot</NavLink>
+            </>
         );
     } else {
         sessionLinks = (
             <>
                 <LoginFormModal />
                 <NavLink to="/signup">Sign Up       </NavLink>
-
             </>
         );
     }

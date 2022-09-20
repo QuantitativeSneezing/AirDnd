@@ -429,6 +429,7 @@ router.post('/',
         const ownerId = user.id;
         const newSpot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price });
         newSpot.save();
+        console.log ("NEWSPOT FROM BACKEND :", newSpot)
         res.json(newSpot)
     })
 

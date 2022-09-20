@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from './Modal';
-import LoginForm from '../components/loginFormPage/index';
-
+import LoginFormPage from '../components/loginFormPage'
 function LoginFormModal() {
   const [showModal, setShowModal] = useState(false);
 
@@ -10,7 +9,7 @@ function LoginFormModal() {
       <button onClick={() => setShowModal(true)}>Log In</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <LoginForm />
+          <LoginFormPage />
         </Modal>
       )}
     </>
