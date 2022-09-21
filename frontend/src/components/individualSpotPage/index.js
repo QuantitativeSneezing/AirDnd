@@ -3,28 +3,36 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
-
+import * as reviewActions from '../../store/reviews'
 
 function IndividualSpotPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { spotId } = useParams();
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
     }, [dispatch]);
+    useEffect(() => {
+        dispatch(reviewActions.getSpotReviews(spotId))
+    }, [dispatch]);
 
     const movePage = () => {
-        history.push("EDITPAGEFORM")
+        history.push(`/spots/${spotId}/edit`)
     }
-    const { spotId } = useParams();
     const deleteThis = async () => {
-        spotActions.deleteSpot(spotId)
-        history.push ("/")
+        dispatch(spotActions.deleteSpot(spotId))
+        history.push("/")
     }
     const spots = useSelector(state => state.spots.spots)
-    const spot = spots.find(spot => spot.id = spotId)
-    console.log ("ALL SPOTS: ",spots)
+    let spot;
+    if (spots[0]) {
+        spot = spots.find(spot => spot.id == spotId)
+    }
+    const allReviews= useSelector(state=> state.reviews.reviews)
+    console.log ("ALL REVIEWS :",allReviews)
+    console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
-    if (!spot){
+    if (!spot) {
         return null;
     }
     return (

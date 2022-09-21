@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import SpotFormPage from './components/createSpotFormPage';
 import Navigation from './components/Navigation';
 import IndividualSpotPage from './components/individualSpotPage';
+import EditSpotFormPage from './components/editSpotFormPage';
 import HomePage from './components/homePage';
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path = "/spots/new">
             <SpotFormPage />
+          </Route>
+          <Route path = "/spots/:spotId/edit">
+            <EditSpotFormPage />
           </Route>
           <Route path= "/spots/:spotId">
             <IndividualSpotPage  />

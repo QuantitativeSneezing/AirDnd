@@ -4,6 +4,7 @@ const GET_SPOTS = '/';
 const GET_ONE_SPOT = '/spots/:id'
 const REMOVE_SPOT = 'spots/:id/delete';
 const ADD_SPOT = '/spots/new'
+
 export const removeSpot = spotId => ({
   type: REMOVE_SPOT,
   spotId
@@ -23,14 +24,13 @@ const getSpots = (spots) => ({
   spots
 })
 
-export const createSpot = (spot, userId) => async (dispatch) => {
+
+export const createSpot = (spot) => async (dispatch) => {
   const { address, city, state, country, lat, lng, name, description, price } = spot;
-  const ownerId = userId;
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      ownerId,
       address,
       city,
       state,
@@ -45,21 +45,43 @@ export const createSpot = (spot, userId) => async (dispatch) => {
   const data = await response.json();
   return data;
 };
-export const deleteSpot = (spotId) => async (dispatch) => {
+export const deleteSpot = (spotId) => async dispatch => {
+  console.log ("TRYING TO DELETE")
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE',
   });
   const data = await response.json();
-  return data;
+  return dispatch(removeSpot(data.id));
 };
 export const getAllSpots = () => async dispatch => {
   const response = await csrfFetch(`/api/spots`);
   if (response.ok) {
     const spots = await response.json();
-    // console.log ("THUNK SPOTS :", spots)
-    const result = dispatch(getSpots(spots.spots))
-    // console.log ("RESULT OF DISPATCHING :", result)
+    console.log ("THUNK SPOTS :", spots)
+    // const result = dispatch(getSpots(spots.spots))
+    // console.log ("RESULT OF DISPATCHING :", result
+    // return result
   }
+};
+export const updateSpot = (spot, spotId) => async (dispatch) => {
+  const { address, city, state, country, lat, lng, name, description, price } = spot;
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
+    }),
+  });
+  const data = await response.json();
+  return dispatch(addSpot(data));
 };
 const initialState = {
   spots: [],
