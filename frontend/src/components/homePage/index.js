@@ -25,7 +25,7 @@ function HomePage() {
                     <div className='fullLocation___container' onClick={() => history.push(`spots/${spot.id}`)}>
                         <div className="locations__location">
                             <div className='image__wrapper'>
-                                <img src='https://upload.wikimedia.org/wikipedia/commons/4/49/A_black_image.jpg' className='picture'></img>
+                                <img src='https://upload.wikimedia.org/wikipedia/commons/4/49/A_black_image.jpg' alt= "Spot" className='picture'></img>
                             </div>
                         </div>
                         <div className='location__details'>
