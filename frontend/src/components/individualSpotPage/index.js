@@ -85,9 +85,7 @@ function IndividualSpotPage() {
     }
     return (
         <div>
-            <p>
-                WELCOME TO THE SPOT
-            </p>
+          <img src=''></img>
             <ul>
                 <li>
                     {spotId} IS THE SPOT'S ID

@@ -58,7 +58,7 @@ export const getAllSpots = () => async dispatch => {
   if (response.ok) {
     const spots = await response.json();
     console.log ("THUNK SPOTS :", spots)
-    console.log ("TRYING TO KEY IN :", spots.spots[0].SpotImages)
+    console.log ("TRYING TO KEY IN :", spots.spots[0])
     const result = dispatch(getSpots(spots.spots))
     console.log ("RESULT OF DISPATCHING :", result)
     return result

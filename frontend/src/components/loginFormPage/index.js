@@ -24,32 +24,43 @@ function LoginFormPage() {
                 if (data && data.errors) setErrors(data.errors);
             });
     }
-
+    function demoLogin() {
+        return dispatch(sessionActions.login({ credential: "demo@user.io", password: "password" }))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
+    }
     return (
-        <form onSubmit={handleSubmit} id ="login">
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Username or Email
-                <input
-                    type="text"
-                    value={credential}
-                    onChange={(e) => setCredential(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Log In</button>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit} id="login">
+                <div>
+                    {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                </div>
+                <label>
+                    Username or Email
+                    <input
+                        type="text"
+                        value={credential}
+                        onChange={(e) => setCredential(e.target.value)}
+                        required
+                    />
+                </label>
+                <div className='lineBreak'>
+                    <label>
+                        Password
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <button type="submit">Log In</button>
+            </form>
+            <button onClick={demoLogin}>Log in as Demo user</button>
+        </div>
     );
 }
 
