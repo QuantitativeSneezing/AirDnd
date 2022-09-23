@@ -1,13 +1,82 @@
-li{
-    background-color: rgb(247,6,207);
-    color: black
+.locations__container {
+  margin: 0 auto;
+  padding: 32px;
+  max-width: 1400px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  z-index: -1;
 }
-*{
-    background-color: rgb(255,56,100);
+
+.locations__container>p {
+  justify-self: center;
+  align-self: center;
+  font-size: 50px;
 }
-link{
-    background-color: rgb(249,200,14);
+
+.locations__group {
+  align-self: center;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  width: 100%;
 }
-ul{
-    background-color: rgb(45, 226, 230);
+
+.locations__location {
+  background-color: transparent;
+  border-radius: 30px;
+  box-sizing: border-box;
+  font-weight: bold;
+  height: 200px;
+  margin: 0 2px 16px;
+  margin-bottom: 0px;
+  max-width: 200px;
+  padding: 4px 8px;
+  position: relative;
+  color: black;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 1;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.description {
+  font-size: 12px;
+}
+
+.picture {
+  width: 200px;
+  height: 200px;
+  display: block;
+  border-radius: 30px;
+}
+
+.picture:hover {
+  opacity: .8;
+}
+
+.image__wrapper {
+  width: 200px;
+  height: 200px;
+  border-radius: 30px;
+}
+
+.image__wrapper:hover {
+  background-color: grey;
+  border-radius: 30px;
+}
+
+.location__details {
+  margin-bottom: 16px;
+}
+
+.fullLocation___container :hover {
+  cursor: pointer;
 }

@@ -58,9 +58,10 @@ export const getAllSpots = () => async dispatch => {
   if (response.ok) {
     const spots = await response.json();
     console.log ("THUNK SPOTS :", spots)
-    // const result = dispatch(getSpots(spots.spots))
-    // console.log ("RESULT OF DISPATCHING :", result
-    // return result
+    console.log ("TRYING TO KEY IN :", spots.spots[0].SpotImages)
+    const result = dispatch(getSpots(spots.spots))
+    console.log ("RESULT OF DISPATCHING :", result)
+    return result
   }
 };
 export const updateSpot = (spot, spotId) => async (dispatch) => {
@@ -90,6 +91,7 @@ const spotReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case GET_SPOTS:
+      console.log ("GET SPOTS ACTION :", action)
       return { ...newState, spots: [...action.spots] };
     case GET_ONE_SPOT:
       newState = { ...state, [action.spot.id]: action.spot }

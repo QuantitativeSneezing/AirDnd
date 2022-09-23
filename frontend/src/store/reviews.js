@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf';
 
-const GET_SPOT_REVIEWS = '/';
+const GET_SPOT_REVIEWS = '/spots/:id/reviews';
 const GET_USER_REVIEWS = '/reviews/current'
 const REMOVE_REVIEW = 'reviews/:id/delete';
 const ADD_REVIEW = '/reviews/new'
@@ -26,6 +26,7 @@ const getReviews = (reviews) => ({
 
 
 export const createReview = (fullReview, spotId) => async (dispatch) => {
+    console.log("CREATING REVIEW")
     const { review, stars } = fullReview;
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
@@ -36,6 +37,7 @@ export const createReview = (fullReview, spotId) => async (dispatch) => {
         }),
     });
     const data = await response.json();
+    console.log("REVIEW HERE :", data)
     return dispatch(addReview(data));
 };
 export const deleteReview = (reviewId) => async dispatch => {
@@ -44,7 +46,9 @@ export const deleteReview = (reviewId) => async dispatch => {
         method: 'DELETE',
     });
     const data = await response.json();
-    return dispatch(removeReview(data.id));
+    if(data){
+    return dispatch(removeReview(reviewId))
+    };
 };
 export const getSpotReviews = (spotId) => async dispatch => {
     console.log("GETTING SPOT REVIEWS")
@@ -58,7 +62,7 @@ export const getSpotReviews = (spotId) => async dispatch => {
     }
 };
 export const getPersonalReviews = () => async dispatch => {
-    const response = await csrfFetch(`/api/reviews`);
+    const response = await csrfFetch(`/api/reviews/current`);
     if (response.ok) {
         const reviews = await response.json();
         console.log("THUNK REVIEWS :", reviews)
@@ -78,7 +82,8 @@ export const updateReview = (fullReview, reviewId) => async (dispatch) => {
         }),
     });
     const data = await response.json();
-    return dispatch(addReview(data));
+    console.log("REVIEW HERE :", data)
+    return dispatch(addReview(data))
 };
 const initialState = {
     reviews: [],
@@ -97,20 +102,22 @@ const reviewReducer = (state = initialState, action) => {
             if (!state[action.review.id]) {
                 newState = {
                     ...state,
-                    [action.review.id]: action.review
                 };
                 const reviewList = newState.reviews.map(id => newState[id]);
                 reviewList.push(action.review);
                 newState.reviews = reviewList;
-
                 return newState;
             }
             return {
                 ...state,
             };
         case REMOVE_REVIEW:
-            const newReviews = state.reviews.filter(review => review.id === action.reviewId)
-            newState = { ...state, reviews: newReviews }
+            console.log ("REMOVING REVIEWS ACTION :",action)
+            const newReviews = state.reviews[0]
+            .filter(review => review.id !== action.reviewId)
+            console.log ("NEW REVIEWS :",newReviews)
+            newState = { ...state, reviews: [newReviews] }
+            console.log("NEWSTATE :",newState)
             return newState;
         default:
             return state;

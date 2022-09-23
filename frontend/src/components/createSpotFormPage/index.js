@@ -37,8 +37,12 @@ function SpotFormPage() {
         }
 
         const spot = await dispatch(spotActions.createSpot(payload))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
         if (spot) {
-            console.log("SPOT :" ,spot)
+            console.log("SPOT :", spot)
             history.push(`/spots/${spot.id}`);
         }
     }

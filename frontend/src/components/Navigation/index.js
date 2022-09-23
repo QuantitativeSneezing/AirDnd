@@ -12,23 +12,27 @@ function Navigation({ isLoaded }) {
     if (sessionUser) {
         sessionLinks = (
             <>
-                <ProfileButton user={sessionUser} />
-                <NavLink to="/spots/new"> Add a spot</NavLink>
+                <div className='profileNav'>
+                    <ProfileButton user={sessionUser} />
+                    <NavLink to="/spots/new" className="link"> Add a spot</NavLink>
+                </div>
             </>
         );
     } else {
         sessionLinks = (
             <>
-                <LoginFormModal />
-                <NavLink to="/signup">Sign Up       </NavLink>
+                <div className='profileNav'>
+                    <LoginFormModal /> &nbsp;
+                    <NavLink to="/signup">Sign Up       </NavLink>
+                </div>
             </>
         );
     }
 
     return (
         <ul>
-            <li>
-                <NavLink exact to="/">Home  </NavLink>
+            <li className='navLinks'>
+                <NavLink exact to="/" className="link">Home  </NavLink>
                 {isLoaded && sessionLinks}
             </li>
         </ul>

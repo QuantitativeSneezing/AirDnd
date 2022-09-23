@@ -1,3 +1,17 @@
-nav{
-    background-color: rgb(45, 226, 230);
+.navLinks{
+display: flex;
+justify-content: space-between;
+}
+.link{
+    text-decoration: none;
+    color:black
+}
+.profileNav{
+    border: 1px grey solid;
+    padding: 10px;
+    border-radius: 50px;
+}
+.profileNav :hover{
+cursor: pointer;
+box-shadow: 1px grey solid;
 }

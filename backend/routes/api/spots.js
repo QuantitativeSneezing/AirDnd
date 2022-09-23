@@ -65,7 +65,7 @@ router.get('/:id/reviews', async (req, res, next) => {
         const spotReviews = await Review.findAll({
             where: { spotId: lookForId }
         })
-        res.json({reviews: spotReviews})
+        res.json({ reviews: spotReviews })
     } else {
         res.status(404)
         res.json({
@@ -91,15 +91,15 @@ router.get('/:id/bookings',
                 spotBookings = await Booking.findAll({
                     where: { spotId: lookForId },
                 })
-                for (let i=0;i<spotBookings.length;i++){
-                    const currentBooking= spotBookings[i];
-                    const addedUser= await User.findOne({
-                        where: {id: currentBooking.userId}
+                for (let i = 0; i < spotBookings.length; i++) {
+                    const currentBooking = spotBookings[i];
+                    const addedUser = await User.findOne({
+                        where: { id: currentBooking.userId }
                     })
-                    currentBooking.user= addedUser
+                    currentBooking.user = addedUser
                 }
             }
-            res.json({bookings: spotBookings})
+            res.json({ bookings: spotBookings })
         } else {
             res.status(404)
             res.json({
@@ -196,7 +196,7 @@ router.post('/:id/images',
                 //error out if unauthorized first
             }
             let { url, preview } = req.body
-            preview= Boolean(preview)
+            preview = Boolean(preview)
             const newSpotImage = await SpotImage.create({ spotId: lookForId, url, preview })
             res.json(newSpotImage)
         } else {
@@ -221,7 +221,7 @@ router.post('/:id/reviews',
             const checkForExistingReview = await Review.findOne({
                 where: { userId: user.id }
             })
-            if (checkForExistingReview) {
+            if (checkForExistingReview && checkForExistingReview.spotID === lookForId) {
                 res.status(403)
                 return res.json({
                     "message": "User already has a review for this spot",
@@ -385,39 +385,41 @@ router.get('/',
         if (page > 1) {
             offset = ((page - 1) * limit);
         }
-            const whereParams = {}
-            if (req.query.minLat) {
-                const minLat = { [Op.gte]: req.query.minLat }
-                whereParams.Lat = minLat
-            }
-            if (req.query.maxLat) {
-                const maxLat = { [Op.lte]: req.query.maxLat }
-                whereParams.Lat = maxLat
-            }
-            if (req.query.minLng) {
-                const minLng = { [Op.gte]: req.query.minLng }
-                whereParams.Lng = minLng
-            }
-            if (req.query.maxLng) {
-                const maxLng = { [Op.lte]: req.query.maxLng }
-                whereParams.Lng = maxLng
-            }
-            if (req.query.minPrice) {
-                const minPrice = { [Op.gte]: req.query.minPrice }
-                whereParams.Price = minPrice
-            }
-            if (req.query.maxPrice) {
-                const maxPrice = { [Op.lte]: req.query.maxPrice }
-                whereParams.Price = maxPrice
-            }
-            const spots = await Spot.findAll({
-                where: whereParams,
-                limit,
-                offset
-
-            })
-            res.json({spots:spots})
+        const whereParams = {}
+        if (req.query.minLat) {
+            const minLat = { [Op.gte]: req.query.minLat }
+            whereParams.Lat = minLat
         }
+        if (req.query.maxLat) {
+            const maxLat = { [Op.lte]: req.query.maxLat }
+            whereParams.Lat = maxLat
+        }
+        if (req.query.minLng) {
+            const minLng = { [Op.gte]: req.query.minLng }
+            whereParams.Lng = minLng
+        }
+        if (req.query.maxLng) {
+            const maxLng = { [Op.lte]: req.query.maxLng }
+            whereParams.Lng = maxLng
+        }
+        if (req.query.minPrice) {
+            const minPrice = { [Op.gte]: req.query.minPrice }
+            whereParams.Price = minPrice
+        }
+        if (req.query.maxPrice) {
+            const maxPrice = { [Op.lte]: req.query.maxPrice }
+            whereParams.Price = maxPrice
+        }
+        const spots = await Spot.findAll({
+            where: whereParams,
+            limit,
+            offset,
+            include: {
+                model: SpotImage
+            }
+        })
+        res.json({ spots: spots })
+    }
 )
 
 router.post('/',
@@ -429,7 +431,7 @@ router.post('/',
         const ownerId = user.id;
         const newSpot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price });
         newSpot.save();
-        console.log ("NEWSPOT FROM BACKEND :", newSpot)
+        console.log("NEWSPOT FROM BACKEND :", newSpot)
         res.json(newSpot)
     })
 
