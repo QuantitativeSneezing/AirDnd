@@ -415,7 +415,7 @@ router.get('/',
             limit,
             offset,
             include: {
-                model: SpotImage
+                model: SpotImage,
             }
         })
         res.json({ spots: spots })
