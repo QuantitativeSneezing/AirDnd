@@ -28,10 +28,14 @@ function ReviewFormPage() {
         setErrors(errors);
     }, [stars, review])
     const updateStars = (e) => setStars(e.target.value);
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         const reviewToSend = { review, stars: Number(stars) }
         const done = dispatch(reviewActions.createReview(reviewToSend, spotId))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
         if (done) {
             console.log("DONE NOW :", done)
             history.push(`/spots/${spotId}`);
