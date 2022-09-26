@@ -44,7 +44,9 @@ function IndividualSpotPage() {
     let reviewItems;
     let buttons;
     let addReviewButton;
-    let notOwned= true;
+    let notOwned = true;
+    let notYourReviews = [];
+    let personalReview;
     let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
@@ -65,11 +67,29 @@ function IndividualSpotPage() {
 
     }
     if (reviews) {
+        if (spot) {
+            reviewItems =
+                <div className='reviewAggregate'>
+                    <div className='reviewContents'>
+                        {
+                            reviews.map(review =>
+
+                                <div key={review.id} className="individualReview">
+
+                                    <div>{review.User.username}</div>
+                                    <div>{review.stars} stars</div>
+                                    <div>{review.review} </div>
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+        }
+
         // if (reviews instanceof Object){
         //     reviews= [reviews]
         // }
-        let notYourReviews = [];
-        let personalReview;
+
 
         if (sessionUser && spot) {
             let reviewSum = 0;
@@ -85,7 +105,7 @@ function IndividualSpotPage() {
                 spot.average = reviewAvg
             }
             if (sessionUser.id === spot.ownerId) {
-                notOwned= false;
+                notOwned = false;
                 buttons =
                     <div>
                         <button onClick={deleteThis} className="optionButton">
@@ -110,7 +130,7 @@ function IndividualSpotPage() {
                             Delete Your Review
                         </button>
                     </div>
-            } else if (notOwned){
+            } else if (notOwned) {
                 addReviewButton =
                     <button onClick={reviewRedirect} className="overrideButton" >
                         Review this spot
@@ -121,23 +141,23 @@ function IndividualSpotPage() {
                     notYourReviews.push(reviews[i])
                 }
             }
-        }
-        reviewItems =
-            <div className='reviewAggregate'>
+            reviewItems =
+                <div className='reviewAggregate'>
 
-                {personalReview}
-                <div className='reviewContents'>
-                    {
-                        notYourReviews.map(review =>
-                            <div key={review.id} className="individualReview">
-                                <div>{review.User.username}</div>
-                                <div>{review.stars} stars</div>
-                                <div>{review.review} </div>
-                            </div>
-                        )
-                    }
+                    {personalReview}
+                    <div className='reviewContents'>
+                        {
+                            notYourReviews.map(review =>
+                                <div key={review.id} className="individualReview">
+                                    <div>{review.User.username}</div>
+                                    <div>{review.stars} stars</div>
+                                    <div>{review.review} </div>
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
+        }
     }
     if (!spot) {
         return null;
