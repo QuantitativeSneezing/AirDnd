@@ -64,7 +64,7 @@ function IndividualSpotPage() {
         if (spot.SpotImages[0]) {
             image = spot.SpotImages[0].url;
         }
-
+        spot.average = "NEW"
     }
     if (reviews) {
         if (spot) {
