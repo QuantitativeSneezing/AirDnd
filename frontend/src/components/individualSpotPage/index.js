@@ -164,6 +164,10 @@ function IndividualSpotPage() {
         return null;
     }
     console.log("WHY IS THIS CHANGING :", reviewAvg)
+    if(Number.isNaN(reviewAvg)){
+        reviewAvg= "New"
+    }
+
     return (
         <div className='notSpotRoot'>
             <div className='container'>

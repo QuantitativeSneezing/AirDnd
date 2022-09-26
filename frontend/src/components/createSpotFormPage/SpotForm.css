@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height:200px;
+    height: 700px;
 }
 .errors{
     font-weight: bold;
@@ -15,6 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 200px;
 }
 .submitButton{
     width: 400px;
