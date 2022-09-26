@@ -151,7 +151,7 @@ function IndividualSpotPage() {
                             notYourReviews.map(review =>
                                 <div key={review.id} className="individualReview">
                                     <div>{review.User.username}</div>
-                                    <div>{review.stars}/5</div>
+                                    <div>{review.stars} stars</div>
                                     <div>{review.review} </div>
                                 </div>
                             )
