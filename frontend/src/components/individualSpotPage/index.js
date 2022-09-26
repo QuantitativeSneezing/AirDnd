@@ -124,6 +124,7 @@ function IndividualSpotPage() {
         }
         let yourReview = reviews.find(review => review.userId == sessionUser.id)
         if (yourReview) {
+            console.log(yourReview)
             personalReview =
                 <div className='individualReview'>
                     <div>{sessionUser.username}</div>

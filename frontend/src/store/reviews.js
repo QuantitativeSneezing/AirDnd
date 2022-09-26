@@ -106,7 +106,7 @@ const reviewReducer = (state = initialState, action) => {
                 };
                 const reviewList = newState.reviews
                 reviewList.push(action.review);
-                newState.reviews = reviewList;
+                newState.reviews[0] = reviewList;
                 return {...newState};
             }
             return {
