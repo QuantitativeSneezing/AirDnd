@@ -112,7 +112,7 @@ function IndividualSpotPage() {
                     </div>
             } else if (notOwned){
                 addReviewButton =
-                    <button onClick={reviewRedirect} >
+                    <button onClick={reviewRedirect} className="overrideButton" >
                         Review this spot
                     </button>
             }

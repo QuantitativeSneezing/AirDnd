@@ -50,8 +50,10 @@ function HomePage() {
                         </div>
                         <div className='location__details'>
                             <div className='title'>
-                                &nbsp;&nbsp; {spot.city}, {spot.state} &nbsp;&nbsp;&nbsp;&nbsp; ★{spot.average}
+                                &nbsp;&nbsp; {spot.city}, {spot.state}
+                                &nbsp;&nbsp;<div>★{spot.average}</div>
                             </div>
+
                             <div className='description'>
                                 &nbsp;&nbsp;&nbsp; {spot.address}
                             </div>

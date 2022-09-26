@@ -24,7 +24,14 @@ module.exports = {
         email: 'ash.ketchum@gmail.com',
         username: 'ashketchum',
         hashedPassword: bcrypt.hashSync('pokemon')
-      }
+      },
+      {
+        firstName: "Rick",
+        lastName: "Sanchez",
+        email: 'user@gmail.com',
+        username: 'PickleRick',
+        hashedPassword: bcrypt.hashSync('superFunny')
+      },
     ], {});
   },
 

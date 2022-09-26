@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [dropped, setDropped] = useState(true)
+    const [dropped, setDropped] = useState(false)
     function goHome() {
         history.push('/')
     }
