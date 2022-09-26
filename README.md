@@ -24,4 +24,4 @@ Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project o
 
 
 **Landing Page:**
-<img src="https://imgur.com/xbJUQkp">
+<img src="https://imgur.com/xbJUQkp.png">
