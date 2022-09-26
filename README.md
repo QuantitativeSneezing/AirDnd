@@ -1,6 +1,6 @@
 # AirDnd
 Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project on its wiki.
-
+**Live site:** [Here](https://auth-me12345.herokuapp.com/)
 # Wiki Links:
 [**Home**](https://github.com/QuantitativeSneezing/Airdnd/wiki)
 
@@ -14,6 +14,9 @@ Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project o
 # Made with:
 [<img src="https://img.shields.io/badge/Javascript-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://www.javascript.com/)
 [<img src="https://img.shields.io/badge/Redux-000000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://redux-toolkit.js.org/)
+[<img src="https://img.shields.io/badge/React-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://reactjs.org/)
+[<img src="https://img.shields.io/badge/Postgres-000000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://www.postgresql.org/)
+[<img src="https://img.shields.io/badge/Express-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://expressjs.com/)
 
 
 <!-- templates for icon links -->
@@ -21,6 +24,7 @@ Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project o
 <!-- [<img src="https://img.shields.io/badge/Javascript-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://www.javascript.com/) -->
 
 
+**Landing Page:**
+<img src="https://imgur.com/xbJUQkp.png">
 
-
-
+Functionality currently includes creating and utilizing new user profiles, locations, and reviewing said locations. All functionality can be tested through the demo login.
