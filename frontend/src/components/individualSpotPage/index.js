@@ -42,6 +42,7 @@ function IndividualSpotPage() {
     const spots = useSelector(state => state.spots.spots)
     let spot;
     let reviewItems;
+    let reviewAvg
     let buttons;
     let addReviewButton;
     let notOwned = true;
@@ -64,10 +65,21 @@ function IndividualSpotPage() {
         if (spot.SpotImages[0]) {
             image = spot.SpotImages[0].url;
         }
-        spot.average = "NEW"
     }
     if (reviews) {
         if (spot) {
+            let reviewSum = 0;
+            for (let j = 0; j < reviews.length; j++) {
+                reviewSum += (reviews[j].stars)
+            }
+            reviewAvg = (Math.round((reviewSum / reviews.length) * 100)) / 100
+            //Airbnb really does put ★ New for listings
+            if (Number.isNaN(reviewAvg)) {
+                spot.average = "New"
+            }
+            else {
+                spot.average = reviewAvg
+            }
             reviewItems =
                 <div className='reviewAggregate'>
                     <div className='reviewContents'>
@@ -92,18 +104,7 @@ function IndividualSpotPage() {
 
 
         if (sessionUser && spot) {
-            let reviewSum = 0;
-            for (let j = 0; j < reviews.length; j++) {
-                reviewSum += (reviews[j].stars)
-            }
-            const reviewAvg = (Math.round((reviewSum / reviews.length) * 100)) / 100
-            //Airbnb really does put ★ New for listings
-            if (Number.isNaN(reviewAvg)) {
-                spot.average = "New"
-            }
-            else {
-                spot.average = reviewAvg
-            }
+
             if (sessionUser.id === spot.ownerId) {
                 notOwned = false;
                 buttons =
@@ -162,26 +163,26 @@ function IndividualSpotPage() {
     if (!spot) {
         return null;
     }
+    console.log("WHY IS THIS CHANGING :", reviewAvg)
     return (
         <div className='notSpotRoot'>
             <div className='container'>
                 {reviews &&
                     (<div className='title'>
                         <div className='bigTitle'>{spot.name}</div>
-                        ★{spot.average}, {reviews.length} reviews
+                        ★{reviewAvg}, {reviews.length} reviews
                     </div>)
                 }
 
                 <img src={image} className="mainImage"></img>
                 <div className='spotInfo'>
-
                 </div>
                 <div className='separator'></div>
                 {buttons}
                 <div className='reviewHeader'>
                     Reviews:
                     {reviews && spot && (<span>
-                        ★{spot.average} • {reviews.length} reviews
+                        ★{reviewAvg} • {reviews.length} reviews
                     </span>
                     )}
                     <div className='reviewItems'>
