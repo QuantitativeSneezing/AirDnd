@@ -42,7 +42,7 @@ function IndividualSpotPage() {
     const spots = useSelector(state => state.spots.spots)
     let spot;
     let reviewItems;
-    let reviewAvg =NaN;
+    let reviewAvg = NaN;
     let buttons;
     let addReviewButton;
     let notOwned = true;
@@ -85,10 +85,10 @@ function IndividualSpotPage() {
                     <div className='reviewContents'>
                         {
                             reviews.map(review =>
-
                                 <div key={review.id} className="individualReview">
-
-                                    <div>{review.User.username}</div>
+                                    {review.User && (
+                                        <div>{review.User.username}</div>
+                                    )}
                                     <div>{review.stars} stars</div>
                                     <div>{review.review} </div>
                                 </div>
@@ -164,8 +164,8 @@ function IndividualSpotPage() {
         return null;
     }
     console.log("WHY IS THIS CHANGING :", reviewAvg)
-    if(Number.isNaN(reviewAvg)){
-        reviewAvg= "New"
+    if (Number.isNaN(reviewAvg)) {
+        reviewAvg = "New"
     }
 
     return (
