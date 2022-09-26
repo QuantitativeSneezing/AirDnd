@@ -63,7 +63,9 @@ router.get('/:id/reviews', async (req, res, next) => {
     });
     if (spot) {
         const spotReviews = await Review.findAll({
-            where: { spotId: lookForId }
+            where: { spotId: lookForId },
+            include :{
+                model: User}
         })
         res.json({ reviews: spotReviews })
     } else {
