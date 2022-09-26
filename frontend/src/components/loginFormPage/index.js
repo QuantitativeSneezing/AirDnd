@@ -34,7 +34,7 @@ function LoginFormPage() {
     return (
         <div className='notLoginRoot'>
             <form onSubmit={handleSubmit} id="login">
-                <div>
+                <div className='errors'>
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}
                 </div>
                 <div className="formItem">
