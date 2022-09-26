@@ -42,7 +42,7 @@ function IndividualSpotPage() {
     const spots = useSelector(state => state.spots.spots)
     let spot;
     let reviewItems;
-    let reviewAvg
+    let reviewAvg =NaN;
     let buttons;
     let addReviewButton;
     let notOwned = true;
