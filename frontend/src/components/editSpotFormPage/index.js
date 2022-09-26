@@ -167,7 +167,7 @@ function EditSpotFormPage() {
                 </div>
 
                 <div className="formItem">
-                    <button type="submit" className="submitButton">Add spot</button>
+                    <button type="submit" className="submitButton">Update spot</button>
                 </div>
             </form>
         </div>
