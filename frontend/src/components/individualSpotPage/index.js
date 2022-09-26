@@ -48,16 +48,14 @@ function IndividualSpotPage() {
     let notOwned = true;
     let notYourReviews = [];
     let personalReview;
+    let reviews;
     let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
+        reviews= spot.reviews.reviews
     }
-    const allReviews = useSelector(state => state.reviews.reviews)
-    let reviews = allReviews[0]
-    if (allReviews[1]) {
-        reviews = [allReviews[1]]
-    }
-    console.log("ALL REVIEWS :", allReviews, "REVIEWS :", reviews)
+
+    console.log( "REVIEWS :", reviews)
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
     console.log("USER :", sessionUser)

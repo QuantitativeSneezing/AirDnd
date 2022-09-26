@@ -71,7 +71,7 @@ function EditReviewFormPage() {
                     </label>
                 </div>
 
-                <button type="submit" disabled={disableSubmit} className="submitButton">Create Review</button>
+                <button type="submit" disabled={disableSubmit} className="submitButton">Edit Review</button>
             </form>
         </div>
     );
