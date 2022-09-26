@@ -38,7 +38,11 @@ function EditSpotFormPage() {
         }
 
         const spot = await dispatch(spotActions.updateSpot(payload, spotId))
-        console.log("SPOT :" ,spot)
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
+        console.log("SPOT :", spot)
         if (spot) {
             history.push(`/spots/${spotId}`);
         }

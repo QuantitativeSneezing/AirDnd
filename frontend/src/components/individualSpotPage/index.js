@@ -28,7 +28,8 @@ function IndividualSpotPage() {
         history.push("/")
     }
     const deleteThisReview = async (reviewId) => {
-        dispatch(reviewActions.deleteReview(reviewId))
+        const deleteResult = await dispatch(reviewActions.deleteReview(reviewId))
+        console.log ("RESULT :",deleteResult);
     }
     const reviewRedirect = () => {
         history.push(`/spots/${spotId}/reviews`)

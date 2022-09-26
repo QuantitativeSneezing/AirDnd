@@ -114,12 +114,17 @@ const reviewReducer = (state = initialState, action) => {
             };
         case REMOVE_REVIEW:
             console.log ("REMOVING REVIEWS ACTION :",action)
-            const newReviews = state.reviews[0]
-            .filter(review => review.id !== action.reviewId)
+            let newReviews= [];
+            const oldReviews= state.reviews[0]
+            for (let i=0;i<oldReviews.length;i++){
+                if(oldReviews[i].id !== action.reviewId){
+                    newReviews.push(oldReviews[i])
+                }
+            }
             console.log ("NEW REVIEWS :",newReviews)
             newState = { ...state, reviews: [newReviews] }
             console.log("NEWSTATE :",newState)
-            return newState;
+            return {...newState};
         default:
             return state;
     }
