@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import * as reviewActions from '../../store/reviews';
 import './EditReviewForm.css'
@@ -11,7 +11,22 @@ function EditReviewFormPage() {
     const [review, setReview] = useState("");
     const [stars, setStars] = useState(1)
     const [errors, setErrors] = useState([]);
-
+    const [validationErrors, setValidationErrors] = useState([]);
+    const [disableSubmit, setDisableSubmit] = useState(true)
+    useEffect(() => {
+        if (validationErrors.length === 0) {
+            setDisableSubmit(false)
+        } else {
+            setDisableSubmit(true)
+        }
+    }, [validationErrors])
+    useEffect(() => {
+        const errors = [];
+        if (!review) {
+            errors.push("Please add text to your review")
+        }
+        setErrors(errors);
+    }, [stars, review])
     const updateStars = (e) => setStars(e.target.value);
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,34 +37,43 @@ function EditReviewFormPage() {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Review
-                <input
-                    type="text"
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Stars
-                <select onChange={updateStars} value={stars}>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </label>
+        <div className="notRoot">
+            <form onSubmit={handleSubmit} className="reviewForm">
+                <div className="errors">
+                    {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                    {
+                        validationErrors.map(error => (
+                            <div key={error}>{error}</div>
+                        ))}
+                </div>
+                <div div className="formItem">
+                    Review
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div div className="formItem">
+                    Stars
+                    <label>
+                        <select onChange={updateStars} value={stars} className="inputField" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </label>
+                </div>
 
-            <button type="submit">
-                Update Review
-            </button>
-        </form>
+                <button type="submit" disabled={disableSubmit} className="submitButton">Create Review</button>
+            </form>
+        </div>
     );
 }
 export default EditReviewFormPage

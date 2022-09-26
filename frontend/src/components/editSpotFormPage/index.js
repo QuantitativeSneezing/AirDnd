@@ -46,96 +46,127 @@ function EditSpotFormPage() {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Address
-                <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                City
-                <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                State
-                <select onChange={updateState} value={state}>
-                    {States.map(state =>
-                        <option key={state}>{state}</option>
-                    )}
-                </select>
-            </label>
-            <label>
-                Country
-                <input
-                    type="text"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                />
-            </label>
-            {/* I am not making a dropdown for every country lol */}
-            <label>
-                Latitude
-                <input
-                    type="number"
-                    step="0.1"
-                    value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Longitude
-                <input
-                    type="number"
-                    step="0.1"
-                    value={lng}
-                    onChange={(e) => setLong(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Name
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Description
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Price
-                <input
-                    type="number"
-                    step="0.1"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Update spot</button>
-        </form>
+        <div className='notRoot'>
+            <form onSubmit={handleSubmit} className="form">
+                <div className="errors">
+                    {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                </div>
+                <div className="formItem">
+                    Address
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    City
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    State
+                    <label>
+                        <select onChange={updateState} value={state} className="inputField">
+                            {States.map(state =>
+                                <option key={state}>{state}</option>
+                            )}
+                        </select>
+                    </label>
+                </div>
+                <div className="formItem">
+                    Country
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            required
+                        />
+                    </label>
+                    {/* I am not making a dropdown for every country lol */}
+                </div>
+                <div className="formItem">
+                    Latitude
+                    <label>
+                        <input
+                            className="inputField"
+                            type="number"
+                            step="0.1"
+                            value={lat}
+                            onChange={(e) => setLat(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    Longitude
+                    <label>
+                        <input
+                            className="inputField"
+                            type="number"
+                            step="0.1"
+                            value={lng}
+                            onChange={(e) => setLong(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    Name
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    Description
+                    <label>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    Price
+                    <label>
+                        <input
+                            className="inputField"
+                            type="number"
+                            step="0.1"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+
+                <div className="formItem">
+                    <button type="submit" className="submitButton">Add spot</button>
+                </div>
+            </form>
+        </div>
     );
 }
 

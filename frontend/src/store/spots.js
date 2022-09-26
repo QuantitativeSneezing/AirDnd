@@ -23,7 +23,18 @@ const getSpots = (spots) => ({
   type: GET_SPOTS,
   spots
 })
-
+export const addSpotPhoto = (spotId, url) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      url,
+      preview: true
+    }),
+  });
+  const data = await response.json();
+  return data;
+}
 
 export const createSpot = (spot) => async (dispatch) => {
   const { address, city, state, country, lat, lng, name, description, price } = spot;
@@ -46,7 +57,7 @@ export const createSpot = (spot) => async (dispatch) => {
   return data;
 };
 export const deleteSpot = (spotId) => async dispatch => {
-  console.log ("TRYING TO DELETE")
+  console.log("TRYING TO DELETE")
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE',
   });
@@ -57,10 +68,15 @@ export const getAllSpots = () => async dispatch => {
   const response = await csrfFetch(`/api/spots`);
   if (response.ok) {
     const spots = await response.json();
-    console.log ("THUNK SPOTS :", spots)
-    console.log ("TRYING TO KEY IN :", spots.spots[0])
+    console.log("THUNK SPOTS :", spots)
+    console.log("TRYING TO KEY IN :", spots.spots[0])
+    for (let i = 0; i < spots.spots.length; i++) {
+      const reviews = await csrfFetch(`/api/spots/${spots.spots[i].id}/reviews`)
+      const retrieved = await reviews.json()
+      spots.spots[i].reviews = retrieved;
+    }
     const result = dispatch(getSpots(spots.spots))
-    console.log ("RESULT OF DISPATCHING :", result)
+    console.log("RESULT OF DISPATCHING :", result)
     return result
   }
 };
@@ -91,7 +107,7 @@ const spotReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case GET_SPOTS:
-      console.log ("GET SPOTS ACTION :", action)
+      console.log("GET SPOTS ACTION :", action)
       return { ...newState, spots: [...action.spots] };
     case GET_ONE_SPOT:
       newState = { ...state, [action.spot.id]: action.spot }

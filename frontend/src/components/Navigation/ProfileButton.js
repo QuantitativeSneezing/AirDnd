@@ -1,49 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+// import React, { useState, useEffect } from "react";
+// import { useDispatch } from 'react-redux';
+// import { useHistory } from "react-router-dom";
+// import * as sessionActions from '../../store/session';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
+// // import './Profile.css'
+// function ProfileButton({ user }) {
+//     const history = useHistory();
+    // const dispatch = useDispatch();
+//     const [showMenu, setShowMenu] = useState(false);
 
-function ProfileButton({ user }) {
-    const dispatch = useDispatch();
-    const [showMenu, setShowMenu] = useState(false);
+//     const openMenu = () => {
+//         if (showMenu) return;
+//         setShowMenu(true);
+//     };
 
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
+//     useEffect(() => {
+//         if (!showMenu) return;
 
-    useEffect(() => {
-        if (!showMenu) return;
+//         const closeMenu = () => {
+//             setShowMenu(false);
+//         };
 
-        const closeMenu = () => {
-            setShowMenu(false);
-        };
+//         document.addEventListener('click', closeMenu);
 
-        document.addEventListener('click', closeMenu);
+//         return () => document.removeEventListener("click", closeMenu);
+//     }, [showMenu]);
 
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
+    // const logout = (e) => {
+    //     e.preventDefault();
+    //     dispatch(sessionActions.logout());
+    // };
+    // const addSpot = () => {
+    //     history.push('/spots/new')
+    // }
+//     return (
+//         <div className="notRoot">
 
-    const logout = (e) => {
-        e.preventDefault();
-        dispatch(sessionActions.logout());
-    };
-
-    return (
-        <>
-            <button onClick={openMenu} className="profile">
-                <i className="fas fa-user-circle" />
-            </button>
-            {showMenu && (
-                <ul className="profile-dropdown">
-                    <li>{user.username}</li>
-                    <li>{user.email}</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
-                    </li>
-                </ul>
-            )}
-        </>
-    );
-}
-
-export default ProfileButton;
+//             <div onClick={openMenu} className="profile">
+                // <FontAwesomeIcon icon={faBars} />
+//             </div>
+            // {showMenu && (
+            //     <div className="profile-dropdown">
+            //         <div>{user.username} user.email}</div>
+            //         <div className="redirector" onClick={addSpot}> Add a spot</div>
+            //         <div>
+            //             <button onClick={logout}>Log Out</button>
+            //         </div>
+            //     </div>
+            // )}
+//         </div>
+//     );
+// }
+// export default ProfileButton;

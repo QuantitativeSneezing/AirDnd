@@ -6,12 +6,14 @@ function LoginFormModal() {
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Log In</button>
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          <LoginFormPage />
-        </Modal>
-      )}
+      <div className='modalRoot'>
+        <div onClick={() => setShowModal(true)} className="redirector">Log In</div>
+        {showModal && (
+          <Modal onClose={() => setShowModal(false)}>
+            <LoginFormPage />
+          </Modal>
+        )}
+      </div>
     </>
   );
 }

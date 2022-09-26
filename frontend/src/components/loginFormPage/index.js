@@ -32,24 +32,28 @@ function LoginFormPage() {
             });
     }
     return (
-        <div>
+        <div className='notLoginRoot'>
             <form onSubmit={handleSubmit} id="login">
                 <div>
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}
                 </div>
-                <label>
+                <div className="formItem">
                     Username or Email
-                    <input
-                        type="text"
-                        value={credential}
-                        onChange={(e) => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <div className='lineBreak'>
                     <label>
-                        Password
                         <input
+                            className="inputField"
+                            type="text"
+                            value={credential}
+                            onChange={(e) => setCredential(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="formItem">
+                    Password
+                    <label>
+                        <input
+                            className="inputField"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -57,9 +61,12 @@ function LoginFormPage() {
                         />
                     </label>
                 </div>
+                <div className='centerButtons'>
                 <button type="submit">Log In</button>
+                <button onClick={demoLogin}>Log in as Demo user</button>
+                </div>
             </form>
-            <button onClick={demoLogin}>Log in as Demo user</button>
+
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import './IndividualSpotPage.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
@@ -10,7 +10,7 @@ function IndividualSpotPage() {
     const history = useHistory();
     const { spotId } = useParams();
     const sessionUser = useSelector(state => state.session.user);
-
+    const [canReview, setCanReview] = useState(true)
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
     }, [dispatch]);
@@ -41,74 +41,134 @@ function IndividualSpotPage() {
 
     const spots = useSelector(state => state.spots.spots)
     let spot;
+    let reviewItems;
+    let buttons;
+    let addReviewButton;
+    let notOwned= true;
+    let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
     }
     const allReviews = useSelector(state => state.reviews.reviews)
     let reviews = allReviews[0]
-    if (allReviews[1]){
-        reviews=[allReviews[1]]
+    if (allReviews[1]) {
+        reviews = [allReviews[1]]
     }
-    console.log("ALL REVIEWS :",allReviews, "REVIEWS :", reviews)
+    console.log("ALL REVIEWS :", allReviews, "REVIEWS :", reviews)
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
-    let reviewItems;
+    console.log("USER :", sessionUser)
+    if (spot) {
+        if (spot.SpotImages[0]) {
+            image = spot.SpotImages[0].url;
+        }
+
+    }
     if (reviews) {
         // if (reviews instanceof Object){
         //     reviews= [reviews]
         // }
-        let notYourReviews= reviews;
-        if (sessionUser){
-            // notYourReviews.filter()
+        let notYourReviews = [];
+        let personalReview;
+
+        if (sessionUser && spot) {
+            let reviewSum = 0;
+            for (let j = 0; j < reviews.length; j++) {
+                reviewSum += (reviews[j].stars)
+            }
+            const reviewAvg = (Math.round((reviewSum / reviews.length) * 100)) / 100
+            //Airbnb really does put ★ New for listings
+            if (Number.isNaN(reviewAvg)) {
+                spot.average = "New"
+            }
+            else {
+                spot.average = reviewAvg
+            }
+            if (sessionUser.id === spot.ownerId) {
+                notOwned= false;
+                buttons =
+                    <div>
+                        <button onClick={deleteThis} className="optionButton">
+                            Delete this spot
+                        </button>
+                        <button onClick={movePage} className="optionButton">
+                            Edit this spot's details
+                        </button>
+                    </div>
+            }
+            let yourReview = reviews.find(review => review.userId == sessionUser.id)
+            if (yourReview) {
+                personalReview =
+                    <div className='individualReview'>
+                        <div>{sessionUser.username}</div>
+                        <div>{yourReview.stars} stars</div>
+                        <div>{yourReview.review} </div>
+                        <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
+                            Edit Your Review
+                        </button>
+                        <button onClick={() => deleteThisReview(yourReview.id)} disabled={false} className="overrideButton"  >
+                            Delete Your Review
+                        </button>
+                    </div>
+            } else if (notOwned){
+                addReviewButton =
+                    <button onClick={reviewRedirect} >
+                        Review this spot
+                    </button>
+            }
+            for (let i = 0; i < reviews.length; i++) {
+                if (reviews[i].userId !== sessionUser.id) {
+                    notYourReviews.push(reviews[i])
+                }
+            }
         }
         reviewItems =
-            <ul>
-                {
-                    reviews.map(review =>
-                        <li key={review.id}>
-                            <div>{review.stars} stars</div>
-                            <div>{review.review} </div>
+            <div className='reviewAggregate'>
 
-                            <button onClick={() => editReviewRedirect(review.id)} disabled={false} >
-                                EDIT THIS REVIEW
-                            </button>
-                            <button onClick={() => deleteThisReview(review.id)} disabled={false} >
-                                DELETE THIS REVIEW
-                            </button>
-                        </li>
-                    )
-                }
-            </ul>
+                {personalReview}
+                <div className='reviewContents'>
+                    {
+                        notYourReviews.map(review =>
+                            <div key={review.id} className="individualReview">
+                                <div>{review.User.username}</div>
+                                <div>{review.stars} stars</div>
+                                <div>{review.review} </div>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
     }
     if (!spot) {
         return null;
     }
     return (
-        <div>
-          <img src=''></img>
-            <ul>
-                <li>
-                    {spotId} IS THE SPOT'S ID
-                </li>
-                <li>
-                    {spot.name} IS THE SPOT'S NAME
-                </li>
-                <li>
-                    IT IS LOCATED IN {spot.city}, {spot.country}
-                </li>
-            </ul>
-            <button onClick={deleteThis}>
-                DELETE THIS SPOT
-            </button>
-            <button onClick={movePage} >
-                EDIT THIS SPOT
-            </button>
-            <div>
-                REVIEWS FOR THIS SPOT:
-                {reviewItems}
-                <button onClick={reviewRedirect} disabled={false} >
-                    ADD YOUR OWN REVIEW
-                </button>
+        <div className='notSpotRoot'>
+            <div className='container'>
+                {reviews &&
+                    (<div className='title'>
+                        <div className='bigTitle'>{spot.name}</div>
+                        ★{spot.average}, {reviews.length} reviews
+                    </div>)
+                }
+
+                <img src={image} className="mainImage"></img>
+                <div className='spotInfo'>
+
+                </div>
+                <div className='separator'></div>
+                {buttons}
+                <div className='reviewHeader'>
+                    Reviews:
+                    {reviews && spot && (<span>
+                        ★{spot.average} • {reviews.length} reviews
+                    </span>
+                    )}
+                    <div className='reviewItems'>
+                        {reviewItems}
+                        {addReviewButton}
+                    </div>
+                </div>
             </div>
         </div>
     );

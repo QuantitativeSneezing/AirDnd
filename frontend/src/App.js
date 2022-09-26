@@ -20,37 +20,51 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} className= "navigator" />
+    <div className='topLevel'>
+      <>
+        <Navigation isLoaded={isLoaded} />
+        {isLoaded && (
+          <Switch>
+            <Route path="/login">
+              <LoginFormModal />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route path="/spots/new">
+              <SpotFormPage />
+            </Route>
+            <Route path="/spots/:spotId/edit">
+              <EditSpotFormPage />
+            </Route>
+            <Route path="/reviews/:reviewId/edit">
+              <EditReviewFormPage />
+            </Route>
+            <Route path="/spots/:spotId/reviews">
+              <ReviewFormPage />
+            </Route>
+            <Route path="/spots/:spotId">
+              <IndividualSpotPage />
+            </Route>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        )}
+      </>
       {isLoaded && (
-        <Switch>
-          <Route path="/login">
-            <LoginFormModal />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path="/spots/new">
-            <SpotFormPage />
-          </Route>
-          <Route path="/spots/:spotId/edit">
-            <EditSpotFormPage />
-          </Route>
-          <Route path="/reviews/:reviewId/edit">
-            <EditReviewFormPage />
-          </Route>
-          <Route path="/spots/:spotId/reviews">
-            <ReviewFormPage />
-          </Route>
-          <Route path="/spots/:spotId">
-            <IndividualSpotPage />
-          </Route>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-        </Switch>
+        <div className='footer'>
+          <div className='footerContent'>
+            <span>
+              Made by Jason Arnold
+            </span>
+            <span>
+              Inspired by Airbnb
+            </span>
+          </div>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
