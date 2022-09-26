@@ -32,10 +32,6 @@ function ReviewFormPage() {
         e.preventDefault();
         const reviewToSend = { review, stars: Number(stars) }
         const done = dispatch(reviewActions.createReview(reviewToSend, spotId))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            });
         if (done) {
             console.log("DONE NOW :", done)
             history.push(`/spots/${spotId}`);
@@ -63,18 +59,18 @@ function ReviewFormPage() {
                         />
                     </label>
                 </div>
-               <div div className="formItem">
-               Stars
-               <label>
-                    <select onChange={updateStars} value={stars} className="inputField" >
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </label>
-               </div>
+                <div div className="formItem">
+                    Stars
+                    <label>
+                        <select onChange={updateStars} value={stars} className="inputField" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </label>
+                </div>
 
                 <button type="submit" disabled={disableSubmit} className="submitButton">Create Review</button>
             </form>

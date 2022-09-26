@@ -40,6 +40,11 @@ function IndividualSpotPage() {
 
 
     const spots = useSelector(state => state.spots.spots)
+    const allReviews = useSelector(state => state.reviews.reviews)
+    let reviews = [];
+    if (allReviews[0]){
+        reviews= allReviews[0]
+    }
     let spot;
     let reviewItems;
     let reviewAvg = NaN;
@@ -48,14 +53,11 @@ function IndividualSpotPage() {
     let notOwned = true;
     let notYourReviews = [];
     let personalReview;
-    let reviews;
     let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
-        reviews= spot.reviews.reviews
     }
-
-    console.log( "REVIEWS :", reviews)
+    console.log("ALL REVIEWS", allReviews, "REVIEWS :", reviews)
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
     console.log("USER :", sessionUser)
@@ -64,8 +66,8 @@ function IndividualSpotPage() {
             image = spot.SpotImages[0].url;
         }
     }
-    if (reviews) {
-        if (spot) {
+    if (spot) {
+        if (reviews) {
             let reviewSum = 0;
             for (let j = 0; j < reviews.length; j++) {
                 reviewSum += (reviews[j].stars)
@@ -73,90 +75,96 @@ function IndividualSpotPage() {
             reviewAvg = (Math.round((reviewSum / reviews.length) * 100)) / 100
             //Airbnb really does put ★ New for listings
             if (Number.isNaN(reviewAvg)) {
-                spot.average = "New"
+                reviewAvg = "New"
             }
             else {
                 spot.average = reviewAvg
             }
-            reviewItems =
-                <div className='reviewAggregate'>
-                    <div className='reviewContents'>
-                        {
-                            reviews.map(review =>
-                                <div key={review.id} className="individualReview">
-                                    {review.User && (
-                                        <div>{review.User.username}</div>
-                                    )}
-                                    <div>{review.stars} stars</div>
-                                    <div>{review.review} </div>
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
+        } else {
+            reviewAvg= "New"
         }
 
-        // if (reviews instanceof Object){
-        //     reviews= [reviews]
-        // }
-
-
-        if (sessionUser && spot) {
-
-            if (sessionUser.id === spot.ownerId) {
-                notOwned = false;
-                buttons =
-                    <div>
-                        <button onClick={deleteThis} className="optionButton">
-                            Delete this spot
-                        </button>
-                        <button onClick={movePage} className="optionButton">
-                            Edit this spot's details
-                        </button>
-                    </div>
-            }
-            let yourReview = reviews.find(review => review.userId == sessionUser.id)
-            if (yourReview) {
-                personalReview =
-                    <div className='individualReview'>
-                        <div>{sessionUser.username}</div>
-                        <div>{yourReview.stars} stars</div>
-                        <div>{yourReview.review} </div>
-                        <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
-                            Edit Your Review
-                        </button>
-                        <button onClick={() => deleteThisReview(yourReview.id)} disabled={false} className="overrideButton"  >
-                            Delete Your Review
-                        </button>
-                    </div>
-            } else if (notOwned) {
-                addReviewButton =
-                    <button onClick={reviewRedirect} className="overrideButton" >
-                        Review this spot
-                    </button>
-            }
-            for (let i = 0; i < reviews.length; i++) {
-                if (reviews[i].userId !== sessionUser.id) {
-                    notYourReviews.push(reviews[i])
-                }
-            }
-            reviewItems =
-                <div className='reviewAggregate'>
-
-                    {personalReview}
-                    <div className='reviewContents'>
-                        {
-                            notYourReviews.map(review =>
-                                <div key={review.id} className="individualReview">
+        reviewItems =
+            <div className='reviewAggregate'>
+                <div className='reviewContents'>
+                    {
+                        reviews.map(review =>
+                            <div key={review.id} className="individualReview">
+                                {review.User && (
                                     <div>{review.User.username}</div>
-                                    <div>{review.stars} stars</div>
-                                    <div>{review.review} </div>
-                                </div>
-                            )
-                        }
-                    </div>
+                                )}
+                                <div>{review.stars} stars</div>
+                                <div>{review.review} </div>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+    }
+
+    // if (reviews instanceof Object){
+    //     reviews= [reviews]
+    // }
+
+
+    if (sessionUser && spot) {
+
+        if (sessionUser.id === spot.ownerId) {
+            notOwned = false;
+            buttons =
+                <div>
+                    <button onClick={deleteThis} className="optionButton">
+                        Delete this spot
+                    </button>
+                    <button onClick={movePage} className="optionButton">
+                        Edit this spot's details
+                    </button>
                 </div>
         }
+        let yourReview = reviews.find(review => review.userId == sessionUser.id)
+        if (yourReview) {
+            personalReview =
+                <div className='individualReview'>
+                    <div>{sessionUser.username}</div>
+                    <div>{yourReview.stars} stars</div>
+                    <div>{yourReview.review} </div>
+                    <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
+                        Edit Your Review
+                    </button>
+                    <button onClick={() => deleteThisReview(yourReview.id)} disabled={false} className="overrideButton"  >
+                        Delete Your Review
+                    </button>
+                </div>
+        } else if (notOwned) {
+            addReviewButton =
+                <button onClick={reviewRedirect} className="overrideButton" >
+                    Review this spot
+                </button>
+        }
+        for (let i = 0; i < reviews.length; i++) {
+            if (reviews[i].userId !== sessionUser.id) {
+                console.log("INDIVIDUAL REVIEW :", reviews[i])
+                notYourReviews.push(reviews[i])
+            }
+            console.log("NOT YOUR REVIEWS :", notYourReviews)
+        }
+        reviewItems =
+            <div className='reviewAggregate'>
+
+                {personalReview}
+                <div className='reviewContents'>
+                    {
+                        notYourReviews.map(review =>
+                            <div key={review.id} className="individualReview">
+                                <div>{review.User.username}</div>
+                                <div>{review.stars} stars</div>
+                                <div>{review.review} </div>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+
     }
     if (!spot) {
         return null;

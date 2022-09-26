@@ -38,7 +38,8 @@ export const createReview = (fullReview, spotId) => async (dispatch) => {
     });
     const data = await response.json();
     console.log("REVIEW HERE :", data)
-    return dispatch(addReview(data));
+    const result = await dispatch(addReview(data));
+    console.log ("rEVIEW ADDING RESULT :",result )
 };
 export const deleteReview = (reviewId) => async dispatch => {
     console.log("TRYING TO DELETE")
@@ -53,6 +54,7 @@ export const deleteReview = (reviewId) => async dispatch => {
 export const getSpotReviews = (spotId) => async dispatch => {
     console.log("GETTING SPOT REVIEWS")
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
+    console.log ("SPOT REVIEW RESPONSE" ,response)
     if (response.ok) {
         const reviews = await response.json();
         console.log("REVIEWS RETRIEVED:", reviews)
@@ -98,15 +100,14 @@ const reviewReducer = (state = initialState, action) => {
             newState = { ...state, [action.review.id]: action.review }
             return newState
         case ADD_REVIEW:
-            // if there is a review already, skip this and go straight to overwriting it
             if (!state[action.review.id]) {
                 newState = {
                     ...state,
                 };
-                const reviewList = newState.reviews.map(id => newState[id]);
+                const reviewList = newState.reviews
                 reviewList.push(action.review);
                 newState.reviews = reviewList;
-                return newState;
+                return {...newState};
             }
             return {
                 ...state,
