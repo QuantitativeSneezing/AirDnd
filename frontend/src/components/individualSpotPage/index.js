@@ -174,7 +174,7 @@ function IndividualSpotPage() {
                 {reviews &&
                     (<div className='title'>
                         <div className='bigTitle'>{spot.name}</div>
-                        ★{reviewAvg}, {reviews.length} reviews
+                        ★{reviewAvg} • {reviews.length} reviews
                     </div>)
                 }
 
@@ -184,7 +184,6 @@ function IndividualSpotPage() {
                 <div className='separator'></div>
                 {buttons}
                 <div className='reviewHeader'>
-                    Reviews:
                     {reviews && spot && (<span>
                         ★{reviewAvg} • {reviews.length} reviews
                     </span>

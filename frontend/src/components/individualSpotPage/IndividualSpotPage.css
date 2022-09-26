@@ -29,7 +29,7 @@
     font-weight: normal;
     display: flex;
     justify-content: center;
-    border: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
     border-radius: 9px;
 }
 .bigTitle{
