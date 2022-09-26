@@ -13,4 +13,14 @@
     padding-top: 10px;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+.noColor{
+    background-color: lightgray;
+}
+.smallSubmitButton{
+    width: 200px;
+    height: 100x;
+    border: 1px solid white;
+    border-radius: 10px;
 }

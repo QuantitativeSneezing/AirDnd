@@ -16,7 +16,7 @@ function Navigation({ isLoaded }) {
     function goHome() {
         history.push('/')
     }
-    const setDropDown= () => {
+    const setDropDown = () => {
         dropped ? setDropped(false) : setDropped(true)
 
 
@@ -36,23 +36,23 @@ function Navigation({ isLoaded }) {
 
     if (sessionUser) {
         sessionLinks =
-        <>
-        <div>
-            <div className='circle' onClick={setDropDown} >
-                <FontAwesomeIcon icon={faBars} />
-                &nbsp;
-                <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
-            </div>
-            {dropped && (
-                <div className="profile-dropdown">
-                    <div>{sessionUser.username}</div>
-                    <div> {sessionUser.email}</div>
-                    <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
-                    <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
+            <>
+                <div>
+                    <div className='circle' onClick={setDropDown} >
+                        <FontAwesomeIcon icon={faBars} />
+                        &nbsp;
+                        <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
+                    </div>
+                    {dropped && (
+                        <div className="profile-dropdown">
+                            <div>{sessionUser.username}</div>
+                            <div> <span className='makeFit'>{sessionUser.email} </span></div>
+                            <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
+                            <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
+                        </div>
+                    )}
                 </div>
-            )}
-        </div>
-    </>
+            </>
 
     } else {
         sessionLinks = (

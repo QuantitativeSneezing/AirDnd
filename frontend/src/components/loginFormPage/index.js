@@ -62,8 +62,12 @@ function LoginFormPage() {
                     </label>
                 </div>
                 <div className='centerButtons'>
-                <button type="submit">Log In</button>
-                <button onClick={demoLogin}>Log in as Demo user</button>
+                    <div>
+                        <button type="submit" className='smallSubmitButton'>Continue</button>
+                    </div>
+                    <div>
+                        <button onClick={demoLogin} className='smallSubmitButton'>Continue as Demo user</button>
+                    </div>
                 </div>
             </form>
 
