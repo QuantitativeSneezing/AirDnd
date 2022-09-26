@@ -23,6 +23,5 @@ Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project o
 <!-- [<img src="https://img.shields.io/badge/Javascript-FF0000?style=for-the-badge&logo=AbletonLive&logoColor=white">](https://www.javascript.com/) -->
 
 
-
-
-
+**Landing Page:**
+<img src="https://imgur.com/xbJUQkp">
