@@ -26,3 +26,5 @@ Welcome to Airdnd, a fantasy themed Airbnb clone. Find more about this project o
 
 **Landing Page:**
 <img src="https://imgur.com/xbJUQkp.png">
+
+Functionality currently includes creating and utilizing new user profiles, locations, and reviewing said locations. All functionality can be tested through the demo login.
