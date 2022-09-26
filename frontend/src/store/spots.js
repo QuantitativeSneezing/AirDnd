@@ -73,6 +73,7 @@ export const getAllSpots = () => async dispatch => {
     for (let i = 0; i < spots.spots.length; i++) {
       const reviews = await csrfFetch(`/api/spots/${spots.spots[i].id}/reviews`)
       const retrieved = await reviews.json()
+      console.log ("RETRIEVED REVIEWS :", retrieved)
       spots.spots[i].reviews = retrieved;
     }
     const result = dispatch(getSpots(spots.spots))
