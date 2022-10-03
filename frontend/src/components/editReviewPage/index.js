@@ -22,8 +22,8 @@ function EditReviewFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const errors = [];
-        if (!review) {
-            errors.push("Please add text to your review")
+        if (review.length < 3){
+            errors.push("Reviews must be at least 3 characters long")
         }
         setErrors(errors);
     }, [stars, review])
@@ -37,7 +37,7 @@ function EditReviewFormPage() {
         }
     }
     return (
-        <div className="notRoot">
+        <div className="notReviewRoot">
             <form onSubmit={handleSubmit} className="reviewForm">
                 <div className="errors">
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}

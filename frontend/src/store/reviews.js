@@ -40,6 +40,7 @@ export const createReview = (fullReview, spotId) => async (dispatch) => {
     console.log("REVIEW HERE :", data)
     const result = await dispatch(addReview(data));
     console.log ("rEVIEW ADDING RESULT :",result )
+    return result
 };
 export const deleteReview = (reviewId) => async dispatch => {
     console.log("TRYING TO DELETE")

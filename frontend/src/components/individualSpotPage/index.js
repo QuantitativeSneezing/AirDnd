@@ -29,7 +29,7 @@ function IndividualSpotPage() {
     }
     const deleteThisReview = async (reviewId) => {
         const deleteResult = await dispatch(reviewActions.deleteReview(reviewId))
-        console.log ("RESULT :",deleteResult);
+        console.log("RESULT :", deleteResult);
     }
     const reviewRedirect = () => {
         history.push(`/spots/${spotId}/reviews`)
@@ -43,8 +43,8 @@ function IndividualSpotPage() {
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
     let reviews = [];
-    if (allReviews[0]){
-        reviews= allReviews[0]
+    if (allReviews[0]) {
+        reviews = allReviews[0]
     }
     let spot;
     let reviewItems;
@@ -82,7 +82,7 @@ function IndividualSpotPage() {
                 spot.average = reviewAvg
             }
         } else {
-            reviewAvg= "New"
+            reviewAvg = "New"
         }
 
         reviewItems =
@@ -92,9 +92,9 @@ function IndividualSpotPage() {
                         reviews.map(review =>
                             <div key={review.id} className="individualReview">
                                 {review.User && (
-                                    <div>{review.User.username}</div>
+                                    <span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{review.User.username}</span>
                                 )}
-                                <div>{review.stars} stars</div>
+                                <div>{review.stars} ★</div>
                                 <div>{review.review} </div>
                             </div>
                         )
@@ -114,10 +114,10 @@ function IndividualSpotPage() {
             notOwned = false;
             buttons =
                 <div>
-                    <button onClick={deleteThis} className="optionButton">
+                    <button onClick={deleteThis} className="ownerButton">
                         Delete this spot
                     </button>
-                    <button onClick={movePage} className="optionButton">
+                    <button onClick={movePage} className="ownerButton">
                         Edit this spot's details
                     </button>
                 </div>
@@ -128,7 +128,7 @@ function IndividualSpotPage() {
             personalReview =
                 <div className='individualReview'>
                     <div>{sessionUser.username}</div>
-                    <div>{yourReview.stars} stars</div>
+                    <div>{yourReview.stars} ★</div>
                     <div>{yourReview.review} </div>
                     <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
                         Edit Your Review
@@ -152,19 +152,16 @@ function IndividualSpotPage() {
         }
         reviewItems =
             <div className='reviewAggregate'>
-
                 {personalReview}
-                <div className='reviewContents'>
-                    {
-                        notYourReviews.map(review =>
-                            <div key={review.id} className="individualReview">
-                                <div>{review.User.username}</div>
-                                <div>{review.stars} stars</div>
-                                <div>{review.review} </div>
-                            </div>
-                        )
-                    }
-                </div>
+                {
+                    notYourReviews.map(review =>
+                        <div key={review.id} className="individualReview">
+                            <div><span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{review.User.username}</span></div>
+                            <div>{review.stars} ★</div>
+                            <div>{review.review} </div>
+                        </div>
+                    )
+                }
             </div>
 
     }
@@ -175,22 +172,21 @@ function IndividualSpotPage() {
     if (Number.isNaN(reviewAvg)) {
         reviewAvg = "New"
     }
-
+    console.log ("PERSONAL REVIEW :", personalReview)
+    let reviewCount
+    reviews[0] ? reviewCount = `${reviews.length} reviews` : reviewCount = "No reviews yet"
     return (
         <div className='notSpotRoot'>
             <div className='container'>
-                {reviews &&
-                    (<div className='title'>
-                        <div className='bigTitle'>{spot.name}</div>
-                        ★{reviewAvg} • {reviews.length} reviews
-                    </div>)
-                }
-
+                <div className='title'>
+                    <div className='bigTitle'>{spot.name}</div>
+                    ★{reviewAvg} • {reviewCount} &nbsp;&nbsp; &nbsp;&nbsp; {spot.country}, {spot.state}, {spot.city}
+                </div>
                 <img src={image} className="mainImage"></img>
                 <div className='spotInfo'>
                 </div>
-                <div className='separator'></div>
                 {buttons}
+                <div className='separator'></div>
                 <div className='reviewHeader'>
                     {reviews && spot && (<span>
                         ★{reviewAvg} • {reviews.length} reviews
@@ -198,6 +194,7 @@ function IndividualSpotPage() {
                     )}
                     <div className='reviewItems'>
                         {reviewItems}
+                        <div className='spacer'></div>
                         {addReviewButton}
                     </div>
                 </div>

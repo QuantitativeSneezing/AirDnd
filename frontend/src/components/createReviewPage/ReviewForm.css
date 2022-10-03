@@ -1,5 +1,5 @@
-.notRoot{
-    padding-top: 100px;
+.notReviewRoot{
+    padding-top: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,6 +35,11 @@
 }
 .inputField{
     padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 9px;
+}
+.inputFieldLarge{
+    padding: 40px;
     border: 1px solid lightgray;
     border-radius: 9px;
 }
