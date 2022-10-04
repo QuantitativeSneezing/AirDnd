@@ -42,6 +42,7 @@ function SpotFormPage() {
         if (!image.endsWith("png") && !image.endsWith("jpg")) {
             currentErrors.push("Please choose a .jpg or .png file to upload")
         }
+
         setValidationErrors(currentErrors);
     }, [image])
     if (!sessionUser) return <Redirect to="/" />;

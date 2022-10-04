@@ -34,10 +34,14 @@ body {
     border-top: lightgray solid 1px;
     font-size: 9px;
 }
-button{
+
+button {
     background-color: rgb(255, 90, 95);
     border-radius: 5px;
-
+    color: white;
     border: 1px solid white;
     border-radius: 10px;
+}
+button:hover {
+    cursor: pointer;
 }

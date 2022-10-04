@@ -50,7 +50,7 @@ function EditSpotFormPage() {
 
 
     return (
-        <div className='notRoot'>
+        <div className='notSpotCreatorRoot'>
             <form onSubmit={handleSubmit} className="form">
                 <div className="errors">
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}

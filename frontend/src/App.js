@@ -18,7 +18,9 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+const redirectToLinkedIn = () =>{
+ window.location.replace("www.linkedin.com")
+}
   return (
     <div className='topLevel'>
       <>
@@ -55,7 +57,7 @@ function App() {
       {isLoaded && (
         <div className='footer'>
           <div className='footerContent'>
-            <span>
+            <span onClick={redirectToLinkedIn}>
               Made by Jason Arnold
             </span>
             <span>

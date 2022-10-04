@@ -14,11 +14,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 .noColor{
     background-color: lightgray;
 }
 .smallSubmitButton{
+    color: white;
     width: 200px;
     height: 100x;
     border: 1px solid white;
