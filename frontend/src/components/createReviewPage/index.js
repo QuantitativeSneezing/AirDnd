@@ -22,7 +22,7 @@ function ReviewFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const errors = [];
-        if (review.length < 3){
+        if (review.length < 3) {
             errors.push("Reviews must be at least 3 characters long")
         }
         setErrors(errors);

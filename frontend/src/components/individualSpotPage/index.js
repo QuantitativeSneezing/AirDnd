@@ -122,7 +122,11 @@ function IndividualSpotPage() {
                     </button>
                 </div>
         }
-        let yourReview = reviews.find(review => review.userId == sessionUser.id)
+        let yourReview
+        console.log ("ALL REVIEWS :", reviews)
+        yourReview = reviews.find(review => review.userId == sessionUser.id)
+        console.log("PERSONAL REVIEW :", yourReview)
+
         if (yourReview) {
             console.log(yourReview)
             personalReview =
@@ -172,7 +176,6 @@ function IndividualSpotPage() {
     if (Number.isNaN(reviewAvg)) {
         reviewAvg = "New"
     }
-    console.log ("PERSONAL REVIEW :", personalReview)
     let reviewCount
     reviews[0] ? reviewCount = `${reviews.length} reviews` : reviewCount = "No reviews yet"
     return (

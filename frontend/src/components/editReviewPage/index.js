@@ -22,7 +22,7 @@ function EditReviewFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const errors = [];
-        if (review.length < 3){
+        if (review.length < 3) {
             errors.push("Reviews must be at least 3 characters long")
         }
         setErrors(errors);
@@ -49,8 +49,8 @@ function EditReviewFormPage() {
                 <div div className="formItem">
                     Review
                     <label>
-                        <input
-                            className="inputField"
+                        <textarea
+                            className="inputFieldLarge"
                             type="text"
                             value={review}
                             onChange={(e) => setReview(e.target.value)}
