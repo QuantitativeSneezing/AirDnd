@@ -42,9 +42,11 @@ function SpotFormPage() {
         if (!image.endsWith("png") && !image.endsWith("jpg")) {
             currentErrors.push("Please choose a .jpg or .png file to upload")
         }
-
+        if (description.length<10){
+            currentErrors.push("Please add a longer description")
+        }
         setValidationErrors(currentErrors);
-    }, [image])
+    }, [image, description])
     if (!sessionUser) return <Redirect to="/" />;
     const handleSubmit = async (e) => {
         e.preventDefault();

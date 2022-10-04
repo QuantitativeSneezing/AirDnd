@@ -19,8 +19,11 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 const redirectToLinkedIn = () =>{
- window.location.replace("www.linkedin.com")
+ window.location.assign("https://www.linkedin.com/in/jason-arnold-539005183/")
 }
+const redirectToGithub = () =>{
+  window.location.assign("https://github.com/QuantitativeSneezing")
+ }
   return (
     <div className='topLevel'>
       <>
@@ -57,8 +60,9 @@ const redirectToLinkedIn = () =>{
       {isLoaded && (
         <div className='footer'>
           <div className='footerContent'>
-            <span onClick={redirectToLinkedIn}>
-              Made by Jason Arnold
+            <span className="myLinks">
+              <span onClick={redirectToLinkedIn} > Made by Jason </span>
+               <span onClick={redirectToGithub}>Arnold</span>
             </span>
             <span>
               Inspired by Airbnb

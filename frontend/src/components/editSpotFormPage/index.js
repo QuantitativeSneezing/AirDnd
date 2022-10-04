@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import * as spotActions from "../../store/spots";
@@ -23,11 +23,20 @@ function EditSpotFormPage() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
+    const [validationErrors, setValidationErrors] = useState([])
     const updateState = (e) => setState(e.target.value);
 
     // this should probably be a dropdown/scroll menu
     const [errors, setErrors] = useState([]);
     const { spotId } = useParams();
+
+    useEffect(() => {
+        const currentErrors = [];
+        if (description.length < 10) {
+            currentErrors.push("Please add a longer description")
+        }
+        setValidationErrors(currentErrors);
+    }, [description])
 
     if (!sessionUser) return <Redirect to="/" />;
     const handleSubmit = async (e) => {
@@ -49,11 +58,16 @@ function EditSpotFormPage() {
     }
 
 
+
     return (
         <div className='notSpotCreatorRoot'>
             <form onSubmit={handleSubmit} className="form">
                 <div className="errors">
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                    {
+                        validationErrors.map(error => (
+                            <div key={error}>{error}</div>
+                        ))}
                 </div>
                 <div className="formItem">
                     Address

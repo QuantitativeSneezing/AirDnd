@@ -45,3 +45,6 @@ button {
 button:hover {
     cursor: pointer;
 }
+.myLinks:hover{
+    cursor: pointer;
+}
