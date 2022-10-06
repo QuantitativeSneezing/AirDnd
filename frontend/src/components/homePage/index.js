@@ -50,15 +50,15 @@ function HomePage() {
                         </div>
                         <div className='location__details'>
                             <div className='title'>
-                                &nbsp;&nbsp; {spot.city}, {spot.state}
-                                &nbsp;&nbsp;<div>★{spot.average}</div>
+                                {spot.city}, {spot.state}
+                                &nbsp;&nbsp;★{spot.average}
                             </div>
 
                             <div className='description'>
-                                &nbsp;&nbsp;&nbsp; {spot.address}
+                               {spot.address}
                             </div>
                             <div className='description'>
-                                &nbsp;&nbsp;&nbsp; <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
+                             <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
                             </div>
                         </div>
                     </div>

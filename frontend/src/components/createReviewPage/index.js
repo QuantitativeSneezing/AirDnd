@@ -22,12 +22,13 @@ function ReviewFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const errors = [];
-        if (review.length < 3) {
+        if (review && review.length < 3) {
             errors.push("Reviews must be at least 3 characters long")
         }
-        setErrors(errors);
+        setValidationErrors(errors);
     }, [stars, review])
     const updateStars = (e) => setStars(e.target.value);
+
     async function handleSubmit(e) {
         e.preventDefault();
         const reviewToSend = { review, stars: Number(stars) }
@@ -76,8 +77,10 @@ function ReviewFormPage() {
                         </select>
                     </label>
                 </div>
+                <div>
+                    <button type="submit" disabled={disableSubmit} className="submitButton">Create Review</button>
 
-                <button type="submit" disabled={disableSubmit} className="submitButton">Create Review</button>
+                </div>
             </form>
         </div>
     );

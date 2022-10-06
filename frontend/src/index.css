@@ -48,3 +48,41 @@ button:hover {
 .myLinks:hover{
     cursor: pointer;
 }
+textarea{
+    resize: none;
+}
+.inputField{
+   width: 400px;
+}
+.submitButton{
+    width: 422px;
+    height: 37px;
+    padding: 10px;
+    padding-right: 0px;
+    border: 1px solid white;
+    border-radius: 9px;
+}
+.inputFieldLarge{
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 9px;
+    padding-top: 5px;
+    overflow: hidden;
+    width: 380px;
+    height:90px;
+}
+.formItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding:8px;
+    border: 1px white solid;
+    border-radius: 10px;
+    width: 400px;
+}
+.inputField{
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 9px;
+}

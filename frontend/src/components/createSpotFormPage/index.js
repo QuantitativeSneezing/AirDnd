@@ -16,7 +16,7 @@ function SpotFormPage() {
     const sessionUser = useSelector((state) => state.session.user);
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
-    const [state, setState] = useState("Alaska");
+    const [state, setState] = useState("");
     const [country, setCountry] = useState("")
     const [lat, setLat] = useState(0)
     const [lng, setLong] = useState(0)
@@ -24,12 +24,15 @@ function SpotFormPage() {
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState("")
-    const updateState = (e) => setState(e.target.value);
 
     // this should probably be a dropdown/scroll menu
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
+
+    const cancelSubmit = () =>{
+        history.push('/')
+    }
     useEffect(() => {
         if (validationErrors.length === 0) {
             setDisableSubmit(false)
@@ -39,12 +42,18 @@ function SpotFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const currentErrors = [];
-        if (!image.endsWith("png") && !image.endsWith("jpg")) {
+        if (image && (!image.endsWith("png") && !image.endsWith("jpg"))) {
             currentErrors.push("Please choose a .jpg or .png file to upload")
         }
-        if (description.length<10){
+        if (description && description.length < 10) {
             currentErrors.push("Please add a longer description")
         }
+        // if (price) {
+        //     console.log("CHECK PRICE IS NUMBER : ", parseFloat(price))
+        //     if (Number.isNaN(parseFloat(price))) {
+        //         currentErrors.push("Price must be a number")
+        //     }
+        // }
         setValidationErrors(currentErrors);
     }, [image, description])
     if (!sessionUser) return <Redirect to="/" />;
@@ -55,15 +64,15 @@ function SpotFormPage() {
             address, city, state, country, lat, lng, name, description, price
         }
 
-        const spot = await dispatch(spotActions.createSpot(payload))
+        const spot = dispatch(spotActions.createSpot(payload))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
         if (spot) {
             console.log("SPOT :", spot)
-            const picture = await dispatch(spotActions.addSpotPhoto(spot.id, image))
-            // console.log(picture)
+            const picture = dispatch(spotActions.addSpotPhoto(spot.id, image))
+            console.log(picture)
             history.push(`/spots/${spot.id}`);
         }
     }
@@ -106,11 +115,13 @@ function SpotFormPage() {
                 <div className="formItem">
                     State
                     <label>
-                        <select onChange={updateState} value={state} className="inputField">
-                            {States.map(state =>
-                                <option key={state}>{state}</option>
-                            )}
-                        </select>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
+                        />
                     </label>
                 </div>
                 <div className="formItem">
@@ -130,10 +141,12 @@ function SpotFormPage() {
                     Latitude
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
                             step="0.1"
                             value={lat}
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             onChange={(e) => setLat(e.target.value)}
                             required
                         />
@@ -143,8 +156,10 @@ function SpotFormPage() {
                     Longitude
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             step="0.1"
                             value={lng}
                             onChange={(e) => setLong(e.target.value)}
@@ -167,11 +182,12 @@ function SpotFormPage() {
                 <div className="formItem">
                     Description
                     <label>
-                        <input
-                            className="inputField"
+                        <textarea
+                            className="inputFieldLarge"
                             type="text"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Please write a brief description of your spot"
                             required
                         />
                     </label>
@@ -180,9 +196,11 @@ function SpotFormPage() {
                     Price
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
-                            step="0.1"
+                            step={0.01}
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             required
@@ -203,6 +221,9 @@ function SpotFormPage() {
                 </div>
                 <div className="formItem">
                     <button type="submit" disabled={disableSubmit} className="submitButton">Add spot</button>
+                </div>
+                <div className="formItem">
+                    <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div>
                 </div>
             </form>
         </div>

@@ -32,6 +32,13 @@ module.exports = {
         username: 'PickleRick',
         hashedPassword: bcrypt.hashSync('superFunny')
       },
+      {
+        firstName: "Lucyna",
+        lastName: "Kushinada",
+        email: 'blank@user.io',
+        username: '3dg3runn3r',
+        hashedPassword: bcrypt.hashSync('correcthorsebatterystaple')
+      },
     ], {});
   },
 

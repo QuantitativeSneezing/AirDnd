@@ -49,7 +49,7 @@ module.exports = {
         "stars": 4
       },
       {
-        "userId": 3,
+        "userId": 1,
         "spotId": 3,
         "review": "Gross!",
         "stars": 2
@@ -127,7 +127,7 @@ module.exports = {
         "stars": 3
       },
       {
-        "userId": 1,
+        "userId": 5,
         "spotId": 7,
         "review": "It was ok...",
         "stars": 2

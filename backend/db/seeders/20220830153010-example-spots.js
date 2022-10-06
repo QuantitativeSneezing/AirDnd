@@ -34,7 +34,7 @@ module.exports = {
       "lat": 37.7645358,
       "lng": -122.4730327,
       "name": "Kingeater's castle",
-      "description": "Lose your mind",
+      "description": "Lose your mind, eat your crew",
       "price": 0
     },
     {
@@ -65,7 +65,7 @@ module.exports = {
       "ownerId": 2,
       "address": "Time Abyss",
       "city": "Beyond the known world",
-      "state": "Mississipi",
+      "state": "Mississippi",
       "country": "USA",
       "lat": 37.7645358,
       "lng": -122.4730327,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import * as reviewActions from '../../store/reviews';
 import './EditReviewForm.css'
@@ -13,6 +13,8 @@ function EditReviewFormPage() {
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
+    const spotIdSaved = useSelector((state) => state.session);
+
     useEffect(() => {
         if (validationErrors.length === 0) {
             setDisableSubmit(false)
@@ -22,16 +24,20 @@ function EditReviewFormPage() {
     }, [validationErrors])
     useEffect(() => {
         const errors = [];
-        if (review.length < 3) {
+        if (review && review.length < 3) {
             errors.push("Reviews must be at least 3 characters long")
         }
-        setErrors(errors);
+        setValidationErrors(errors);
     }, [stars, review])
     const updateStars = (e) => setStars(e.target.value);
     function handleSubmit(e) {
         e.preventDefault();
         const reviewToSend = { review, stars: Number(stars) }
         const done = dispatch(reviewActions.updateReview(reviewToSend, reviewId))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
         if (done) {
             history.goBack();
         }
@@ -70,9 +76,13 @@ function EditReviewFormPage() {
                         </select>
                     </label>
                 </div>
+                <div>
+                    <button type="submit" disabled={disableSubmit} className="submitButton">Edit Review</button>
 
-                <button type="submit" disabled={disableSubmit} className="submitButton">Edit Review</button>
+                </div>
             </form>
+
+
         </div>
     );
 }

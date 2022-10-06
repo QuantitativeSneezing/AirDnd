@@ -16,25 +16,41 @@ function EditSpotFormPage() {
     const sessionUser = useSelector((state) => state.session.user);
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
-    const [state, setState] = useState("Alaska");
+    const [state, setState] = useState("");
     const [country, setCountry] = useState("")
-    const [lat, setLat] = useState(0)
-    const [lng, setLong] = useState(0)
+    const [lat, setLat] = useState(1)
+    const [lng, setLong] = useState(1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
     const [validationErrors, setValidationErrors] = useState([])
-    const updateState = (e) => setState(e.target.value);
 
     // this should probably be a dropdown/scroll menu
     const [errors, setErrors] = useState([]);
     const { spotId } = useParams();
+    const [disableSubmit, setDisableSubmit] = useState(true)
 
+    const cancelSubmit = () =>{
+        history.push(`/spots/${spotId}`);
+    }
+    useEffect(() => {
+        if (validationErrors.length === 0) {
+            setDisableSubmit(false)
+        } else {
+            setDisableSubmit(true)
+        }
+    }, [validationErrors])
     useEffect(() => {
         const currentErrors = [];
-        if (description.length < 10) {
+        if (description && description.length < 10) {
             currentErrors.push("Please add a longer description")
         }
+        // if (price) {
+        //     console.log("CHECK PRICE IS NUMBER : ", parseFloat(price))
+        //     if (Number.isNaN(parseFloat(price))) {
+        //         currentErrors.push("Price must be a number")
+        //     }
+        // }
         setValidationErrors(currentErrors);
     }, [description])
 
@@ -96,11 +112,13 @@ function EditSpotFormPage() {
                 <div className="formItem">
                     State
                     <label>
-                        <select onChange={updateState} value={state} className="inputField">
-                            {States.map(state =>
-                                <option key={state}>{state}</option>
-                            )}
-                        </select>
+                        <input
+                            className="inputField"
+                            type="text"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
+                        />
                     </label>
                 </div>
                 <div className="formItem">
@@ -117,28 +135,30 @@ function EditSpotFormPage() {
                     {/* I am not making a dropdown for every country lol */}
                 </div>
                 <div className="formItem">
-                    Latitude
+                    Latitude (optional)
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
                             step="0.1"
                             value={lat}
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             onChange={(e) => setLat(e.target.value)}
-                            required
                         />
                     </label>
                 </div>
                 <div className="formItem">
-                    Longitude
+                    Longitude (optional)
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             step="0.1"
                             value={lng}
                             onChange={(e) => setLong(e.target.value)}
-                            required
                         />
                     </label>
                 </div>
@@ -157,11 +177,12 @@ function EditSpotFormPage() {
                 <div className="formItem">
                     Description
                     <label>
-                        <input
-                            className="inputField"
+                        <textarea
+                            className="inputFieldLarge"
                             type="text"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Please write a brief description of your spot"
                             required
                         />
                     </label>
@@ -170,18 +191,23 @@ function EditSpotFormPage() {
                     Price
                     <label>
                         <input
-                            className="inputField"
+                            className="inputField noWheel"
                             type="number"
-                            step="0.1"
+                            step={0.01}
+                            onWheel={(e) => e.target.blur()}
+                            //getting rid of those wheels is really annoying lol, had to use this and css to hide them
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             required
                         />
                     </label>
                 </div>
+                <div className="formItem">
+                    <button type="submit" className="submitButton" disabled={disableSubmit}>Update spot</button>
+                </div>
 
                 <div className="formItem">
-                    <button type="submit" className="submitButton">Update spot</button>
+                    <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div>
                 </div>
             </form>
         </div>

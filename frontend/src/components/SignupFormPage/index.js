@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
 import './SignupForm.css'
 function SignupFormPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -16,7 +17,9 @@ function SignupFormPage() {
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) return <Redirect to="/" />;
-
+  const cancelSubmit = (e) => {
+    history.push('/')
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
@@ -42,7 +45,7 @@ function SignupFormPage() {
           <label>
             <input
               className="inputField"
-              type="text"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -119,8 +122,8 @@ function SignupFormPage() {
               required
             />
           </label></div>
-<div className="formItem"> <button type="submit" className="submitButton">Sign Up</button></div>
-
+        <div className="formItem"> <button type="submit" className="submitButton">Sign Up</button></div>
+        <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div>
       </form>
     </div>
   );

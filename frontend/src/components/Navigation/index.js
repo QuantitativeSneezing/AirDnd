@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginFormModal from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -64,8 +64,8 @@ function Navigation({ isLoaded }) {
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropped && (
-                        <div className="smallerProfile-dropdown">
-                            <LoginFormModal />
+                        <div className="smallerProfile-dropdown" >
+                                <LoginFormModal/>
                             <div className='redirector' onClick={addNewUser}>Sign Up</div>
                         </div>
                     )}
@@ -78,6 +78,7 @@ function Navigation({ isLoaded }) {
             <div className='navBar'>
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
+                    <div className='search'> </div>
                     {isLoaded && sessionLinks}
                 </div>
             </div>

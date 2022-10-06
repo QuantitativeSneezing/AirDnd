@@ -15,33 +15,5 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 200px;
-}
-.submitButton{
-    width: 400px;
-    height: 30px;
-    border: 1px solid white;
-    border-radius: 10px;
-}
-.formItem{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    padding:8px;
-    border: 1px white solid;
-    border-radius: 10px;
-    width: 400px;
-}
-.inputField{
-    padding: 10px;
-    border: 1px solid lightgray;
-    border-radius: 9px;
-}
-.inputFieldLarge{
-    padding: 20px;
-    border: 1px solid lightgray;
-    border-radius: 9px;
-    padding-top: 5px;
-    overflow: hidden;
+    height: 220px;
 }

@@ -61,13 +61,11 @@ function LoginFormPage() {
                         />
                     </label>
                 </div>
-                <div className='centerButtons'>
-                    <div>
-                        <button type="submit" className='smallSubmitButton'>Continue</button>
-                    </div>
-                    <div>
-                        <button onClick={demoLogin} className='smallSubmitButton'>Continue as Demo user</button>
-                    </div>
+                <div>
+                    <button type="submit" className='submitButton'>Continue</button>
+                </div>
+                <div>
+                    <button onClick={demoLogin} className='submitButton'>Continue as Demo user</button>
                 </div>
             </form>
 

@@ -123,7 +123,7 @@ function IndividualSpotPage() {
                 </div>
         }
         let yourReview
-        console.log ("ALL REVIEWS :", reviews)
+        console.log("ALL REVIEWS :", reviews)
         yourReview = reviews.find(review => review.userId == sessionUser.id)
         console.log("PERSONAL REVIEW :", yourReview)
 
@@ -131,7 +131,9 @@ function IndividualSpotPage() {
             console.log(yourReview)
             personalReview =
                 <div className='individualReview'>
-                    <div>{sessionUser.username}</div>
+                    <div>
+                        <span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{sessionUser.username} (You)</span>
+                    </div>
                     <div>{yourReview.stars} ★</div>
                     <div>{yourReview.review} </div>
                     <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
@@ -182,13 +184,18 @@ function IndividualSpotPage() {
         <div className='notSpotRoot'>
             <div className='container'>
                 <div className='title'>
+                    {buttons}
                     <div className='bigTitle'>{spot.name}</div>
                     ★{reviewAvg} • {reviewCount} &nbsp;&nbsp; &nbsp;&nbsp; {spot.country}, {spot.state}, {spot.city}
                 </div>
                 <img src={image} className="mainImage"></img>
+                <div className='spotDesc'>
+                    <p>
+                        {spot.description}
+                    </p>
+                </div>
                 <div className='spotInfo'>
                 </div>
-                {buttons}
                 <div className='separator'></div>
                 <div className='reviewHeader'>
                     {reviews && spot && (<span>

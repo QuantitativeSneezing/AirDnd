@@ -12,7 +12,7 @@
 .mainImage {
     height: 800px;
     width: 800px;
-    padding-bottom: 50px;
+    padding-bottom: 2px;
 }
 
 .separator {
@@ -24,7 +24,11 @@
     font-weight: bold;
     color: black;
 }
-
+.spotDesc {
+    display: flex;
+    justify-content: center;
+    color: black
+}
 .reviewHeader {
     font-weight: bold;
     color: black;
@@ -52,12 +56,15 @@
 .title {
     font-size: 15px;
     font-weight: bold;
+
 }
 
 .individualReview {
     padding-top: 10px;
     border: 1px solid white;
     border-radius: 9px;
+    flex-wrap: wrap;
+
 }
 
 .overrideButton {

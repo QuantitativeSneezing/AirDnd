@@ -23,6 +23,8 @@
   position: absolute;
   background-color: white;
   padding: 10px;
+  border: 1px solid white;
+  border-radius: 9px;
 }
 
 .redirector {
@@ -38,32 +40,4 @@
 .errors{
   font-weight: bold;
   color: red;
-}
-.reviewForm{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 200px;
-}
-.submitButton{
-  width: 400px;
-  height: 30px;
-  border: 1px solid white;
-  border-radius: 10px;
-}
-.formItem{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding:8px;
-  border: 1px white solid;
-  border-radius: 10px;
-  width: 400px;
-}
-.inputField{
-  padding: 10px;
-  border: 1px solid lightgray;
-  border-radius: 9px;
 }
