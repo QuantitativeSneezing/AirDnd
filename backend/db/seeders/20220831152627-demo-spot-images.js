@@ -15,6 +15,11 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 3,
+        url: 'https://static.wikia.nocookie.net/lovecraft/images/6/6e/Innsmouth_%28Internet%29.jpg',
+        preview: true
+      },
+      {
         spotId: 4,
         url: 'https://static.wikia.nocookie.net/yugioh/images/a/a6/Kaiba_Craft_3.jpg',
         preview: true
@@ -42,17 +47,17 @@ module.exports = {
       },
       {
         spotId: 8,
-        url:  'https://static.wikia.nocookie.net/lotr/images/d/d3/Helm%27s_Deep_-_TtT.png',
+        url: 'https://static.wikia.nocookie.net/lotr/images/d/d3/Helm%27s_Deep_-_TtT.png',
         preview: true
       },
       {
         spotId: 9,
-        url:  'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5d/Woodland_Mansion.png',
+        url: 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5d/Woodland_Mansion.png',
         preview: true
       },
       {
         spotId: 11,
-        url:  'https://upload.wikimedia.org/wikipedia/commons/b/b2/Cover_Corp_horizontal_logo_1.png',
+        url: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Cover_Corp_horizontal_logo_1.png',
         preview: true
       },
     ])
@@ -66,8 +71,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete('SpotImages', {
-      spotId: { [Op.in]: [1] }
-    }, {});
+    await queryInterface.bulkDelete('SpotImages', {});
   }
 };

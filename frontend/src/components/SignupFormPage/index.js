@@ -84,7 +84,6 @@ function SignupFormPage() {
         <div className="formItem">
           Confirm Password
           <label>
-
             <input
               className="inputField"
               type="password"
