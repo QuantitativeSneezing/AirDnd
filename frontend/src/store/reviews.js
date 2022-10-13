@@ -39,7 +39,7 @@ export const createReview = (fullReview, spotId) => async (dispatch) => {
     const data = await response.json();
     console.log("REVIEW HERE :", data)
     const result = await dispatch(addReview(data));
-    console.log ("rEVIEW ADDING RESULT :",result )
+    console.log("rEVIEW ADDING RESULT :", result)
     return result
 };
 export const deleteReview = (reviewId) => async dispatch => {
@@ -48,14 +48,14 @@ export const deleteReview = (reviewId) => async dispatch => {
         method: 'DELETE',
     });
     const data = await response.json();
-    if(data){
-    return dispatch(removeReview(reviewId))
+    if (data) {
+        return dispatch(removeReview(reviewId))
     };
 };
 export const getSpotReviews = (spotId) => async dispatch => {
     console.log("GETTING SPOT REVIEWS")
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-    console.log ("SPOT REVIEW RESPONSE" ,response)
+    console.log("SPOT REVIEW RESPONSE", response)
     if (response.ok) {
         const reviews = await response.json();
         console.log("REVIEWS RETRIEVED:", reviews)
@@ -93,41 +93,36 @@ const initialState = {
 }
 const reviewReducer = (state = initialState, action) => {
     let newState;
+    let reviewObj;
     switch (action.type) {
         case GET_SPOT_REVIEWS:
             // return { ...newState, reviews: [...action.reviews] };
-            return { ...state, reviews: [action.reviews] }
+            console.log("GET SPOT REVIEWS ACTION :", action.reviews)
+            reviewObj = {}
+            for (let i = 0; i < action.reviews.length; i++) {
+                const key = action.reviews[i].id
+                reviewObj[key] = action.reviews[i]
+            }
+            console.log("NEW OBJECT :", reviewObj)
+            return { ...state, reviews: reviewObj }
         case GET_USER_REVIEWS:
             newState = { ...state, [action.review.id]: action.review }
             return newState
         case ADD_REVIEW:
-            if (!state[action.review.id]) {
-                newState = {
-                    ...state,
-                };
-                const reviewList = [...newState.reviews[0]]
-                console.log ("ADD REVIEW ACTION :", action.review)
-                reviewList.push(action.review);
-                console.log ("NEW REVIEWLIST :", reviewList)
-                newState.reviews[0]= reviewList;
-                return {...newState};
-            }
-            return {
-                ...state,
-            };
+            newState= {...state}
+            const newId= action.review.id;
+            console.log ("ID FOR REVIEW TO BE ADDED :", newId)
+            newState.reviews[newId]= action.review
+            return newState
         case REMOVE_REVIEW:
-            console.log ("REMOVING REVIEWS ACTION :",action)
-            let newReviews= [];
-            const oldReviews= state.reviews[0]
-            for (let i=0;i<oldReviews.length;i++){
-                if(oldReviews[i].id !== action.reviewId){
-                    newReviews.push(oldReviews[i])
-                }
-            }
-            console.log ("NEW REVIEWS :",newReviews)
-            newState = { ...state, reviews: [newReviews] }
-            console.log("NEWSTATE :",newState)
-            return {...newState};
+            newState= {...state}
+            const id= action.reviewId
+            console.log ("REVIEW ID TO BE DELETED :", action.reviewId)
+            console.log ("NEWSTATE REVIEWS :", newState.reviews)
+            console.log ("REVIEW TO BE DELETED :", newState.reviews[id])
+            delete newState.reviews[id]
+            console.log("UPDATED NEWSTATE REVIEWS :", newState.reviews)
+            return {...newState}
         default:
             return state;
     }

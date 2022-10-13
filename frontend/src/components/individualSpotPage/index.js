@@ -43,8 +43,8 @@ function IndividualSpotPage() {
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
     let reviews = [];
-    if (allReviews[0]) {
-        reviews = allReviews[0]
+    if (allReviews) {
+        reviews = Object.values(allReviews)
     }
     let spot;
     let reviewItems;
@@ -184,11 +184,12 @@ function IndividualSpotPage() {
         <div className='notSpotRoot'>
             <div className='container'>
                 <div className='title'>
-                    {buttons}
+
                     <div className='bigTitle'>{spot.name}</div>
                     ★{reviewAvg} • {reviewCount} &nbsp;&nbsp; &nbsp;&nbsp; {spot.country}, {spot.state}, {spot.city}
                 </div>
                 <img src={image} className="mainImage"></img>
+                {buttons}
                 <div className='spotDesc'>
                     <p>
                         {spot.description}

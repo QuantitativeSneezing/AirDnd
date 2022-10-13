@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 32px;
   padding-top: 100px;
-  max-width: 1600px;
+  max-width: 1800px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -21,7 +21,7 @@
   align-self: center;
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
-  width: 1800px;
+  width: 1600px;
 }
 
 .locations__location {
@@ -29,10 +29,10 @@
   border-radius: 30px;
   box-sizing: border-box;
   font-weight: bold;
-  height: 265px;
+  height: 300.8px;
   margin: 0 2px 16px;
   margin-bottom: 0px;
-  max-width: 265px;
+  max-width: 285.75px;
   padding: 4px 8px;
   position: relative;
   color: black;
@@ -65,8 +65,8 @@
 }
 
 .image__wrapper {
-  width: 265px;
-  height: 265px;
+  width: 300.8px;
+  height: 285.75px;
   border-radius: 10px;
 }
 

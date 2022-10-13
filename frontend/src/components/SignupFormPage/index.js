@@ -34,7 +34,7 @@ function SignupFormPage() {
   };
 
   return (
-    <div className="notRoot">
+    <div className="signUpRoot">
       <form onSubmit={handleSubmit}>
         <div className="errors">
           {errors.map((error, idx) => <div key={idx} className="error">{error}</div>)}
@@ -122,7 +122,7 @@ function SignupFormPage() {
             />
           </label></div>
         <div className="formItem"> <button type="submit" className="submitButton">Sign Up</button></div>
-        <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div>
+        {/* <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div> */}
       </form>
     </div>
   );

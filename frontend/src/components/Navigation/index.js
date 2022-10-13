@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginFormModal from '../../context';
+import { SignupFormModal } from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import * as sessionActions from '../../store/session';
@@ -46,7 +47,6 @@ function Navigation({ isLoaded }) {
                     {dropped && (
                         <div className="profile-dropdown">
                             <div>{sessionUser.username}</div>
-                            <div> <span className='makeFit'>{sessionUser.email} </span></div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
                             <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
                         </div>
@@ -66,7 +66,9 @@ function Navigation({ isLoaded }) {
                     {dropped && (
                         <div className="smallerProfile-dropdown" >
                                 <LoginFormModal/>
-                            <div className='redirector' onClick={addNewUser}>Sign Up</div>
+                            {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
+                             */}
+                             <SignupFormModal />
                         </div>
                     )}
                 </div>

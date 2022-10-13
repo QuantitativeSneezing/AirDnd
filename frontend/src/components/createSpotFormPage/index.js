@@ -79,7 +79,7 @@ function SpotFormPage() {
 
 
     return (
-        <div className='notSpotCreatorRoot'>
+        <div className='SpotCreatorRoot'>
             <form onSubmit={handleSubmit} className="form">
                 <div className="errors">
                     {errors.map((error, idx) => <div key={idx}>{error}</div>)}
