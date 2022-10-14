@@ -58,7 +58,7 @@ function HomePage() {
                                {spot.address}
                             </div>
                             <div className='description'>
-                             <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
+                             <span style={{ fontWeight: 'bold', fontSize: "16 px", color: "black"}} > ${spot.price}</span> night
                             </div>
                         </div>
                     </div>
