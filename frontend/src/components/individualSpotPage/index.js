@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from '../../store/reviews'
-
+import BookingFormPage from '../bookingForm';
 function IndividualSpotPage() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -210,6 +210,7 @@ function IndividualSpotPage() {
                     </div>
                 </div>
             </div>
+            <BookingFormPage />
         </div>
     );
 }

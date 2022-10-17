@@ -19,3 +19,4 @@ return (
     </div>
 )
 }
+export default BookingFormPage
