@@ -24,11 +24,11 @@ function IndividualSpotPage() {
     }
 
     const deleteThis = async () => {
-        await dispatch(spotActions.deleteSpot(spotId))
+        dispatch(spotActions.deleteSpot(spotId))
         history.push("/")
     }
     const deleteThisReview = async (reviewId) => {
-        const deleteResult = await dispatch(reviewActions.deleteReview(reviewId))
+        const deleteResult = dispatch(reviewActions.deleteReview(reviewId))
         console.log("RESULT :", deleteResult);
     }
     const reviewRedirect = () => {
@@ -38,7 +38,9 @@ function IndividualSpotPage() {
         // console.log("THIS IS BEING PASSED TO THE REDIRECT :",reviewId)
         history.push(`/reviews/${reviewId}/edit`)
     }
-
+    const bookingRedirect = () => {
+        history.push(`/spots/${spotId}/bookings`)
+    }
 
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
@@ -210,7 +212,19 @@ function IndividualSpotPage() {
                     </div>
                 </div>
             </div>
-            <BookingFormPage />
+            <div className="preBookingInfo">
+                <div className='preBookFirstLine'>
+                    <span className="preBookTop">
+                        <span className="price">${spot.price}
+                        </span>  night
+                    </span>
+                    {reviews && spot && (<span>
+                        ★{reviewAvg} • {reviews.length} reviews
+                    </span>
+                    )}</div>
+                <button onClick={bookingRedirect} className='submitButton'> Book this spot</button>
+            </div>
+
         </div>
     );
 }

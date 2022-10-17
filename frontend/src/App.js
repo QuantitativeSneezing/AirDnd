@@ -11,7 +11,7 @@ import ReviewFormPage from './components/createReviewPage';
 import EditReviewFormPage from './components/editReviewPage';
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
-
+import BookingFormPage from './components/bookingForm';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,6 +47,9 @@ const redirectToGithub = () =>{
             </Route>
             <Route path="/spots/:spotId/reviews">
               <ReviewFormPage />
+            </Route>
+            <Route path= "/spots/:spotId/bookings">
+              <BookingFormPage />
             </Route>
             <Route path="/spots/:spotId">
               <IndividualSpotPage />

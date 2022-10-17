@@ -14,7 +14,8 @@ function EditReviewFormPage() {
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
     const spotIdSaved = useSelector((state) => state.session);
-
+    const spots = useSelector(state => state.spots.spots)
+    // const spot = spots.find(spot=> spot.id = spotId)
     useEffect(() => {
         if (validationErrors.length === 0) {
             setDisableSubmit(false)

@@ -88,3 +88,12 @@
 /* .ownerButton:hover{
 
 } */
+.preBookTop{
+ color:gray;
+ font-size: smaller;
+}
+.preBookFirstLine{
+    display: flex;
+    justify-content: space-around;
+    width: 300px;
+}
