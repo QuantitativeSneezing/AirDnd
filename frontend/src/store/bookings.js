@@ -43,7 +43,7 @@ export const getPersonalBookings = (userId) => async dispatch => {
     if (response.ok) {
         const bookings = await response.json();
         console.log("BOOKINGS RETRIEVED:", bookings)
-        const result = dispatch(getBookings(bookings.bookings))
+        const result = dispatch(getBookings(bookings.userBookings))
         console.log("RESULT OF DISPATCHING TO BOOKINGS :", result)
         return result
     }
@@ -59,8 +59,9 @@ export const addSpotBooking = ({ startDate, endDate, spotId }) => async dispatch
     });
     const data = await response.json();
     console.log("BOOKING HERE :", data)
-    const result = await dispatch(addBooking(data));
-
+    const result = dispatch(addBooking(data));
+    console.log("BOOKING ADDING RESULT :", result)
+    return result
 }
 export const deleteSpotBooking = (bookingId) => async dispatch => {
     console.log("TRYING TO DELETE")
@@ -90,7 +91,7 @@ const bookingReducer = (state = initialState, action) => {
             console.log("NEW OBJECT :", bookingObj)
             return { ...state, bookings: bookingObj }
         case GET_USER_BOOKINGS:
-            console.log("GET SPOT BOOKINGS ACTION :", action.bookings)
+          console.log("GET SPOT BOOKINGS ACTION :", action.bookings)
             bookingObj = {}
             for (let i = 0; i < action.bookings.length; i++) {
                 const key = action.bookings[i].id

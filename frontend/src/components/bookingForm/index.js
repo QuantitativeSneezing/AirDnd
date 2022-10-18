@@ -9,14 +9,12 @@ function BookingFormPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
-    const [review, setReview] = useState("");
-    const [stars, setStars] = useState(1)
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
     // const sessionUser = useSelector(state => state.session.user);
     const [nights, setNights] = useState(1)
-    const [startDate, setStartDate]= useState ("")
+    const [startDate, setStartDate] = useState("")
     const updateNights = (e) => setNights(e.target.value);
     const spots = useSelector(state => state.spots.spots)
     const bookings = useSelector(state => state.bookings)
@@ -34,11 +32,11 @@ function BookingFormPage() {
 
     useEffect(() => {
         const errors = [];
-        if (review && review.length < 3) {
-            errors.push("Reviews must be at least 3 characters long")
+        if (false) {
+            errors.push("Should not happen")
         }
         setValidationErrors(errors);
-    }, [stars, review])
+    }, [])
 
     useEffect(() => {
         dispatch(bookingActions.getSpotBookings(spotId))
@@ -46,7 +44,7 @@ function BookingFormPage() {
 
 
     console.log("BOOKINGS IN STATE :", bookings)
-    const spot = spots.find(spot => spot.id = spotId)
+    const spot = spots.find(spot => spot.id == spotId)
     async function handleSubmit(e) {
         e.preventDefault();
         const bookingToSend = {
@@ -54,14 +52,17 @@ function BookingFormPage() {
             endDate: "2024-01-01 00:00:00",
             spotId,
         }
-        const done = dispatch(bookingActions.addSpotBooking(bookingToSend))
+        const booking = await dispatch(bookingActions.addSpotBooking(bookingToSend))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors([data.errors]);
                 console.log("ERRORS RETURNED :", data.errors)
             });
-        console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", done)
-        history.push(`spots/${spotId}`)
+        console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", booking)
+        if (booking) {
+            console.log("NO ERROR DETECTED AT FIRST")
+            history.push(`spots/${spotId}`)
+        }
     }
     if (!spot) {
         return (
@@ -84,7 +85,8 @@ function BookingFormPage() {
                     <div className="bookingformTop"><span className="price">${spot.price}</span>  night</div>
                 </div>
                 <div div className="formItem">
-                    Nights
+                    CALENDAR GOES HERE
+                    (TEMPORARY NIGHT COUNT)
                     <label>
                         <select onChange={updateNights} value={nights} className="inputField" >
                             <option>1</option>

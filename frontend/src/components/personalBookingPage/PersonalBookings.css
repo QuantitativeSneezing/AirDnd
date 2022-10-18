@@ -1,0 +1,11 @@
+.personalRoot{
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    height: 1000px
+}
+.wideBookings{
+    display: grid;
+    width: 1000px;
+   grid-template-columns: 50% 50%;
+}

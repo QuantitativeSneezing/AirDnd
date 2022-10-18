@@ -35,7 +35,7 @@ function Navigation({ isLoaded }) {
     };
     let sessionLinks;
     const checkBookings = () => {
-        console.log("WILL BOOKING REDIRECT")
+       history.push('/bookings/personal')
     }
     if (sessionUser) {
         sessionLinks =

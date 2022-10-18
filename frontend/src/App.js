@@ -12,6 +12,7 @@ import EditReviewFormPage from './components/editReviewPage';
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
 import BookingFormPage from './components/bookingForm';
+import PersonalBookingpage from './components/personalBookingPage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -53,6 +54,9 @@ const redirectToGithub = () =>{
             </Route>
             <Route path="/spots/:spotId">
               <IndividualSpotPage />
+            </Route>
+            <Route path="/bookings/personal">
+              <PersonalBookingpage />
             </Route>
             <Route exact path="/">
               <HomePage />
