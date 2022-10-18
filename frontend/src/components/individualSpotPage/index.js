@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from '../../store/reviews'
-
+import * as bookingActions from '../../store/bookings'
 function IndividualSpotPage() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -17,6 +17,10 @@ function IndividualSpotPage() {
 
     useEffect(() => {
         dispatch(reviewActions.getSpotReviews(spotId))
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(bookingActions.getSpotBookings(spotId))
     }, [dispatch]);
 
     const movePage = () => {
@@ -46,6 +50,13 @@ function IndividualSpotPage() {
     }
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
+    const bookings= useSelector(state=> state.bookings.bookings)
+    console.log ("BOOKINGS RETRIEVED :", bookings)
+    let bookingItems
+    if (bookings){
+        bookingItems= Object.values(bookings)
+    }
+    console.log ("BOOKINGITEMS :", bookingItems)
     let reviews = [];
     if (allReviews) {
         reviews = Object.values(allReviews)
@@ -146,7 +157,8 @@ function IndividualSpotPage() {
         } else if (!notOwned) {
             bookingOptions =
                 <div>
-                    <button onClick={checkOwnedBookings} className="submitButton" > Check your bookings for this spot</button>
+                    Bookings for this spot :
+                    {bookingItems.map(booking => <div>1 Guest, from {booking.startDate.slice(0,10)} to {booking.endDate.slice(0,10)} </div>)}
                 </div>
         }
         let yourReview
