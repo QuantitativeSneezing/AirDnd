@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import * as bookingActions from '../../store/bookings';
+import * as spotActions from "../../store/spots";
 import './BookingForm.css'
 
-function BookingFormPage({ }) {
+function BookingFormPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -13,6 +14,12 @@ function BookingFormPage({ }) {
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
+    // const sessionUser = useSelector(state => state.session.user);
+    const [nights, setNights] = useState(1)
+    const [startDate, setStartDate]= useState ("")
+    const updateNights = (e) => setNights(e.target.value);
+    const spots = useSelector(state => state.spots.spots)
+    const bookings = useSelector(state => state.bookings)
     useEffect(() => {
         if (validationErrors.length === 0) {
             setDisableSubmit(false)
@@ -20,6 +27,10 @@ function BookingFormPage({ }) {
             setDisableSubmit(true)
         }
     }, [validationErrors])
+
+    useEffect(() => {
+        dispatch(spotActions.getAllSpots());
+    }, [dispatch]);
 
     useEffect(() => {
         const errors = [];
@@ -33,19 +44,31 @@ function BookingFormPage({ }) {
         dispatch(bookingActions.getSpotBookings(spotId))
     }, [dispatch]);
 
-    const [nights, setNights] = useState(1)
-    const updateNights = (e) => setNights(e.target.value);
-    const spots = useSelector(state => state.spots.spots)
-    const bookings = useSelector(state => state.bookings)
-    console.log ("BOOKINGS IN STATE :", bookings)
+
+    console.log("BOOKINGS IN STATE :", bookings)
     const spot = spots.find(spot => spot.id = spotId)
     async function handleSubmit(e) {
         e.preventDefault();
+        const bookingToSend = {
+            startDate: `2023-01-01 00:00:00`,
+            endDate: "2024-01-01 00:00:00",
+            spotId,
+        }
+        const done = dispatch(bookingActions.addSpotBooking(bookingToSend))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors([data.errors]);
+                console.log("ERRORS RETURNED :", data.errors)
+            });
+        console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", done)
         history.push(`spots/${spotId}`)
     }
     if (!spot) {
-        return null;
+        return (
+            null
+        )
     }
+    console.log("ERROR ARRAY :", errors)
     return (
         <div className="bookingRoot">
             <form onSubmit={handleSubmit} className="reviewForm">

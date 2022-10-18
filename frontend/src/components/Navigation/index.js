@@ -34,7 +34,9 @@ function Navigation({ isLoaded }) {
         dispatch(sessionActions.logout());
     };
     let sessionLinks;
-
+    const checkBookings = () => {
+        console.log("WILL BOOKING REDIRECT")
+    }
     if (sessionUser) {
         sessionLinks =
             <>
@@ -49,6 +51,7 @@ function Navigation({ isLoaded }) {
                             <div>{sessionUser.username}</div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
                             <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
+                            <div className='redirector' onClick={checkBookings}><span className='centerRedirector'>Trips</span></div>
                         </div>
                     )}
                 </div>
@@ -66,10 +69,10 @@ function Navigation({ isLoaded }) {
 
                     {dropped && (
                         <div className="smallerProfile-dropdown" >
-                                <LoginFormModal/>
+                            <LoginFormModal />
                             {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
                              */}
-                             <SignupFormModal />
+                            <SignupFormModal />
                         </div>
                     )}
                 </div>
