@@ -87,9 +87,8 @@ router.get('/:id/bookings',
         if (spot) {
             let spotBookings = await Booking.findAll({
                 where: { spotId: lookForId },
-                // attributes: ["spotId", "startDate", "endDate"]
+                attributes: ["spotId", "startDate", "endDate"]
             })
-            console.log("SPOT BOOKINGS IN API :", spotBookings)
             if (spot.ownerId === user.id) {
                 spotBookings = await Booking.findAll({
                     where: { spotId: lookForId },

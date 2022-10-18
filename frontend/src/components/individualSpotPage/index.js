@@ -41,7 +41,9 @@ function IndividualSpotPage() {
     const bookingRedirect = () => {
         history.push(`/spots/${spotId}/bookings`)
     }
-
+    const checkOwnedBookings = () => {
+        console.log("WILL REDIRECT")
+    }
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
     let reviews = [];
@@ -53,9 +55,11 @@ function IndividualSpotPage() {
     let reviewAvg = NaN;
     let buttons;
     let addReviewButton;
+    let bookingOptions;
     let notOwned = true;
     let notYourReviews = [];
     let personalReview;
+
     let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
@@ -124,6 +128,27 @@ function IndividualSpotPage() {
                     </button>
                 </div>
         }
+        if (notOwned) {
+            bookingOptions =
+                (<div className="preBookingInfo">
+                    <div className='preBookFirstLine'>
+                        <span className="preBookTop">
+                            <span className="price">${spot.price}
+                            </span>  night
+                        </span>
+                        {reviews && spot && (<span>
+                            ★{reviewAvg} • {reviews.length} reviews
+                        </span>
+                        )}</div>
+                        <div className='spacer'></div>
+                    <button onClick={bookingRedirect} className='submitButton'> Book this spot</button>
+                </div>)
+        } else if (!notOwned) {
+            bookingOptions =
+                <div>
+                    <button onClick={checkOwnedBookings} className="submitButton" > Check your bookings for this spot</button>
+                </div>
+        }
         let yourReview
         console.log("ALL REVIEWS :", reviews)
         yourReview = reviews.find(review => review.userId == sessionUser.id)
@@ -146,10 +171,10 @@ function IndividualSpotPage() {
                     </button>
                 </div>
         } else if (notOwned) {
-            addReviewButton =
+            addReviewButton = (
                 <button onClick={reviewRedirect} className="overrideButton" >
                     Review this spot
-                </button>
+                </button>)
         }
         for (let i = 0; i < reviews.length; i++) {
             if (reviews[i].userId !== sessionUser.id) {
@@ -212,17 +237,8 @@ function IndividualSpotPage() {
                     </div>
                 </div>
             </div>
-            <div className="preBookingInfo">
-                <div className='preBookFirstLine'>
-                    <span className="preBookTop">
-                        <span className="price">${spot.price}
-                        </span>  night
-                    </span>
-                    {reviews && spot && (<span>
-                        ★{reviewAvg} • {reviews.length} reviews
-                    </span>
-                    )}</div>
-                <button onClick={bookingRedirect} className='submitButton'> Book this spot</button>
+            <div className='bookings'>
+                {sessionUser && bookingOptions}
             </div>
 
         </div>
