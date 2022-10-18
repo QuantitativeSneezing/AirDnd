@@ -62,6 +62,7 @@ export const deleteSpot = (spotId) => async dispatch => {
     method: 'DELETE',
   });
   const data = await response.json();
+  console.log("DELETING :", data)
   return dispatch(removeSpot(data.id));
 };
 export const getAllSpots = () => async dispatch => {

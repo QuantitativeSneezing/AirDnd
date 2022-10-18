@@ -110,3 +110,12 @@
 .makeFit{
 font-size: 100%;
 }
+.search{
+    border: 1px white solid;
+    border-radius: 24px;
+    display: hidden;
+}
+.searchContainer{
+    /* border: 1px lightgray solid; */
+    border-radius: 20px;
+}

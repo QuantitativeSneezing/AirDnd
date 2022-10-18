@@ -84,7 +84,7 @@ function Navigation({ isLoaded }) {
             <div className='navBar'>
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
-                    <div className='search'>THIS IS A SEARCH BAR </div>
+                    <div className='searchContainer'><textarea placeholder="Search for a spot"></textarea> </div>
                     {isLoaded && sessionLinks}
                 </div>
             </div>

@@ -64,7 +64,7 @@ function SpotFormPage() {
             address, city, state, country, lat, lng, name, description, price
         }
 
-        const spot = dispatch(spotActions.createSpot(payload))
+        const spot = await dispatch(spotActions.createSpot(payload))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
