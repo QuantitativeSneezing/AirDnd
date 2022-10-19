@@ -82,7 +82,8 @@ export const getAllSpots = () => async dispatch => {
   }
 };
 export const getSomeSpots = (params) => async dispatch => {
-  const response = await csrfFetch(`/api/spots`);
+  console.log("SEARCH PARAMS :", params)
+  const response = await csrfFetch(`/api/spots${params}`);
   if (response.ok) {
     const spots = await response.json();
     console.log("THUNK SPOTS :", spots)

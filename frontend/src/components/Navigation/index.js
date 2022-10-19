@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
     const dispatch = useDispatch();
-
+    const [params, setParams] = useState("")
     const [dropped, setDropped] = useState(false)
     function goHome() {
         history.push('/')
@@ -22,7 +22,10 @@ function Navigation({ isLoaded }) {
 
 
     }
-
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log(params)
+    }
     const addSpot = () => {
         history.push('/spots/new')
     }
@@ -35,7 +38,7 @@ function Navigation({ isLoaded }) {
     };
     let sessionLinks;
     const checkBookings = () => {
-       history.push('/bookings/personal')
+        history.push('/bookings/personal')
     }
     if (sessionUser) {
         sessionLinks =
@@ -84,7 +87,17 @@ function Navigation({ isLoaded }) {
             <div className='navBar'>
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
-                    <div className='searchContainer'><textarea placeholder="Search for a spot"></textarea> </div>
+                    <form className='search' onSubmit={handleSearch} >
+                        <div className='searchContainer'>
+                            <textarea
+                                placeholder="Search for a spot"
+                                type="text"
+                                value={params}
+                                onChange={(e) => setParams(e.target.value)}
+                            ></textarea>
+                        </div>
+                        <button className='overrideButton'> Search</button>
+                    </form>
                     {isLoaded && sessionLinks}
                 </div>
             </div>

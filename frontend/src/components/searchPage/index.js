@@ -1,16 +1,23 @@
 
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
 import Carousel from '../carousel';
 // "https://img.pokemondb.net/artwork/avif/rayquaza-mega.avif"
 
+// function useQuery() {
+//     const { search } = useLocation();
+
+//     return React.useMemo(() => new URLSearchParams(search), [search]);
+//   }
 function SearchPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const items= useLocation().search;
+    console.log ("SEARCH PARAMETERS :", items)
     useEffect(() => {
-        dispatch(spotActions.getSomeSpots());
+        dispatch(spotActions.getSomeSpots(items));
     }, [dispatch]);
 
     const spots = useSelector(state => state.spots.spots)
