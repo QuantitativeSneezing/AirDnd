@@ -74,7 +74,10 @@
     flex-wrap: wrap;
 }
 .individualReviewText{
-    flex-wrap: wrap;;
+    width: 400px;
+    display: block;
+    flex-wrap: wrap;
+    word-break: break-all;
 }
 .overrideButton {
     height: 45px;
