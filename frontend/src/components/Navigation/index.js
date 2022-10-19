@@ -6,13 +6,14 @@ import { SignupFormModal } from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import * as sessionActions from '../../store/session';
+import SearchBar from '../searchBar';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
     const dispatch = useDispatch();
-    const [params, setParams] = useState("")
+    // const [params, setParams] = useState("")
     const [dropped, setDropped] = useState(false)
     function goHome() {
         history.push('/')
@@ -22,16 +23,15 @@ function Navigation({ isLoaded }) {
 
 
     }
-    const handleSearch = (e) => {
-        e.preventDefault();
-        console.log(params)
-    }
+    // const handleSearch = (e) => {
+
+    // }
     const addSpot = () => {
         history.push('/spots/new')
     }
-    const addNewUser = () => {
-        history.push('/signup')
-    }
+    // const addNewUser = () => {
+    //     history.push('/signup')
+    // }
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
@@ -73,8 +73,7 @@ function Navigation({ isLoaded }) {
                     {dropped && (
                         <div className="smallerProfile-dropdown" >
                             <LoginFormModal />
-                            {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
-                             */}
+                            <SearchBar />
                             <SignupFormModal />
                         </div>
                     )}
@@ -87,17 +86,7 @@ function Navigation({ isLoaded }) {
             <div className='navBar'>
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
-                    <form className='search' onSubmit={handleSearch} >
-                        <div className='searchContainer'>
-                            <textarea
-                                placeholder="Search for a spot"
-                                type="text"
-                                value={params}
-                                onChange={(e) => setParams(e.target.value)}
-                            ></textarea>
-                        </div>
-                        <button className='overrideButton'> Search</button>
-                    </form>
+
                     {isLoaded && sessionLinks}
                 </div>
             </div>
