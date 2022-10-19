@@ -8,12 +8,19 @@
     height: 100%;
     padding-bottom: 100px;
 }
-
+.mainImage {
+    height: 400px;
+    width: 800px;
+    padding-bottom: 2px;
+    object-fit: contain;
+}
+@media screen and (min-width: 1250px) {
 .mainImage {
     height: 800px;
     width: 1200px;
     padding-bottom: 2px;
     object-fit: contain;
+}
 }
 
 .separator {
