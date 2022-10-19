@@ -164,7 +164,7 @@ function IndividualSpotPage() {
                         <div key={review.id} className="individualReview">
                             <div><span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{review.User.username}</span></div>
                             <div>{review.stars} ★</div>
-                            <div>{review.review} </div>
+                            <div className='individualReviewText'>{review.review} </div>
                         </div>
                     )
                 }

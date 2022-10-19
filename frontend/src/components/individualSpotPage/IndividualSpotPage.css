@@ -72,9 +72,10 @@
     border: 1px solid white;
     border-radius: 9px;
     flex-wrap: wrap;
-
 }
-
+.individualReviewText{
+    flex-wrap: wrap;;
+}
 .overrideButton {
     height: 45px;
     width: 100px;
