@@ -48,6 +48,9 @@ function SpotFormPage() {
         if (description && description.length < 10) {
             currentErrors.push("Please add a longer description")
         }
+        if (description&& description.length >254){
+            currentErrors.push("Please shorten your description")
+        }
         // if (price) {
         //     console.log("CHECK PRICE IS NUMBER : ", parseFloat(price))
         //     if (Number.isNaN(parseFloat(price))) {
