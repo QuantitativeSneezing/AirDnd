@@ -13,18 +13,20 @@ import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
 import BookingFormPage from './components/bookingForm';
 import PersonalBookingpage from './components/personalBookingPage';
+import SearchPage from './components/searchPage';
+import NotFoundPage from './components/notFoundPage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-const redirectToLinkedIn = () =>{
- window.location.assign("https://www.linkedin.com/in/jason-arnold-539005183/")
-}
-const redirectToGithub = () =>{
-  window.location.assign("https://github.com/QuantitativeSneezing")
- }
+  const redirectToLinkedIn = () => {
+    window.location.assign("https://www.linkedin.com/in/jason-arnold-539005183/")
+  }
+  const redirectToGithub = () => {
+    window.location.assign("https://github.com/QuantitativeSneezing")
+  }
   return (
     <div className='topLevel'>
       <>
@@ -49,7 +51,7 @@ const redirectToGithub = () =>{
             <Route path="/spots/:spotId/reviews">
               <ReviewFormPage />
             </Route>
-            <Route path= "/spots/:spotId/bookings">
+            <Route path="/spots/:spotId/bookings">
               <BookingFormPage />
             </Route>
             <Route path="/spots/:spotId">
@@ -58,8 +60,14 @@ const redirectToGithub = () =>{
             <Route path="/bookings/personal">
               <PersonalBookingpage />
             </Route>
+            <Route path="/search">
+              <SearchPage />
+            </Route>
             <Route exact path="/">
               <HomePage />
+            </Route>
+            <Route>
+              <NotFoundPage />
             </Route>
           </Switch>
         )}
@@ -69,7 +77,7 @@ const redirectToGithub = () =>{
           <div className='footerContent'>
             <span className="myLinks">
               <span onClick={redirectToLinkedIn} > Made by Jason </span>
-               <span onClick={redirectToGithub}>Arnold</span>
+              <span onClick={redirectToGithub}>Arnold</span>
             </span>
             <span>
               Inspired by Airbnb
