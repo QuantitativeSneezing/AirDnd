@@ -67,7 +67,7 @@ export const getSpotReviews = (spotId) => async dispatch => {
 export const getPersonalReviews = () => async dispatch => {
     console.log("getting personal reviews")
     const response = await csrfFetch(`/api/reviews/current`);
-    console.log ("personal reviews response :",response )
+    console.log("personal reviews response :", response)
     if (response.ok) {
         const reviews = await response.json();
         console.log("THUNK REVIEWS :", reviews)
@@ -117,20 +117,30 @@ const reviewReducer = (state = initialState, action) => {
             console.log("NEW OBJECT :", reviewObj)
             return { ...state, reviews: reviewObj }
         case ADD_REVIEW:
-            newState= {...state}
-            const newId= action.review.id;
-            console.log ("ID FOR REVIEW TO BE ADDED :", newId)
-            newState.reviews[newId]= action.review
+            newState = { ...state }
+            const newId = action.review.id;
+            console.log("ID FOR REVIEW TO BE ADDED :", newId)
+            newState.reviews[newId] = action.review
             return newState
         case REMOVE_REVIEW:
-            newState= {...state}
-            const id= action.reviewId
-            console.log ("REVIEW ID TO BE DELETED :", action.reviewId)
-            console.log ("NEWSTATE REVIEWS :", newState.reviews)
-            console.log ("REVIEW TO BE DELETED :", newState.reviews[id])
-            delete newState.reviews[id]
+            newState = { ...state }
+            const id = action.reviewId
+            console.log("REVIEW ID TO BE DELETED :", action.reviewId)
+            console.log("NEWSTATE REVIEWS :", newState.reviews)
+            console.log("REVIEW TO BE DELETED :", newState.reviews[id])
+            const reviewArr = Object.values(newState.reviews)
+            console.log("arr is :", reviewArr)
+            reviewObj = {}
+            for (let i = 0; i < reviewArr.length; i++) {
+                if (!(reviewArr[i].id == action.reviewId)) {
+                    const key = reviewArr[i].id
+                    reviewObj[key] = reviewArr[i]
+                }
+            }
+            newState.reviews= reviewObj;
+            // delete newState.reviews[id]
             console.log("UPDATED NEWSTATE REVIEWS :", newState.reviews)
-            return {...newState}
+            return { ...newState }
         default:
             return state;
     }
