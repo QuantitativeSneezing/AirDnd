@@ -415,8 +415,18 @@ router.get('/',
         if (req.query.name){
             const name= {[Op.like]: `%${req.query.name}%`}
             whereParams.name= name
-            limit= undefined;
-
+        }
+        if (req.query.city){
+            const city= {[Op.like]: `%${req.query.city}%`}
+            whereParams.city= city
+        }
+        if (req.query.state){
+            const state= {[Op.like]: `%${req.query.state}%`}
+            whereParams.state= state
+        }
+        if (req.query.country){
+            const country= {[Op.like]: `%${req.query.country}%`}
+            whereParams.country= country
         }
         const spots = await Spot.findAll({
             where: whereParams,
