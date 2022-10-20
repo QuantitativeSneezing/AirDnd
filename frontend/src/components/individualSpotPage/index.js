@@ -63,7 +63,7 @@ function IndividualSpotPage() {
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
     console.log("USER :", sessionUser)
-    if (!isLoaded){
+    if (!loaded){
         return null
     }
     if (spot) {

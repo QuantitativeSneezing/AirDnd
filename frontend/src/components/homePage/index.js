@@ -1,5 +1,5 @@
 import './HomePage.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
