@@ -10,13 +10,14 @@ function IndividualSpotPage() {
     const history = useHistory();
     const { spotId } = useParams();
     const sessionUser = useSelector(state => state.session.user);
-    const [canReview, setCanReview] = useState(true)
+    const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
     }, [dispatch]);
 
     useEffect(() => {
         dispatch(reviewActions.getSpotReviews(spotId))
+        setLoaded(true)
     }, [dispatch]);
 
     const movePage = () => {
@@ -62,6 +63,9 @@ function IndividualSpotPage() {
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
     console.log("USER :", sessionUser)
+    if (!isLoaded){
+        return null
+    }
     if (spot) {
         if (spot.SpotImages[0]) {
             image = spot.SpotImages[0].url;
