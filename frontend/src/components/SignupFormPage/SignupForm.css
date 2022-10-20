@@ -3,7 +3,7 @@
     display: inline;
 }
 .centerButtons{
-    padding-top: 10px;
+    padding-top: 5px;
     display: flex;
     justify-content: center;
 }

@@ -14,12 +14,12 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
     // const [params, setParams] = useState("")
-    const [dropped, setDropped] = useState(false)
+    const [dropdown, setDropdown] = useState(false)
     function goHome() {
         history.push('/')
     }
     const setDropDown = () => {
-        dropped ? setDropped(false) : setDropped(true)
+        dropdown ? setDropdown(false) : setDropdown(true)
 
 
     }
@@ -49,7 +49,7 @@ function Navigation({ isLoaded }) {
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
-                    {dropped && (
+                    {dropdown && (
                         <div className="profile-dropdown">
                             <div>{sessionUser.username}</div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
@@ -69,8 +69,7 @@ function Navigation({ isLoaded }) {
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
-
-                    {dropped && (
+                    {dropdown && (
                         <div className="smallerProfile-dropdown" >
                             <LoginFormModal />
                             <SearchBar />

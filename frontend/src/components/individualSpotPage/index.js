@@ -174,7 +174,7 @@ function IndividualSpotPage() {
                         <span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{sessionUser.username} (You)</span>
                     </div>
                     <div>{yourReview.stars} ★</div>
-                    <div>{yourReview.review} </div>
+                    <p className='individualReviewText'>{yourReview.review} </p>
                     <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
                         Edit Your Review
                     </button>
@@ -203,7 +203,7 @@ function IndividualSpotPage() {
                         <div key={review.id} className="individualReview">
                             <div><span style={{ fontWeight: 'bold', fontSize: "16 px" }}>{review.User.username}</span></div>
                             <div>{review.stars} ★</div>
-                            <div>{review.review} </div>
+                            <div className='individualReviewText'>{review.review} </div>
                         </div>
                     )
                 }

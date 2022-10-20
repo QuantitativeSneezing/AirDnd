@@ -48,6 +48,9 @@ function SpotFormPage() {
         if (description && description.length < 10) {
             currentErrors.push("Please add a longer description")
         }
+        if (description&& description.length >254){
+            currentErrors.push("Please shorten your description")
+        }
         // if (price) {
         //     console.log("CHECK PRICE IS NUMBER : ", parseFloat(price))
         //     if (Number.isNaN(parseFloat(price))) {
@@ -71,8 +74,9 @@ function SpotFormPage() {
             });
         if (spot) {
             console.log("SPOT :", spot)
-            const picture = dispatch(spotActions.addSpotPhoto(spot.id, image))
+            const picture = await dispatch(spotActions.addSpotPhoto(spot.id, image))
             console.log(picture)
+            console.log (spot.id)
             history.push(`/spots/${spot.id}`);
         }
     }
