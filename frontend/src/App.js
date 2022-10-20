@@ -9,6 +9,10 @@ import EditSpotFormPage from './components/editSpotFormPage';
 import HomePage from './components/homePage';
 import ReviewFormPage from './components/createReviewPage';
 import EditReviewFormPage from './components/editReviewPage';
+import BookingFormPage from './components/bookingFormPage'
+import NotFoundPage from './components/notFoundPage'
+import PersonalBookingPage from './components/personalBookingPage'
+import SearchPage from './components/searchPage'
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -57,7 +61,7 @@ function App() {
               <IndividualSpotPage />
             </Route>
             <Route path="/bookings/personal">
-              <PersonalBookingpage />
+              <PersonalBookingPage />
             </Route>
             <Route path="/search">
               <SearchPage />

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import * as bookingActions from '../../store/bookings';
 import * as spotActions from "../../store/spots";
 import './PersonalBookings.css'
-function PersonalBookingpage() {
+function PersonalBookingPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
@@ -64,4 +64,4 @@ function PersonalBookingpage() {
     )
 }
 
-export default PersonalBookingpage
+export default PersonalBookingPage
