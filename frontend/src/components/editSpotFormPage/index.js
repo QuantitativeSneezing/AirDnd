@@ -3,34 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import * as spotActions from "../../store/spots";
 import './EditPage.css'
-//this is basically the same as the add spot honestly
-const States = ["Alaska", "Alabama", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
-    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
-    "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Missouri", "Montana", "Nebraska", "Nevada",
-    "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "South Carolina", "Tennessee",
-    "Texas", "Utah", "Vermont", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
-// I did actually type these all out, don't want to run afoul of copy/paste rules lol
 function EditSpotFormPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { spotId } = useParams();
     const sessionUser = useSelector((state) => state.session.user);
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("")
-    const [lat, setLat] = useState(1)
-    const [lng, setLong] = useState(1)
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState(0)
+    const spots = useSelector(state => state.spots.spots)
+    let spot;
+    if (spots[0]) {
+        spot = spots.find(spot => spot.id == spotId)
+    }
+    console.log("SPOT FOR PREPOPULATE :", spot)
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [country, setCountry] = useState(spot.country)
+    const [lat, setLat] = useState(spot.lat)
+    const [lng, setLong] = useState(spot.lng)
+    const [name, setName] = useState(spot.name)
+    const [description, setDescription] = useState(spot.description)
+    const [price, setPrice] = useState(spot.price)
     const [validationErrors, setValidationErrors] = useState([])
 
     // this should probably be a dropdown/scroll menu
     const [errors, setErrors] = useState([]);
-    const { spotId } = useParams();
     const [disableSubmit, setDisableSubmit] = useState(true)
 
-    const cancelSubmit = () =>{
+    const cancelSubmit = () => {
         history.push(`/spots/${spotId}`);
     }
     useEffect(() => {
@@ -44,6 +43,9 @@ function EditSpotFormPage() {
         const currentErrors = [];
         if (description && description.length < 10) {
             currentErrors.push("Please add a longer description")
+        }
+        if (description && description.length > 254) {
+            currentErrors.push("Please shorten your description")
         }
         // if (price) {
         //     console.log("CHECK PRICE IS NUMBER : ", parseFloat(price))

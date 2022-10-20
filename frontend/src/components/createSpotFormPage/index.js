@@ -67,15 +67,16 @@ function SpotFormPage() {
             address, city, state, country, lat, lng, name, description, price
         }
 
-        const spot = dispatch(spotActions.createSpot(payload))
+        const spot = await dispatch(spotActions.createSpot(payload))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
         if (spot) {
             console.log("SPOT :", spot)
-            const picture = dispatch(spotActions.addSpotPhoto(spot.id, image))
+            const picture = await dispatch(spotActions.addSpotPhoto(spot.id, image))
             console.log(picture)
+            console.log (spot.id)
             history.push(`/spots/${spot.id}`);
         }
     }

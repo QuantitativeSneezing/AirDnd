@@ -65,11 +65,13 @@ export const getSpotReviews = (spotId) => async dispatch => {
     }
 };
 export const getPersonalReviews = () => async dispatch => {
+    console.log("getting personal reviews")
     const response = await csrfFetch(`/api/reviews/current`);
+    console.log ("personal reviews response :",response )
     if (response.ok) {
         const reviews = await response.json();
         console.log("THUNK REVIEWS :", reviews)
-        const result = dispatch(getUserReviews(reviews.reviews))
+        const result = dispatch(getUserReviews(reviews.userReviews))
         console.log("RESULT OF DISPATCHING REVIEWS:", result)
 
     }
@@ -106,8 +108,14 @@ const reviewReducer = (state = initialState, action) => {
             console.log("NEW OBJECT :", reviewObj)
             return { ...state, reviews: reviewObj }
         case GET_USER_REVIEWS:
-            newState = { ...state, [action.review.id]: action.review }
-            return newState
+            console.log("GET USER REVIEWS ACTION :", action.reviews)
+            reviewObj = {}
+            for (let i = 0; i < action.reviews.length; i++) {
+                const key = action.reviews[i].id
+                reviewObj[key] = action.reviews[i]
+            }
+            console.log("NEW OBJECT :", reviewObj)
+            return { ...state, reviews: reviewObj }
         case ADD_REVIEW:
             newState= {...state}
             const newId= action.review.id;
