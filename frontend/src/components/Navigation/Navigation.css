@@ -46,7 +46,9 @@
     transition: all .5s ease-out;
     z-index: 20000;
 }
-
+.hidden {
+    display:none
+}
 .circle:hover {
     cursor: pointer;
     box-shadow: 0px 1px 1px lightgray, -1px 3px 3px lightgray, 1px 1px 1px lightgray;

@@ -1,21 +1,30 @@
 import './HomePage.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
+import { useDropdown } from '../../context/DropdownContext';
 import Carousel from '../carousel';
+
 // "https://img.pokemondb.net/artwork/avif/rayquaza-mega.avif"
 
 function HomePage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { setDropdown } = useDropdown();
+    const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
+        setLoaded(true);
+        setDropdown(false)
     }, [dispatch]);
 
     const spots = useSelector(state => state.spots.spots)
     if (!spots[0]) {
         return null;
+    }
+    if (!loaded) {
+        return null
     }
     for (let i = 0; i < spots.length; i++) {
         const spot = spots[i]
