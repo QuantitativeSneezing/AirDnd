@@ -15,7 +15,7 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const { dropdown, setDropdown } = useDropdown();
+    const { dropdown, setDropdown, sessionLinksClass} = useDropdown();
     function goHome() {
 
         history.push('/')
@@ -38,12 +38,15 @@ function Navigation({ isLoaded }) {
         dispatch(sessionActions.logout());
     };
     let sessionLinks;
+    // const hideeClass= () =>{
+    //     sessionLinksClass= "hidden"
+    // }
 
     if (sessionUser) {
         sessionLinks =
             <>
                 <div>
-                    <div className='circle' onClick={setDropDown} >
+                    <div className={sessionLinksClass} onClick={setDropDown} >
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
@@ -62,14 +65,14 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <div>
-                    <div className="circle" onClick={setDropDown}>
+                    <div className={sessionLinksClass} onClick={setDropDown}>
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropdown && (
                         <div className="smallerProfile-dropdown" >
-                            <LoginFormModal />
+                            <LoginFormModal  />
                             {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
                              */}
                             <SignupFormModal />

@@ -3,28 +3,35 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
-
+import { useDropdown } from '../../context/DropdownContext';
 // "https://img.pokemondb.net/artwork/avif/rayquaza-mega.avif"
 
 function HomePage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { setDropdown } = useDropdown();
+    const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
+        setLoaded(true);
+        setDropdown(false)
     }, [dispatch]);
 
     const spots = useSelector(state => state.spots.spots)
     if (!spots[0]) {
         return null;
     }
+    if (!loaded) {
+        return null
+    }
     for (let i = 0; i < spots.length; i++) {
-        const spot= spots[i]
+        const spot = spots[i]
         let reviews = spot.reviews.reviews
         let reviewSum = 0;
         for (let j = 0; j < reviews.length; j++) {
             reviewSum += (reviews[j].stars)
         }
-        const reviewAvg = (Math.round((reviewSum / reviews.length)*100))/100
+        const reviewAvg = (Math.round((reviewSum / reviews.length) * 100)) / 100
         //Airbnb really does put ★ New for listings
         if (Number.isNaN(reviewAvg)) {
             spots[i].average = "New"
@@ -34,8 +41,8 @@ function HomePage() {
         }
         // console.log ("LOOP SPOT :",spot)
         spot.displayImage = 'https://i.imgur.com/g24gIGL.png'
-        if (spot.SpotImages[0]){
-            spot.displayImage=`${spot.SpotImages[0].url}`
+        if (spot.SpotImages[0]) {
+            spot.displayImage = `${spot.SpotImages[0].url}`
         }
     }
     return (
@@ -55,10 +62,10 @@ function HomePage() {
                             </div>
 
                             <div className='description'>
-                               {spot.address}
+                                {spot.address}
                             </div>
                             <div className='description'>
-                             <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
+                                <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
                             </div>
                         </div>
                     </div>
