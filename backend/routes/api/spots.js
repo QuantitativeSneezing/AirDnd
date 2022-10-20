@@ -412,6 +412,12 @@ router.get('/',
             const maxPrice = { [Op.lte]: req.query.maxPrice }
             whereParams.Price = maxPrice
         }
+        if (req.query.name){
+            const name= {[Op.like]: `%${req.query.name}%`}
+            whereParams.name= name
+            limit= undefined;
+
+        }
         const spots = await Spot.findAll({
             where: whereParams,
             limit,
@@ -420,6 +426,7 @@ router.get('/',
                 model: SpotImage,
             }
         })
+        // console.log ("spots :", spots)
         res.json({ spots: spots })
     }
 )
