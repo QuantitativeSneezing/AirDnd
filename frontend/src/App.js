@@ -11,6 +11,8 @@ import ReviewFormPage from './components/createReviewPage';
 import EditReviewFormPage from './components/editReviewPage';
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 function App() {
   const dispatch = useDispatch();
@@ -18,12 +20,12 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-const redirectToLinkedIn = () =>{
- window.location.assign("https://www.linkedin.com/in/jason-arnold-539005183/")
-}
-const redirectToGithub = () =>{
-  window.location.assign("https://github.com/QuantitativeSneezing")
- }
+  const redirectToLinkedIn = () => {
+    window.location.assign("https://www.linkedin.com/in/jason-arnold-539005183/")
+  }
+  const redirectToGithub = () => {
+    window.location.assign("https://github.com/QuantitativeSneezing")
+  }
   return (
     <div className='topLevel'>
       <>
@@ -61,8 +63,8 @@ const redirectToGithub = () =>{
         <div className='footer'>
           <div className='footerContent'>
             <span className="myLinks">
-              <span onClick={redirectToLinkedIn} > Made by Jason </span>
-               <span onClick={redirectToGithub}>Arnold</span>
+              <span onClick={redirectToLinkedIn} >Made by Jason <FontAwesomeIcon icon={faGithub}/>   </span>
+              <span onClick={redirectToGithub}>  Arnold  <FontAwesomeIcon icon={faLinkedin}/> </span>
             </span>
             <span>
               Inspired by Airbnb

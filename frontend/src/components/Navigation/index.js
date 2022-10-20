@@ -5,6 +5,8 @@ import LoginFormModal from '../../context';
 import { SignupFormModal } from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+// import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { useDropdown } from '../../context/DropdownContext';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
@@ -13,24 +15,26 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [dropdown, setDropdown] = useState(false)
+    const { dropdown, setDropdown } = useDropdown();
     function goHome() {
+
         history.push('/')
     }
     const setDropDown = () => {
         dropdown ? setDropdown(false) : setDropdown(true)
-
-
     }
 
     const addSpot = () => {
+        setDropDown(false)
         history.push('/spots/new')
     }
-    const addNewUser = () => {
-        history.push('/signup')
-    }
+    // const addNewUser = () => {
+    //     history.push('/signup')
+    // }
+    //changed to modal
     const logout = (e) => {
         e.preventDefault();
+        setDropDown(false)
         dispatch(sessionActions.logout());
     };
     let sessionLinks;
@@ -65,10 +69,10 @@ function Navigation({ isLoaded }) {
                     </div>
                     {dropdown && (
                         <div className="smallerProfile-dropdown" >
-                                <LoginFormModal/>
+                            <LoginFormModal />
                             {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
                              */}
-                             <SignupFormModal />
+                            <SignupFormModal />
                         </div>
                     )}
                 </div>
