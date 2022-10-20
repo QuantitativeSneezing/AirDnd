@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import { useDropdown } from "../../context/DropdownContext";
 
 import './SignupForm.css'
 function SignupFormPage() {
@@ -15,20 +16,27 @@ function SignupFormPage() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [errors, setErrors] = useState([]);
+  const { setDropdown } = useDropdown();
 
   if (sessionUser) return <Redirect to="/" />;
   const cancelSubmit = (e) => {
     history.push('/')
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))
+      const result =await dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
+      console.log("SIGNUP RESULT :", result)
+      if (result) {
+        // console.log ("should be fine now??? :",result)
+        setDropdown(false)
+        return result
+      }
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };

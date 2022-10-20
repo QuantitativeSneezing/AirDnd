@@ -11,10 +11,9 @@ import ReviewFormPage from './components/createReviewPage';
 import EditReviewFormPage from './components/editReviewPage';
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
-import BookingFormPage from './components/bookingForm';
-import PersonalBookingpage from './components/personalBookingPage';
-import SearchPage from './components/searchPage';
-import NotFoundPage from './components/notFoundPage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -76,8 +75,8 @@ function App() {
         <div className='footer'>
           <div className='footerContent'>
             <span className="myLinks">
-              <span onClick={redirectToLinkedIn} > Made by Jason </span>
-              <span onClick={redirectToGithub}>Arnold</span>
+              <span onClick={redirectToLinkedIn} >Made by Jason <FontAwesomeIcon icon={faGithub}/>   </span>
+              <span onClick={redirectToGithub}>  Arnold  <FontAwesomeIcon icon={faLinkedin}/> </span>
             </span>
             <span>
               Inspired by Airbnb

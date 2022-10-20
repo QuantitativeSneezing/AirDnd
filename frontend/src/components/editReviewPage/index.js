@@ -14,7 +14,7 @@ function EditReviewFormPage() {
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
-    const spots = useSelector(state => state.spots.spots)
+    // const spots = useSelector(state => state.spots.spots)
     const reviewsOld = useSelector((state) => state.reviews.reviews)
     const reviewsArr = Object.values(reviewsOld)
     const sessionUser = useSelector(state => state.session.user);
@@ -24,7 +24,7 @@ function EditReviewFormPage() {
         oldReview = reviewsArr.find(review => review.id == reviewId)
     }
     console.log("OLD REVIEW :", oldReview)
-    console.log(spots, reviewsOld, "OLD DATA")
+    console.log(reviewsOld, "OLD DATA")
     const [review, setReview] = useState(oldReview.review);
     const [stars, setStars] = useState(oldReview.stars)
     useEffect(() => {
@@ -59,11 +59,14 @@ function EditReviewFormPage() {
                 if (data && data.errors) setErrors(data.errors);
             });
         if (done) {
-            history.goBack();
+            history.push(`/spots/${oldReview.spotId}`);
+
         }
     }
 
-
+    function cancelSubmit() {
+        history.push(`/spots/${oldReview.spotId}`);
+    }
 
     return (
         <div className="notReviewRoot">
@@ -101,7 +104,9 @@ function EditReviewFormPage() {
                 </div>
                 <div>
                     <button type="submit" disabled={disableSubmit} className="submitButton">Edit Review</button>
-
+                </div>
+                <div className="formItem">
+                    <div className="formItem"> <button onClick={cancelSubmit} className="submitButton">Cancel</button></div>
                 </div>
             </form>
 
