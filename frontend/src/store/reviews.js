@@ -106,7 +106,7 @@ const reviewReducer = (state = initialState, action) => {
                 reviewObj[key] = action.reviews[i]
             }
             console.log("NEW OBJECT :", reviewObj)
-            return { ...state, reviews: reviewObj }
+            return { reviews: reviewObj, ...state,  }
         case GET_USER_REVIEWS:
             console.log("GET USER REVIEWS ACTION :", action.reviews)
             reviewObj = {}
