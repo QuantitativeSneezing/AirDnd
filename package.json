@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
@@ -9,6 +10,8 @@
     "pg": "^8.8.0",
     "react-date-range": "^1.4.0"
   },
+=======
+>>>>>>> fixpls
   "name": "authenticate-me",
   "description": "Schema here: https://drive.google.com/file/d/1mlD7SR5M-bWXZ9_ANdyKlyU5Rjb8XyIG/view?usp=sharing",
   "version": "1.0.0",
