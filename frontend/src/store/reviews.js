@@ -122,7 +122,7 @@ const reviewReducer = (state = initialState, action) => {
             console.log("ID FOR REVIEW TO BE ADDED :", newId)
             newState.reviews[newId] = action.review
             return newState
-        case REMOVE_REVIEW:22
+        case REMOVE_REVIEW:
             newState = { ...state }
             const id = action.reviewId
             console.log("REVIEW ID TO BE DELETED :", action.reviewId)
