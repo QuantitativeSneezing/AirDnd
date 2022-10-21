@@ -8,7 +8,6 @@ import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { useDropdown } from '../../context/DropdownContext';
 import * as sessionActions from '../../store/session';
-import SearchBar from '../searchBar';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -24,9 +23,7 @@ function Navigation({ isLoaded }) {
     const setDropDown = () => {
         dropdown ? setDropdown(false) : setDropdown(true)
     }
-    // const handleSearch = (e) => {
 
-    // }
     const addSpot = () => {
         setDropDown(false)
         history.push('/spots/new')
@@ -44,9 +41,7 @@ function Navigation({ isLoaded }) {
     // const hideeClass= () =>{
     //     sessionLinksClass= "hidden"
     // }
-    const checkBookings = () => {
-        history.push('/bookings/personal')
-    }
+
     if (sessionUser) {
         sessionLinks =
             <>
@@ -61,7 +56,6 @@ function Navigation({ isLoaded }) {
                             <div>{sessionUser.username}</div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
                             <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
-                            <div className='redirector' onClick={checkBookings}><span className='centerRedirector'>Trips</span></div>
                         </div>
                     )}
                 </div>
@@ -93,7 +87,7 @@ function Navigation({ isLoaded }) {
             <div className='navBar'>
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
-
+                    <div className='search'> </div>
                     {isLoaded && sessionLinks}
                 </div>
             </div>

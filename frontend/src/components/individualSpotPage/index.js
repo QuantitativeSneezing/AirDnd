@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from '../../store/reviews'
-import * as bookingActions from '../../store/bookings'
+
 function IndividualSpotPage() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -20,20 +20,16 @@ function IndividualSpotPage() {
         setLoaded(true)
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(bookingActions.getSpotBookings(spotId))
-    }, [dispatch]);
-
     const movePage = () => {
         history.push(`/spots/${spotId}/edit`)
     }
 
     const deleteThis = async () => {
-        dispatch(spotActions.deleteSpot(spotId))
+        await dispatch(spotActions.deleteSpot(spotId))
         history.push("/")
     }
     const deleteThisReview = async (reviewId) => {
-        const deleteResult = dispatch(reviewActions.deleteReview(reviewId))
+        const deleteResult = await dispatch(reviewActions.deleteReview(reviewId))
         console.log("RESULT :", deleteResult);
     }
     const reviewRedirect = () => {
@@ -43,21 +39,10 @@ function IndividualSpotPage() {
         // console.log("THIS IS BEING PASSED TO THE REDIRECT :",reviewId)
         history.push(`/reviews/${reviewId}/edit`)
     }
-    const bookingRedirect = () => {
-        history.push(`/spots/${spotId}/bookings`)
-    }
-    const checkOwnedBookings = () => {
-        console.log("WILL REDIRECT")
-    }
+
+
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
-    const bookings= useSelector(state=> state.bookings.bookings)
-    console.log ("BOOKINGS RETRIEVED :", bookings)
-    let bookingItems
-    if (bookings){
-        bookingItems= Object.values(bookings)
-    }
-    console.log ("BOOKINGITEMS :", bookingItems)
     let reviews = [];
     if (allReviews) {
         reviews = Object.values(allReviews)
@@ -67,11 +52,9 @@ function IndividualSpotPage() {
     let reviewAvg = NaN;
     let buttons;
     let addReviewButton;
-    let bookingOptions;
     let notOwned = true;
     let notYourReviews = [];
     let personalReview;
-
     let image = 'https://i.imgur.com/g24gIGL.png';
     if (spots[0]) {
         spot = spots.find(spot => spot.id == spotId)
@@ -143,28 +126,6 @@ function IndividualSpotPage() {
                     </button>
                 </div>
         }
-        if (notOwned) {
-            bookingOptions =
-                (<div className="preBookingInfo">
-                    <div className='preBookFirstLine'>
-                        <span className="preBookTop">
-                            <span className="price">${spot.price}
-                            </span>  night
-                        </span>
-                        {reviews && spot && (<span>
-                            ★{reviewAvg} • {reviews.length} reviews
-                        </span>
-                        )}</div>
-                        <div className='spacer'></div>
-                    <button onClick={bookingRedirect} className='submitButton'> Book this spot</button>
-                </div>)
-        } else if (!notOwned) {
-            bookingOptions =
-                <div>
-                    Bookings for this spot :
-                    {bookingItems.map(booking => <div>1 Guest, from {booking.startDate.slice(0,10)} to {booking.endDate.slice(0,10)} </div>)}
-                </div>
-        }
         let yourReview
         console.log("ALL REVIEWS :", reviews)
         yourReview = reviews.find(review => review.userId == sessionUser.id)
@@ -187,10 +148,10 @@ function IndividualSpotPage() {
                     </button>
                 </div>
         } else if (notOwned) {
-            addReviewButton = (
+            addReviewButton =
                 <button onClick={reviewRedirect} className="overrideButton" >
                     Review this spot
-                </button>)
+                </button>
         }
         for (let i = 0; i < reviews.length; i++) {
             if (reviews[i].userId !== sessionUser.id) {
@@ -253,10 +214,6 @@ function IndividualSpotPage() {
                     </div>
                 </div>
             </div>
-            <div className='bookings'>
-                {sessionUser && bookingOptions}
-            </div>
-
         </div>
     );
 }

@@ -9,10 +9,6 @@ import EditSpotFormPage from './components/editSpotFormPage';
 import HomePage from './components/homePage';
 import ReviewFormPage from './components/createReviewPage';
 import EditReviewFormPage from './components/editReviewPage';
-import BookingFormPage from './components/bookingFormPage'
-import NotFoundPage from './components/notFoundPage'
-import PersonalBookingPage from './components/personalBookingPage'
-import SearchPage from './components/searchPage'
 import * as sessionActions from "./store/session";
 import LoginFormModal from './context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -54,23 +50,11 @@ function App() {
             <Route path="/spots/:spotId/reviews">
               <ReviewFormPage />
             </Route>
-            <Route path="/spots/:spotId/bookings">
-              <BookingFormPage />
-            </Route>
             <Route path="/spots/:spotId">
               <IndividualSpotPage />
             </Route>
-            <Route path="/bookings/personal">
-              <PersonalBookingPage />
-            </Route>
-            <Route path="/search">
-              <SearchPage />
-            </Route>
             <Route exact path="/">
               <HomePage />
-            </Route>
-            <Route>
-              <NotFoundPage />
             </Route>
           </Switch>
         )}

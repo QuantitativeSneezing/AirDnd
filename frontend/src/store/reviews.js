@@ -91,7 +91,7 @@ export const updateReview = (fullReview, reviewId) => async (dispatch) => {
     return dispatch(addReview(data))
 };
 const initialState = {
-    reviews: {},
+    reviews: [],
 }
 const reviewReducer = (state = initialState, action) => {
     let newState;

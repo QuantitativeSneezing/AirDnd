@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import * as spotActions from "../../store/spots";
 import { useDropdown } from '../../context/DropdownContext';
-import Carousel from '../carousel';
-
 // "https://img.pokemondb.net/artwork/avif/rayquaza-mega.avif"
 
 function HomePage() {
@@ -48,33 +46,32 @@ function HomePage() {
         }
     }
     return (
-            <div className='locations__container'>
-                     <Carousel />
-                <div className='locations__group'>
-                    {spots.map(spot =>
-                        <div className='fullLocation___container' onClick={() => history.push(`spots/${spot.id}`)}>
-                            <div className="locations__location">
-                                <div className='image__wrapper'>
-                                    <img src={spot.displayImage} alt="Spot" className='picture'></img>
-                                </div>
-                            </div>
-                            <div className='location__details'>
-                                <div className='title'>
-                                    {spot.city}, {spot.state}
-                                    &nbsp;&nbsp;★{spot.average}
-                                </div>
-
-                                <div className='description'>
-                                    {spot.address}
-                                </div>
-                                <div className='description'>
-                                    <span style={{ fontWeight: 'bold', fontSize: "16 px", color: "black" }} > ${spot.price}</span> night
-                                </div>
+        <div className='locations__container'>
+            <div className='locations__group'>
+                {spots.map(spot =>
+                    <div className='fullLocation___container' onClick={() => history.push(`spots/${spot.id}`)}>
+                        <div className="locations__location">
+                            <div className='image__wrapper'>
+                                <img src={spot.displayImage} alt="Spot" className='picture'></img>
                             </div>
                         </div>
-                    )}
-                </div>
-            </div >
+                        <div className='location__details'>
+                            <div className='title'>
+                                {spot.city}, {spot.state}
+                                &nbsp;&nbsp;★{spot.average}
+                            </div>
+
+                            <div className='description'>
+                                {spot.address}
+                            </div>
+                            <div className='description'>
+                                <span style={{ fontWeight: 'bold', fontSize: "16 px" }} > ${spot.price}</span> night
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div >
     )
 }
 export default HomePage

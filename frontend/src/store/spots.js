@@ -62,28 +62,10 @@ export const deleteSpot = (spotId) => async dispatch => {
     method: 'DELETE',
   });
   const data = await response.json();
-  console.log("DELETING :", data)
   return dispatch(removeSpot(data.id));
 };
 export const getAllSpots = () => async dispatch => {
   const response = await csrfFetch(`/api/spots`);
-  if (response.ok) {
-    const spots = await response.json();
-    console.log("THUNK SPOTS :", spots)
-    console.log("TRYING TO KEY IN :", spots.spots[0])
-    for (let i = 0; i < spots.spots.length; i++) {
-      const reviews = await csrfFetch(`/api/spots/${spots.spots[i].id}/reviews`)
-      const retrieved = await reviews.json()
-      spots.spots[i].reviews = retrieved;
-    }
-    const result = dispatch(getSpots(spots.spots))
-    console.log("RESULT OF DISPATCHING :", result)
-    return result
-  }
-};
-export const getSomeSpots = (params) => async dispatch => {
-  console.log("SEARCH PARAMS :", params)
-  const response = await csrfFetch(`/api/spots${params}`);
   if (response.ok) {
     const spots = await response.json();
     console.log("THUNK SPOTS :", spots)
