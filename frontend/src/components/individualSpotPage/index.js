@@ -2,9 +2,11 @@ import './IndividualSpotPage.css'
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+import { Calendar } from 'react-calendar';
 import * as spotActions from "../../store/spots";
 import * as reviewActions from '../../store/reviews'
 import * as bookingActions from '../../store/bookings'
+// import 'react-calendar/dist/Calendar.css';
 function IndividualSpotPage() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -51,13 +53,13 @@ function IndividualSpotPage() {
     }
     const spots = useSelector(state => state.spots.spots)
     const allReviews = useSelector(state => state.reviews.reviews)
-    const bookings= useSelector(state=> state.bookings.bookings)
-    console.log ("BOOKINGS RETRIEVED :", bookings)
+    const bookings = useSelector(state => state.bookings.bookings)
+    console.log("BOOKINGS RETRIEVED :", bookings)
     let bookingItems
-    if (bookings){
-        bookingItems= Object.values(bookings)
+    if (bookings) {
+        bookingItems = Object.values(bookings)
     }
-    console.log ("BOOKINGITEMS :", bookingItems)
+    console.log("BOOKINGITEMS :", bookingItems)
     let reviews = [];
     if (allReviews) {
         reviews = Object.values(allReviews)
@@ -80,7 +82,7 @@ function IndividualSpotPage() {
     console.log("ALL SPOTS: ", spots)
     console.log("CURRENT SPOT", spot)
     console.log("USER :", sessionUser)
-    if (!loaded){
+    if (!loaded) {
         return null
     }
     if (spot) {
@@ -155,14 +157,14 @@ function IndividualSpotPage() {
                             ★{reviewAvg} • {reviews.length} reviews
                         </span>
                         )}</div>
-                        <div className='spacer'></div>
+                    <div className='spacer'></div>
                     <button onClick={bookingRedirect} className='submitButton'> Book this spot</button>
                 </div>)
         } else if (!notOwned) {
             bookingOptions =
                 <div>
                     Bookings for this spot :
-                    {bookingItems.map(booking => <div>1 Guest, from {booking.startDate.slice(0,10)} to {booking.endDate.slice(0,10)} </div>)}
+                    {bookingItems.map(booking => <div>1 Guest, from {booking.startDate.slice(0, 10)} to {booking.endDate.slice(0, 10)} </div>)}
                 </div>
         }
         let yourReview
@@ -225,6 +227,9 @@ function IndividualSpotPage() {
     reviews[0] ? reviewCount = `${reviews.length} reviews` : reviewCount = "No reviews yet"
     return (
         <div className='notSpotRoot'>
+            <div id='calendarHolder'>
+                <Calendar className="calendar" />
+            </div>
             <div className='container'>
                 <div className='title'>
 
