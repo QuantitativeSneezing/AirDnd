@@ -46,7 +46,7 @@ function Navigation({ isLoaded }) {
         sessionLinks =
             <>
                 <div>
-                    <div className={sessionLinksClass} onClick={setDropDown} >
+                    <div className={"circle"} onClick={setDropDown} >
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
@@ -65,7 +65,7 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <div>
-                    <div className={sessionLinksClass} onClick={setDropDown}>
+                    <div className={"circle"} onClick={setDropDown}>
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />

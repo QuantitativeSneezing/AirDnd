@@ -24,6 +24,7 @@ function SignupFormPage() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log ("this is the pass, and confirm", password, confirmPassword)
     if (password === confirmPassword) {
       setErrors([]);
       const result =await dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))
@@ -37,8 +38,9 @@ function SignupFormPage() {
         setDropdown(false)
         return result
       }
+    } else{
+      return setErrors(['Confirm Password field must be the same as the Password field']);
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
   return (
