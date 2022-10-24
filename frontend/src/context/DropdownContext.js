@@ -6,7 +6,7 @@ export const useDropdown = () => useContext(DropdownContext);
 
 export default function DropdownProvider({ children }) {
   const [dropdown, setDropdown] = useState(true);
-  const [sessionLinksClass, setSessionLinksClass] = useState("circle");
+  const [sessionLinksClass, setSessionLinksClass] = useState("hidden");
   const [hi, setHi] = useState("hi")
   return (
     <DropdownContext.Provider

@@ -27,9 +27,9 @@ function EditReviewFormPage() {
     console.log(reviewsOld, "OLD DATA")
     const [review, setReview] = useState(oldReview.review);
     const [stars, setStars] = useState(oldReview.stars)
-    useEffect(() => {
-        dispatch(spotActions.getAllSpots());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(spotActions.getAllSpots());
+    // }, [dispatch]);
     useEffect(() => {
         dispatch(reviewActions.getPersonalReviews())
     }, [dispatch]);

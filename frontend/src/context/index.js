@@ -9,12 +9,11 @@ function LoginFormModal() {
   const closeHandle = () => {
     console.log("CLOSED")
     setShowModal(false)
-    setSessionLinksClass("circle")
   }
   const openHandle = () => {
     console.log("OPENED")
     setShowModal(true)
-    // setSessionLinksClass("hidden")
+    setSessionLinksClass("hidden")
   }
   return (
     <>

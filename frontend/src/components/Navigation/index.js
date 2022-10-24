@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginFormModal from '../../context';
 import { SignupFormModal } from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import onClickOutside from "react-onclickoutside";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { useDropdown } from '../../context/DropdownContext';
+import DropdownProvider, { useDropdown } from '../../context/DropdownContext';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
@@ -15,12 +16,17 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const { dropdown, setDropdown, sessionLinksClass} = useDropdown();
+    const { dropdown, setDropdown, sessionLinksClass, setSessionLinksClass } = useDropdown();
     function goHome() {
 
         history.push('/')
     }
+    const dropDownHandle = () => {
+        sessionUser ? setSessionLinksClass("profile-dropdown") : setSessionLinksClass("smallerProfile-dropdown")
+        setDropDown();
+    }
     const setDropDown = () => {
+        console.log("new Links class :", sessionLinksClass)
         dropdown ? setDropdown(false) : setDropdown(true)
     }
 
@@ -46,13 +52,13 @@ function Navigation({ isLoaded }) {
         sessionLinks =
             <>
                 <div>
-                    <div className={"circle"} onClick={setDropDown} >
+                    <div className={"circle"} onClick={dropDownHandle} >
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropdown && (
-                        <div className="profile-dropdown">
+                        <div className={sessionLinksClass}>
                             <div>{sessionUser.username}</div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
                             <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
@@ -65,14 +71,14 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <div>
-                    <div className={"circle"} onClick={setDropDown}>
+                    <div className="circle" onClick={dropDownHandle}>
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropdown && (
-                        <div className="smallerProfile-dropdown" >
-                            <LoginFormModal  />
+                        <div className={sessionLinksClass} >
+                            <LoginFormModal />
                             {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
                              */}
                             <SignupFormModal />
