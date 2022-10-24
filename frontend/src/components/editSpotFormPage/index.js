@@ -14,15 +14,15 @@ function EditSpotFormPage() {
         spot = spots.find(spot => spot.id == spotId)
     }
     console.log("SPOT FOR PREPOPULATE :", spot)
-    const [address, setAddress] = useState(spot.address);
-    const [city, setCity] = useState(spot.city);
-    const [state, setState] = useState(spot.state);
-    const [country, setCountry] = useState(spot.country)
-    const [lat, setLat] = useState(spot.lat)
-    const [lng, setLong] = useState(spot.lng)
-    const [name, setName] = useState(spot.name)
-    const [description, setDescription] = useState(spot.description)
-    const [price, setPrice] = useState(spot.price)
+    const [address, setAddress] = useState(spot?.address);
+    const [city, setCity] = useState(spot?.city);
+    const [state, setState] = useState(spot?.state);
+    const [country, setCountry] = useState(spot?.country)
+    const [lat, setLat] = useState(spot?.lat)
+    const [lng, setLong] = useState(spot?.lng)
+    const [name, setName] = useState(spot?.name)
+    const [description, setDescription] = useState(spot?.description)
+    const [price, setPrice] = useState(spot?.price)
     const [validationErrors, setValidationErrors] = useState([])
 
     // this should probably be a dropdown/scroll menu
