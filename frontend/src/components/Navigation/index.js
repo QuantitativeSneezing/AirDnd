@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginFormModal from '../../context';
@@ -44,6 +44,21 @@ function Navigation({ isLoaded }) {
         setDropDown(false)
         dispatch(sessionActions.logout());
     };
+    let dropDownRef= useRef();
+    //Allows menu to close on click outside
+    //Why is this so complicated lol
+    useEffect(() => {
+        if (!dropdown) return;
+
+        const closeMenu = (e) => {
+            if (!dropDownRef.current.contains(e.target))
+            setDropDown(false);
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [dropdown]);
     let sessionLinks;
     // const hideeClass= () =>{
     //     sessionLinksClass= "hidden"
@@ -52,7 +67,7 @@ function Navigation({ isLoaded }) {
     if (sessionUser) {
         sessionLinks =
             <>
-                <div>
+                <div ref={dropDownRef}>
                     <div className={"circle"} onClick={dropDownHandle} >
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
@@ -71,7 +86,7 @@ function Navigation({ isLoaded }) {
     } else {
         sessionLinks = (
             <>
-                <div>
+                <div ref={dropDownRef}>
                     <div className="circle" onClick={dropDownHandle}>
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
@@ -89,7 +104,7 @@ function Navigation({ isLoaded }) {
     }
     return (
         <div>
-            <div className='navBar'>
+            <div className='navBar' >
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
                     <div className='search'> </div>
