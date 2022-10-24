@@ -35,7 +35,9 @@
 .spotDesc {
     display: flex;
     justify-content: center;
-    color: black
+    color: black;
+    word-break: break-word;
+
 }
 .reviewHeader {
     font-weight: bold;
