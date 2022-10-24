@@ -43,22 +43,22 @@ function Navigation({ isLoaded }) {
         e.preventDefault();
         setDropDown(false)
         dispatch(sessionActions.logout());
-    };
+    }
     let dropDownRef= useRef();
     //Allows menu to close on click outside
     //Why is this so complicated lol
-    useEffect(() => {
-        if (!dropdown) return;
+    // useEffect(() => {
+    //     if (!dropdown) return;
 
-        const closeMenu = (e) => {
-            if (!dropDownRef.current.contains(e.target))
-            setDropDown(false);
-        };
+    //     const closeMenu = (e) => {
+    //         if (!dropDownRef.current.contains(e.target))
+    //         setDropDown(false);
+    //     };
 
-        document.addEventListener('click', closeMenu);
+    //     document.addEventListener('click', closeMenu);
 
-        return () => document.removeEventListener("click", closeMenu);
-    }, [dropdown]);
+    //     return () => document.removeEventListener("click", closeMenu);
+    // }, [dropdown]);
     let sessionLinks;
     // const hideeClass= () =>{
     //     sessionLinksClass= "hidden"
