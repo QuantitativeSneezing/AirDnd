@@ -18,7 +18,6 @@ function Navigation({ isLoaded }) {
 
     const { dropdown, setDropdown, sessionLinksClass, setSessionLinksClass } = useDropdown();
     function goHome() {
-
         history.push('/')
     }
     const dropDownHandle = () => {
@@ -29,7 +28,9 @@ function Navigation({ isLoaded }) {
         console.log("new Links class :", sessionLinksClass)
         dropdown ? setDropdown(false) : setDropdown(true)
     }
-
+    useEffect(() => {
+        console.log("NEW DROPDOWN :", dropdown)
+    }, [dropdown])
     const addSpot = () => {
         setDropDown(false)
         history.push('/spots/new')
@@ -79,8 +80,6 @@ function Navigation({ isLoaded }) {
                     {dropdown && (
                         <div className={sessionLinksClass} >
                             <LoginFormModal />
-                            {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
-                             */}
                             <SignupFormModal />
                         </div>
                     )}
@@ -94,6 +93,8 @@ function Navigation({ isLoaded }) {
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
                     <div className='search'> </div>
+                    {/* <LoginFormModal />
+                    <SignupFormModal /> */}
                     {isLoaded && sessionLinks}
                 </div>
             </div>
