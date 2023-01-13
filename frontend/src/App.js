@@ -79,8 +79,8 @@ function App() {
         <div className='footer'>
           <div className='footerContent'>
             <span className="myLinks">
-              <span onClick={redirectToLinkedIn} >Made by Jason <FontAwesomeIcon icon={faGithub}/>   </span>
-              <span onClick={redirectToGithub}>  Arnold  <FontAwesomeIcon icon={faLinkedin}/> </span>
+              <span onClick={redirectToLinkedIn} >Made by Jason <FontAwesomeIcon icon={faGithub} />   </span>
+              <span onClick={redirectToGithub}>  Arnold  <FontAwesomeIcon icon={faLinkedin} /> </span>
             </span>
             <span>
               Inspired by Airbnb

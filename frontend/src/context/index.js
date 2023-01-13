@@ -9,12 +9,12 @@ function LoginFormModal() {
   const closeHandle = () => {
     console.log("CLOSED")
     setShowModal(false)
-    setSessionLinksClass("circle")
+    // setSessionLinksClass("smallerProfile-dropdown")
   }
   const openHandle = () => {
     console.log("OPENED")
     setShowModal(true)
-    // setSessionLinksClass("hidden")
+    setSessionLinksClass("hidden")
   }
   return (
     <>
@@ -34,19 +34,23 @@ export function SignupFormModal() {
   const [showModal, setShowModal] = useState(false);
   const { setSessionLinksClass } = useDropdown();
   let redirectionclass = "redirector"
-
-  function modalHandler() {
-    setShowModal(true)
-    setSessionLinksClass("hidden")
-    redirectionclass= "hidden"
+  const closeHandle = () => {
+    console.log("CLOSED")
+    setShowModal(false)
+    // setSessionLinksClass("smallerProfile-dropdown")
   }
+    const openHandle = () => {
+      console.log("OPENED")
+      setShowModal(true)
+      setSessionLinksClass("hidden")
+    }
   ;
   return (
     <>
       <div className='modalRoot'>
-        <div onClick={modalHandler} className="redirector">Sign Up</div>
+        <div onClick={openHandle} className="redirector">Sign Up</div>
         {showModal && (
-          <Modal onClose={() => setShowModal(false)}>
+          <Modal onClose={closeHandle}>
             <SignUpFormPage />
           </Modal>
         )}

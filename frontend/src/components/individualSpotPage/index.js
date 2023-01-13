@@ -181,9 +181,9 @@ function IndividualSpotPage() {
                     </div>
                     <div>{yourReview.stars} ★</div>
                     <p className='individualReviewText'>{yourReview.review} </p>
-                    <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
+                    {/* <button onClick={() => editReviewRedirect(yourReview.id)} disabled={false} className="overrideButton" >
                         Edit Your Review
-                    </button>
+                    </button> */}
                     <button onClick={() => deleteThisReview(yourReview.id)} disabled={false} className="overrideButton"  >
                         Delete Your Review
                     </button>

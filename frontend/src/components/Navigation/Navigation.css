@@ -46,12 +46,14 @@
     transition: all .5s ease-out;
     z-index: 20000;
 }
+
 .hidden {
-    display:none
+    display: none
 }
+
 .circle:hover {
     cursor: pointer;
-    box-shadow: 0px 1px 1px lightgray, -1px 3px 3px lightgray, 1px 1px 1px lightgray;
+    box-shadow: 0px 1px 1px lightgray, -1px 3px 3px lightgray, 1px 1px 1px lightgray, 0px,-3px,-3px lightgray;
 }
 
 .userIcon {
@@ -76,6 +78,7 @@
     background-color: white;
     z-index: 10000;
 }
+
 .smallerProfile-dropdown {
     position: fixed;
     border: 1px white solid;
@@ -85,12 +88,13 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    right: 100px;
+    right: 5%;
     height: 75px;
     width: 125px;
     background-color: white;
     z-index: 202;
 }
+
 .profile-aligner {
     display: flex;
     flex-direction: column;
@@ -109,8 +113,9 @@
     background-color: lightgray;
     cursor: pointer;
 }
-.makeFit{
-font-size: 100%;
+
+.makeFit {
+    font-size: 100%;
 }
 .search{
     border: 1px white solid;

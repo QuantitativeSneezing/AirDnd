@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginFormModal from '../../context';
 import { SignupFormModal } from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import onClickOutside from "react-onclickoutside";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { useDropdown } from '../../context/DropdownContext';
+import DropdownProvider, { useDropdown } from '../../context/DropdownContext';
 import * as sessionActions from '../../store/session';
 import SearchBar from '../searchBar';
 import './Navigation.css';
@@ -16,17 +17,21 @@ function Navigation({ isLoaded }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const { dropdown, setDropdown, sessionLinksClass} = useDropdown();
+    const { dropdown, setDropdown, sessionLinksClass, setSessionLinksClass } = useDropdown();
     function goHome() {
-
         history.push('/')
     }
+    const dropDownHandle = () => {
+        sessionUser ? setSessionLinksClass("profile-dropdown") : setSessionLinksClass("smallerProfile-dropdown")
+        setDropDown();
+    }
     const setDropDown = () => {
+        console.log("new Links class :", sessionLinksClass)
         dropdown ? setDropdown(false) : setDropdown(true)
     }
-    // const handleSearch = (e) => {
-
-    // }
+    useEffect(() => {
+        console.log("NEW DROPDOWN :", dropdown)
+    }, [dropdown])
     const addSpot = () => {
         setDropDown(false)
         history.push('/spots/new')
@@ -39,7 +44,22 @@ function Navigation({ isLoaded }) {
         e.preventDefault();
         setDropDown(false)
         dispatch(sessionActions.logout());
-    };
+    }
+    let dropDownRef= useRef();
+    //Allows menu to close on click outside
+    //Why is this so complicated lol
+    // useEffect(() => {
+    //     if (!dropdown) return;
+
+    //     const closeMenu = (e) => {
+    //         if (!dropDownRef.current.contains(e.target))
+    //         setDropDown(false);
+    //     };
+
+    //     document.addEventListener('click', closeMenu);
+
+    //     return () => document.removeEventListener("click", closeMenu);
+    // }, [dropdown]);
     let sessionLinks;
     // const hideeClass= () =>{
     //     sessionLinksClass= "hidden"
@@ -50,14 +70,14 @@ function Navigation({ isLoaded }) {
     if (sessionUser) {
         sessionLinks =
             <>
-                <div>
-                    <div className={sessionLinksClass} onClick={setDropDown} >
+                <div ref={dropDownRef}>
+                    <div className={"circle"} onClick={dropDownHandle} >
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropdown && (
-                        <div className="profile-dropdown">
+                        <div className={sessionLinksClass}>
                             <div>{sessionUser.username}</div>
                             <div className="redirector" onClick={addSpot}><span className='centerRedirector'> Add a spot</span></div>
                             <div className='redirector' onClick={logout}><span className='centerRedirector'>Log Out</span></div>
@@ -70,17 +90,15 @@ function Navigation({ isLoaded }) {
     } else {
         sessionLinks = (
             <>
-                <div>
-                    <div className={sessionLinksClass} onClick={setDropDown}>
+                <div ref={dropDownRef}>
+                    <div className="circle" onClick={dropDownHandle}>
                         <FontAwesomeIcon icon={faBars} />
                         &nbsp;
                         <FontAwesomeIcon icon={faUserCircle} className="userIcon" />
                     </div>
                     {dropdown && (
-                        <div className="smallerProfile-dropdown" >
-                            <LoginFormModal  />
-                            {/* <div className='redirector' onClick={addNewUser}>Sign Up</div>
-                             */}
+                        <div className={sessionLinksClass} >
+                            <LoginFormModal />
                             <SignupFormModal />
                         </div>
                     )}
@@ -90,10 +108,12 @@ function Navigation({ isLoaded }) {
     }
     return (
         <div>
-            <div className='navBar'>
+            <div className='navBar' >
                 <div className='navLinks'>
                     <img src='https://i.imgur.com/Jo809dL.png' className='logo' onClick={goHome} alt="return to homepage" />
-
+                    <div className='search'> </div>
+                    {/* <LoginFormModal />
+                    <SignupFormModal /> */}
                     {isLoaded && sessionLinks}
                 </div>
             </div>
