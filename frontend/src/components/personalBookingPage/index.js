@@ -7,6 +7,7 @@ import './PersonalBookings.css'
 function PersonalBookingPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [isLoaded, setIsLoaded]= useState(false)
     const sessionUser = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.spots)
     const bookings = useSelector(state => state.bookings)
@@ -20,6 +21,7 @@ function PersonalBookingPage() {
     console.log("PERSONALBOOKINGS :", personalBookings)
     useEffect(() => {
         dispatch(bookingActions.getPersonalBookings(sessionUser.id))
+        setIsLoaded(true)
     }, [dispatch]);
     console.log("INFO IN BOOKINGS PAGE PERSONAL :", spots, bookings)
     let yourBookings = (
@@ -46,7 +48,7 @@ function PersonalBookingPage() {
                             <img src={group.relatedSpot.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
                         </div>
                     </div>
-                    {group.relatedSpot.name}, from {(group.currentBooking.startDate).slice(0, 10)} to {group.currentBooking.endDate.slice(0, 10)}
+                    {group.relatedSpot.name}, from  {(group.currentBooking.startDate).slice(0, 10)} to {group.currentBooking.endDate.slice(0, 10)}
                 </div>
                 <button className="submitButton" onClick={() => deleteBooking(group.currentBooking.id)}>Delete this booking</button>
             </div>)
@@ -57,7 +59,7 @@ function PersonalBookingPage() {
                 BOOKINGS OF YOU:
 
                 <div className="wideBookings">
-                    {yourBookings}
+                    {isLoaded && yourBookings}
                 </div>
             </div>
         </div>

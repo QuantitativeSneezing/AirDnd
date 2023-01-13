@@ -2,7 +2,7 @@ import './IndividualSpotPage.css'
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { Calendar } from 'react-calendar';
+// import { Calendar } from 'react-calendar';
 import * as spotActions from "../../store/spots";
 import * as reviewActions from '../../store/reviews'
 import * as bookingActions from '../../store/bookings'
@@ -228,7 +228,7 @@ function IndividualSpotPage() {
     return (
         <div className='notSpotRoot'>
             <div id='calendarHolder'>
-                <Calendar className="calendar" />
+                {/* <Calendar className="calendar" /> */}
             </div>
             <div className='container'>
                 <div className='title'>
