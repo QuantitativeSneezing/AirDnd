@@ -85,7 +85,8 @@ const bookingReducer = (state = initialState, action) => {
             console.log("GET SPOT BOOKINGS ACTION :", action.bookings)
             bookingObj = {}
             for (let i = 0; i < action.bookings.length; i++) {
-                const key = action.bookings[i].id
+                const key = action.bookings[i]
+                console.log("KEY FOR NEW OBJ", key)
                 bookingObj[key] = action.bookings[i]
             }
             console.log("NEW OBJECT :", bookingObj)

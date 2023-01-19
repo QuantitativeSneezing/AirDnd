@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Datepicker } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import * as bookingActions from '../../store/bookings';
@@ -6,6 +6,7 @@ import * as spotActions from "../../store/spots";
 import './BookingForm.css'
 
 function BookingFormPage() {
+    console.log("DATEPICKER :", Datepicker)
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -85,7 +86,11 @@ function BookingFormPage() {
                     <div className="bookingformTop"><span className="price">${spot.price}</span>  night</div>
                 </div>
                 <div div className="formItem">
-                    CALENDAR GOES HERE
+                    {/* <DatePicker /> */}
+                    {/* <Datepicker
+                        display="inline"
+                        touchUi={true}
+                    /> */}
                     (TEMPORARY NIGHT COUNT)
                     <label>
                         <select onChange={updateNights} value={nights} className="inputField" >

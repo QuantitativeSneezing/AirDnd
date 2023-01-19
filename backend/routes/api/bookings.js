@@ -13,6 +13,8 @@ router.get('/current',
                 where: {
                     userId: id
                 },
+                include :{
+                    model: Spot}
             }))
             return res.json({userBookings:userBookings});
         } else res.json(
