@@ -36,10 +36,10 @@ function PersonalBookingPage() {
                 <div className="IndividualBookingInfo">
                     <div className="locations__location" onClick={() => history.push(`/spots/${group.Spot.id}`)}>
                         <div className='image__wrapper'>
-                            <img src={group.Spot.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
+                            <img src={group.Spot?.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
                         </div>
                     </div>
-                    {group.Spot.name}, from  {(group.startDate).slice(0, 10)} to {group.endDate.slice(0, 10)}
+                    {group.Spot?.name}, from  {(group.startDate).slice(0, 10)} to {group.endDate.slice(0, 10)}
                 </div>
                 <button className="submitButton" onClick={() => deleteBooking(group.id)}>Delete this booking</button>
             </div>)

@@ -42,16 +42,14 @@ function HomePage() {
             spots[i].average = reviewAvg
         }
         // console.log ("LOOP SPOT :",spot)
-        // spot.displayImage = 'https://i.imgur.com/g24gIGL.png'
+        spot.displayImage = 'https://i.imgur.com/g24gIGL.png'
         if (spot && spot.spotImages && spot.SpotImages[0]) {
             spot.displayImage = `${spot.SpotImages[0].url}`
-        } else{
-            console.log(spot)
         }
     }
     return (
             <div className='locations__container'>
-                     <Carousel />
+                     {/* <Carousel /> */}
                 <div className='locations__group'>
                     {spots.map(spot =>
                         <div className='fullLocation___container' onClick={() => history.push(`spots/${spot.id}`)}>

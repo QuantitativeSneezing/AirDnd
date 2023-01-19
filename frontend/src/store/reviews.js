@@ -105,8 +105,10 @@ const reviewReducer = (state = initialState, action) => {
                 const key = action.reviews[i].id
                 reviewObj[key] = action.reviews[i]
             }
-            console.log("NEW OBJECT :", reviewObj)
-            return { reviews: reviewObj, ...state,  }
+            console.log("NEW OBJECT in get spot:", reviewObj)
+            newState=  { ...state, reviews: reviewObj}
+            console.log ("NEW STATE AFTER RETRIEVING REVIEWS", newState)
+            return newState
         case GET_USER_REVIEWS:
             console.log("GET USER REVIEWS ACTION :", action.reviews)
             reviewObj = {}

@@ -46,8 +46,9 @@ function BookingFormPage() {
 
     console.log("BOOKINGS IN STATE :", bookings)
     const spot = spots.find(spot => spot.id == spotId)
-    async function handleSubmit(e) {
-        e.preventDefault();
+    async function handleSubmit() {
+        console.log("SUBMITTING BOOKING")
+        // e.preventDefault();
         const bookingToSend = {
             startDate: `2023-01-01 00:00:00`,
             endDate: "2024-01-01 00:00:00",
@@ -62,7 +63,7 @@ function BookingFormPage() {
         console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", booking)
         if (booking) {
             console.log("NO ERROR DETECTED AT FIRST")
-            history.push(`spots/${spotId}`)
+            history.push(`/bookings/personal`);
         }
     }
     if (!spot) {
@@ -107,7 +108,8 @@ function BookingFormPage() {
                     ${spot.price * nights} total
                 </div>
                 <div>
-                    <button type="submit" disabled={disableSubmit} className="submitButton">Book this Spot</button>
+                    <button onClick={handleSubmit} type="button" disabled={disableSubmit} className="submitButton">Book this Spot</button>
+                    {/* <button type="submit" disabled={disableSubmit} className="submitButton">Book button instead</button> */}
 
                 </div>
             </form>

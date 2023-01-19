@@ -11,3 +11,18 @@
 .bookingRoot{
     padding-top: 100px;
 }
+.buttonDidntWork {
+    background-color: rgb(255, 90, 95);
+    width: 418px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+.buttonDidntWork:hover {
+    opacity: .9;
+    cursor: pointer;
+}
