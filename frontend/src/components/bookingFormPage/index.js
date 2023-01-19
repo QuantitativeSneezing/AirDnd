@@ -1,12 +1,13 @@
-import React, { useState, useEffect, Datepicker } from "react";
+import React, { useState, useEffect, } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import * as bookingActions from '../../store/bookings';
 import * as spotActions from "../../store/spots";
+// import DatePicker from "react-datepicker";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import './BookingForm.css'
-
 function BookingFormPage() {
-    console.log("DATEPICKER :", Datepicker)
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -88,7 +89,8 @@ function BookingFormPage() {
                 </div>
                 <div div className="formItem">
                     {/* <DatePicker /> */}
-                    {/* <Datepicker
+                    {/* <DatePicker
+                        controls={['calendar']}
                         display="inline"
                         touchUi={true}
                     /> */}
@@ -103,6 +105,7 @@ function BookingFormPage() {
                         </select>
                     </label>
                 </div>
+                <Calendar />
 
                 <div className="totals">
                     ${spot.price * nights} total
