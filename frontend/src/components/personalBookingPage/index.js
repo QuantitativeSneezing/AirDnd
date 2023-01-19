@@ -30,14 +30,6 @@ function PersonalBookingPage() {
         </div>
     )
     if (personalBookings.length && spots.length) {
-        // for (let i = 0; i < personalBookings.length; i++) {
-        //     const currentBooking = personalBookings[i]
-        //     const relatedSpot = spots.find(spot => spot.id == personalBookings[i].spotId)
-        //     bookingsArray.push({
-        //         relatedSpot,
-        //         currentBooking
-        //     })
-    //     }
         console.log("BOOKINGSARRAY :", personalBookings)
         yourBookings = personalBookings.map(group =>
             <div className="individualBooking">

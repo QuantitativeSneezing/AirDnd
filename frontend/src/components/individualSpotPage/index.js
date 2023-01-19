@@ -227,9 +227,9 @@ function IndividualSpotPage() {
     reviews[0] ? reviewCount = `${reviews.length} reviews` : reviewCount = "No reviews yet"
     return (
         <div className='notSpotRoot'>
-            <div id='calendarHolder'>
+            {/* <div id='calendarHolder'>
                 <Calendar className="calendar" />
-            </div>
+            </div> */}
             <div className='container'>
                 <div className='title'>
 

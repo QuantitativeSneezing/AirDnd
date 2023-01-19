@@ -28,7 +28,7 @@ function HomePage() {
     }
     for (let i = 0; i < spots.length; i++) {
         const spot = spots[i]
-        let reviews = spot.reviews.reviews
+        let reviews = spot.Reviews
         let reviewSum = 0;
         for (let j = 0; j < reviews.length; j++) {
             reviewSum += (reviews[j].stars)
@@ -42,9 +42,11 @@ function HomePage() {
             spots[i].average = reviewAvg
         }
         // console.log ("LOOP SPOT :",spot)
-        spot.displayImage = 'https://i.imgur.com/g24gIGL.png'
-        if (spot.SpotImages[0]) {
+        // spot.displayImage = 'https://i.imgur.com/g24gIGL.png'
+        if (spot && spot.spotImages && spot.SpotImages[0]) {
             spot.displayImage = `${spot.SpotImages[0].url}`
+        } else{
+            console.log(spot)
         }
     }
     return (
@@ -55,7 +57,7 @@ function HomePage() {
                         <div className='fullLocation___container' onClick={() => history.push(`spots/${spot.id}`)}>
                             <div className="locations__location">
                                 <div className='image__wrapper'>
-                                    <img src={spot.displayImage} alt="Spot" className='picture'></img>
+                                    <img src={spot.SpotImages[0].url} alt="Spot" className='picture'></img>
                                 </div>
                             </div>
                             <div className='location__details'>

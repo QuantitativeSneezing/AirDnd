@@ -70,12 +70,12 @@ export const getAllSpots = () => async dispatch => {
   if (response.ok) {
     const spots = await response.json();
     console.log("THUNK SPOTS :", spots)
-    console.log("TRYING TO KEY IN :", spots.spots[0])
-    for (let i = 0; i < spots.spots.length; i++) {
-      const reviews = await csrfFetch(`/api/spots/${spots.spots[i].id}/reviews`)
-      const retrieved = await reviews.json()
-      spots.spots[i].reviews = retrieved;
-    }
+    // console.log("TRYING TO KEY IN :", spots.spots[0])
+    // for (let i = 0; i < spots.spots.length; i++) {
+    //   const reviews = await csrfFetch(`/api/spots/${spots.spots[i].id}/reviews`)
+    //   const retrieved = await reviews.json()
+    //   spots.spots[i].reviews = retrieved;
+    // }
     const result = dispatch(getSpots(spots.spots))
     console.log("RESULT OF DISPATCHING :", result)
     return result
