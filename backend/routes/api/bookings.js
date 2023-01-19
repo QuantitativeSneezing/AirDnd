@@ -13,8 +13,12 @@ router.get('/current',
                 where: {
                     userId: id
                 },
-                include :{
-                    model: Spot}
+                include: [{
+                    model: Spot,
+                    include: [{
+                      model: SpotImage,
+                    }]
+                  }]
             }))
             return res.json({userBookings:userBookings});
         } else res.json(

@@ -30,27 +30,26 @@ function PersonalBookingPage() {
         </div>
     )
     if (personalBookings.length && spots.length) {
-        let bookingsArray = [];
-        for (let i = 0; i < personalBookings.length; i++) {
-            const currentBooking = personalBookings[i]
-            const relatedSpot = spots.find(spot => spot.id == personalBookings[i].spotId)
-            bookingsArray.push({
-                relatedSpot,
-                currentBooking
-            })
-        }
-        console.log("BOOKINGSARRAY :", bookingsArray)
-        yourBookings = bookingsArray.map(group =>
+        // for (let i = 0; i < personalBookings.length; i++) {
+        //     const currentBooking = personalBookings[i]
+        //     const relatedSpot = spots.find(spot => spot.id == personalBookings[i].spotId)
+        //     bookingsArray.push({
+        //         relatedSpot,
+        //         currentBooking
+        //     })
+    //     }
+        console.log("BOOKINGSARRAY :", personalBookings)
+        yourBookings = personalBookings.map(group =>
             <div className="individualBooking">
                 <div className="IndividualBookingInfo">
-                    <div className="locations__location" onClick={() => history.push(`/spots/${group.relatedSpot.id}`)}>
+                    <div className="locations__location" onClick={() => history.push(`/spots/${group.Spot.id}`)}>
                         <div className='image__wrapper'>
-                            <img src={group.relatedSpot.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
+                            <img src={group.Spot.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
                         </div>
                     </div>
-                    {group.relatedSpot.name}, from  {(group.currentBooking.startDate).slice(0, 10)} to {group.currentBooking.endDate.slice(0, 10)}
+                    {group.Spot.name}, from  {(group.startDate).slice(0, 10)} to {group.endDate.slice(0, 10)}
                 </div>
-                <button className="submitButton" onClick={() => deleteBooking(group.currentBooking.id)}>Delete this booking</button>
+                <button className="submitButton" onClick={() => deleteBooking(group.id)}>Delete this booking</button>
             </div>)
     }
     return (
