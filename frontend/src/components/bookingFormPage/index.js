@@ -14,12 +14,17 @@ function BookingFormPage() {
     const [errors, setErrors] = useState([]);
     const [validationErrors, setValidationErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
+    const [date, setDate] = useState(new Date());
     // const sessionUser = useSelector(state => state.session.user);
-    const [nights, setNights] = useState(1)
-    const [startDate, setStartDate] = useState("")
-    const updateNights = (e) => setNights(e.target.value);
     const spots = useSelector(state => state.spots.spots)
     const bookings = useSelector(state => state.bookings)
+    let nights = 0
+    if (date&& date.length>1){
+        //formula to get nights lol
+        date[1].setHours(0,0,0)
+        nights= Math.floor((date[1].getTime()- date[0].getTime())/ (1000 * 3600 * 24))
+        console.log ("CALCULATED NIGHTS :", nights)
+    }
     useEffect(() => {
         if (validationErrors.length === 0) {
             setDisableSubmit(false)
@@ -27,7 +32,6 @@ function BookingFormPage() {
             setDisableSubmit(true)
         }
     }, [validationErrors])
-
     useEffect(() => {
         dispatch(spotActions.getAllSpots());
     }, [dispatch]);
@@ -45,26 +49,29 @@ function BookingFormPage() {
     }, [dispatch]);
 
 
+    console.log("THIS IS THE DATE :", date)
     console.log("BOOKINGS IN STATE :", bookings)
     const spot = spots.find(spot => spot.id == spotId)
     async function handleSubmit() {
-        console.log("SUBMITTING BOOKING")
-        // e.preventDefault();
-        const bookingToSend = {
-            startDate: `2023-01-01 00:00:00`,
-            endDate: "2024-01-01 00:00:00",
-            spotId,
-        }
-        const booking = await dispatch(bookingActions.addSpotBooking(bookingToSend))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors([data.errors]);
-                console.log("ERRORS RETURNED :", data.errors)
-            });
-        console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", booking)
-        if (booking) {
-            console.log("NO ERROR DETECTED AT FIRST")
-            history.push(`/bookings/personal`);
+        if (date.length>1){
+            console.log("SUBMITTING BOOKING")
+            // e.preventDefault();
+            const bookingToSend = {
+                startDate: date[0],
+                endDate: date[1],
+                spotId,
+            }
+            const booking = await dispatch(bookingActions.addSpotBooking(bookingToSend))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors([data.errors]);
+                    console.log("ERRORS RETURNED :", data.errors)
+                });
+            console.log("FINISHED DISPATCH TO BOOKINGS RESULT :", booking)
+            if (booking) {
+                console.log("NO ERROR DETECTED AT FIRST")
+                history.push(`/bookings/personal`);
+            }
         }
     }
     if (!spot) {
@@ -94,8 +101,8 @@ function BookingFormPage() {
                         display="inline"
                         touchUi={true}
                     /> */}
-                    (TEMPORARY NIGHT COUNT)
-                    <label>
+                    {/* (TEMPORARY NIGHT COUNT) */}
+                    {/* <label>
                         <select onChange={updateNights} value={nights} className="inputField" >
                             <option>1</option>
                             <option>2</option>
@@ -103,9 +110,15 @@ function BookingFormPage() {
                             <option>4</option>
                             <option>5</option>
                         </select>
-                    </label>
+                    </label> */}
                 </div>
-                <Calendar />
+                <Calendar
+                    onChange={setDate}
+                    value={date}
+                    selectRange={true}
+                    // set minDate to be now to prevent booking before then
+                    minDate= {new Date()}
+                />
 
                 <div className="totals">
                     ${spot.price * nights} total

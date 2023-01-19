@@ -47,7 +47,7 @@ function PersonalBookingPage() {
     return (
         <div className="personalRoot">
             <div className="personalBookingsTitle">
-                BOOKINGS OF YOU:
+                Your reservations
 
                 <div className="wideBookings">
                     {isLoaded && yourBookings}
