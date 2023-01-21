@@ -25,13 +25,17 @@ function PersonalBookingPage() {
     }, [dispatch]);
     console.log("INFO IN BOOKINGS PAGE PERSONAL :", spots, bookings)
     let yourBookings = (
-        <div>
-            Sorry, no bookings found
+        <div className="personalBookingsTitle">
+            You currently have no bookings.
         </div>
     )
     if (personalBookings.length && spots.length) {
         console.log("BOOKINGSARRAY :", personalBookings)
-        yourBookings = personalBookings.map(group =>
+        yourBookings =
+        <div className="personalBookingsTitle">
+                Your reservations
+        </div>
+        personalBookings.map(group =>
             <div className="individualBooking">
                 <div className="IndividualBookingInfo">
                     <div className="locations__location" onClick={() => history.push(`/spots/${group.Spot.id}`)}>
@@ -46,13 +50,12 @@ function PersonalBookingPage() {
     }
     return (
         <div className="personalRoot">
-            <div className="personalBookingsTitle">
-                Your reservations
+            {/* <div className="personalBookingsTitle"> */}
 
                 <div className="wideBookings">
                     {isLoaded && yourBookings}
                 </div>
-            </div>
+            {/* </div> */}
         </div>
     )
 }

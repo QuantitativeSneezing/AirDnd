@@ -9,3 +9,6 @@
     width: 1000px;
    grid-template-columns: 50% 50%;
 }
+.personalBookingsTitle{
+    font-weight: bold;
+}
