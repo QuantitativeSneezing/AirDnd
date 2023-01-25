@@ -7,7 +7,7 @@ import './PersonalBookings.css'
 function PersonalBookingPage() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [isLoaded, setIsLoaded]= useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     const sessionUser = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.spots)
     const bookings = useSelector(state => state.bookings)
@@ -32,29 +32,32 @@ function PersonalBookingPage() {
     if (personalBookings.length && spots.length) {
         console.log("BOOKINGSARRAY :", personalBookings)
         yourBookings =
-        <div className="personalBookingsTitle">
-                Your reservations
-        </div>
-        personalBookings.map(group =>
-            <div className="individualBooking">
-                <div className="IndividualBookingInfo">
-                    <div className="locations__location" onClick={() => history.push(`/spots/${group.Spot.id}`)}>
-                        <div className='image__wrapper'>
-                            <img src={group.Spot?.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
-                        </div>
-                    </div>
-                    {group.Spot?.name}, from  {(group.startDate).slice(0, 10)} to {group.endDate.slice(0, 10)}
+            <div >
+                <div className="personalBookingsTitle">
+                   Your reservations:
                 </div>
-                <button className="submitButton" onClick={() => deleteBooking(group.id)}>Delete this booking</button>
-            </div>)
+                {personalBookings.map(group =>
+                    <div className="individualBooking">
+                        <div className="IndividualBookingInfo">
+                            <div className="locations__location" onClick={() => history.push(`/spots/${group.Spot.id}`)}>
+                                <div className='image__wrapper'>
+                                    <img src={group.Spot?.SpotImages[0].url || 'https://i.imgur.com/g24gIGL.png'} alt="Spot" className='picture'></img>
+                                </div>
+                            </div>
+                            {group.Spot?.name}, from  {(group.startDate).slice(0, 10)} to {group.endDate.slice(0, 10)}
+                        </div>
+                        <button className="submitButton" onClick={() => deleteBooking(group.id)}>Delete this booking</button>
+                    </div>)}
+
+            </div>
     }
     return (
         <div className="personalRoot">
             {/* <div className="personalBookingsTitle"> */}
 
-                <div className="wideBookings">
-                    {isLoaded && yourBookings}
-                </div>
+            <div className="wideBookings">
+                {isLoaded && yourBookings}
+            </div>
             {/* </div> */}
         </div>
     )
